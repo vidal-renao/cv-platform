@@ -139,7 +139,8 @@
     },
     "topbar": {
       "logout": "Logout",
-      "redirecting": "Redirecting to your client portal..."
+      "redirecting": "Redirecting to your client portal...",
+      "activePackages": "active packages"
     }
   },
   "packages": {
@@ -224,6 +225,24 @@
       "changePasswordNote": "The client can change their password from the portal.",
       "understood": "Got it"
     }
+  },
+  "users": {
+    "title": "Users",
+    "subtitle": "Manage system roles and access.",
+    "table": {
+      "email": "Email",
+      "currentRole": "Current role",
+      "registered": "Registered",
+      "changeRole": "Change role",
+      "empty": "No users registered."
+    },
+    "actions": {
+      "promoteToAdmin": "Promote to ADMIN",
+      "changeToClient": "Change to CLIENT",
+      "changing": "Changing..."
+    },
+    "footer": "A CLIENT role user only accesses the tracking portal. An ADMIN has full access to the management panel.",
+    "roleUpdated": "Role updated to"
   },
   "clientPortal": {
     "welcome": "Welcome",

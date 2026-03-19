@@ -139,7 +139,8 @@
     },
     "topbar": {
       "logout": "Déconnexion",
-      "redirecting": "Redirection vers votre portail client..."
+      "redirecting": "Redirection vers votre portail client...",
+      "activePackages": "colis actifs"
     }
   },
   "packages": {
@@ -224,6 +225,24 @@
       "changePasswordNote": "Le client pourra modifier son mot de passe depuis le portail.",
       "understood": "Compris"
     }
+  },
+  "users": {
+    "title": "Utilisateurs",
+    "subtitle": "Gérez les rôles et les accès au système.",
+    "table": {
+      "email": "E-mail",
+      "currentRole": "Rôle actuel",
+      "registered": "Enregistré",
+      "changeRole": "Changer de rôle",
+      "empty": "Aucun utilisateur enregistré."
+    },
+    "actions": {
+      "promoteToAdmin": "Promouvoir en ADMIN",
+      "changeToClient": "Passer en CLIENT",
+      "changing": "Modification..."
+    },
+    "footer": "Un utilisateur avec le rôle CLIENT n'accède qu'au portail de suivi. Un ADMIN a accès complet au panneau de gestion.",
+    "roleUpdated": "Rôle mis à jour en"
   },
   "clientPortal": {
     "welcome": "Bienvenue",

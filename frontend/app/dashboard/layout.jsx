@@ -83,7 +83,7 @@ function GlobalSearch() {
                 <div className="min-w-0">
                   <p className="text-sm font-medium text-gray-900 truncate">{client.name}</p>
                   <p className="text-xs text-gray-400">
-                    {client.active_packages} package{client.active_packages !== 1 ? 's' : ''} active
+                    {client.active_packages} {t('dashboard.topbar.activePackages')}
                   </p>
                 </div>
               </button>

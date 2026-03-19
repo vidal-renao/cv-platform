@@ -139,7 +139,8 @@
     },
     "topbar": {
       "logout": "Esci",
-      "redirecting": "Reindirizzamento al tuo portale cliente..."
+      "redirecting": "Reindirizzamento al tuo portale cliente...",
+      "activePackages": "pacchi attivi"
     }
   },
   "packages": {
@@ -224,6 +225,24 @@
       "changePasswordNote": "Il cliente potrà cambiare la password dal portale.",
       "understood": "Capito"
     }
+  },
+  "users": {
+    "title": "Utenti",
+    "subtitle": "Gestisci ruoli e accessi al sistema.",
+    "table": {
+      "email": "Email",
+      "currentRole": "Ruolo attuale",
+      "registered": "Registrato",
+      "changeRole": "Cambia ruolo",
+      "empty": "Nessun utente registrato."
+    },
+    "actions": {
+      "promoteToAdmin": "Promuovi ad ADMIN",
+      "changeToClient": "Cambia in CLIENT",
+      "changing": "Modifica in corso..."
+    },
+    "footer": "Un utente con ruolo CLIENT accede solo al portale di tracciamento. Un ADMIN ha accesso completo al pannello di gestione.",
+    "roleUpdated": "Ruolo aggiornato a"
   },
   "clientPortal": {
     "welcome": "Benvenuto",

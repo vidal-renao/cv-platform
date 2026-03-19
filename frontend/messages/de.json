@@ -139,7 +139,8 @@
     },
     "topbar": {
       "logout": "Abmelden",
-      "redirecting": "Weiterleitung zu Ihrem Kundenportal..."
+      "redirecting": "Weiterleitung zu Ihrem Kundenportal...",
+      "activePackages": "aktive Pakete"
     }
   },
   "packages": {
@@ -224,6 +225,24 @@
       "changePasswordNote": "Der Kunde kann sein Passwort im Portal ändern.",
       "understood": "Verstanden"
     }
+  },
+  "users": {
+    "title": "Benutzer",
+    "subtitle": "Systemrollen und Zugänge verwalten.",
+    "table": {
+      "email": "E-Mail",
+      "currentRole": "Aktuelle Rolle",
+      "registered": "Registriert",
+      "changeRole": "Rolle ändern",
+      "empty": "Keine Benutzer registriert."
+    },
+    "actions": {
+      "promoteToAdmin": "Zu ADMIN befördern",
+      "changeToClient": "Zu CLIENT wechseln",
+      "changing": "Wird geändert..."
+    },
+    "footer": "Ein Benutzer mit CLIENT-Rolle hat nur Zugang zum Tracking-Portal. Ein ADMIN hat vollen Zugang zum Verwaltungspanel.",
+    "roleUpdated": "Rolle aktualisiert zu"
   },
   "clientPortal": {
     "welcome": "Willkommen",

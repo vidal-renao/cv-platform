@@ -139,7 +139,8 @@
     },
     "topbar": {
       "logout": "Salir",
-      "redirecting": "Redirigiendo a tu portal de cliente..."
+      "redirecting": "Redirigiendo a tu portal de cliente...",
+      "activePackages": "paquetes activos"
     }
   },
   "packages": {
@@ -224,6 +225,24 @@
       "changePasswordNote": "El cliente podrá cambiar su contraseña desde el portal.",
       "understood": "Entendido"
     }
+  },
+  "users": {
+    "title": "Usuarios",
+    "subtitle": "Gestiona roles y accesos del sistema.",
+    "table": {
+      "email": "Email",
+      "currentRole": "Rol actual",
+      "registered": "Registrado",
+      "changeRole": "Cambiar rol",
+      "empty": "No hay usuarios registrados."
+    },
+    "actions": {
+      "promoteToAdmin": "Promover a ADMIN",
+      "changeToClient": "Cambiar a CLIENT",
+      "changing": "Cambiando..."
+    },
+    "footer": "Un usuario con rol CLIENT solo accede al portal de seguimiento. Un ADMIN tiene acceso total al panel de gestión.",
+    "roleUpdated": "Rol actualizado a"
   },
   "clientPortal": {
     "welcome": "Bienvenido",

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { fetchWithAuth } from '../../../lib/api';
+import { useTranslation } from '../../../lib/i18n';
 
 const ROLE_STYLES = {
   ADMIN:  'bg-purple-50 text-purple-700 border-purple-200',
@@ -20,6 +21,7 @@ function SkeletonRow() {
 }
 
 export default function UsersPage() {
+  const { t } = useTranslation();
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [changing, setChanging] = useState(null); // userId currently being updated
@@ -43,7 +45,7 @@ export default function UsersPage() {
         body: JSON.stringify({ role: newRole }),
       });
       setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: updated.role } : u));
-      showToast(`Rol actualizado a ${newRole}`);
+      showToast(`${t('users.roleUpdated')} ${newRole}`);
     } catch (err) {
       showToast(err.message);
     } finally {
@@ -66,8 +68,8 @@ export default function UsersPage() {
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">Usuarios</h1>
-          <p className="text-sm text-gray-400 mt-1">Gestiona roles y accesos del sistema.</p>
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight">{t('users.title')}</h1>
+          <p className="text-sm text-gray-400 mt-1">{t('users.subtitle')}</p>
         </div>
       </div>
 
@@ -76,10 +78,10 @@ export default function UsersPage() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50/50">
               <tr>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Email</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Rol actual</th>
-                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Registrado</th>
-                <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">Cambiar rol</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('users.table.email')}</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('users.table.currentRole')}</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('users.table.registered')}</th>
+                <th className="px-6 py-4 text-right text-xs font-semibold text-gray-500 uppercase tracking-wider">{t('users.table.changeRole')}</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-100">
@@ -88,7 +90,7 @@ export default function UsersPage() {
               ) : users.length === 0 ? (
                 <tr>
                   <td colSpan="4" className="px-6 py-12 text-center text-gray-400 text-sm">
-                    No hay usuarios registrados.
+                    {t('users.table.empty')}
                   </td>
                 </tr>
               ) : users.map((u) => (
@@ -117,7 +119,7 @@ export default function UsersPage() {
                           disabled={changing === u.id}
                           className="text-xs px-3 py-1.5 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition font-medium disabled:opacity-50"
                         >
-                          {changing === u.id ? 'Cambiando...' : 'Promover a ADMIN'}
+                          {changing === u.id ? t('users.actions.changing') : t('users.actions.promoteToAdmin')}
                         </button>
                       ) : (
                         <button
@@ -125,7 +127,7 @@ export default function UsersPage() {
                           disabled={changing === u.id}
                           className="text-xs px-3 py-1.5 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium disabled:opacity-50"
                         >
-                          {changing === u.id ? 'Cambiando...' : 'Cambiar a CLIENT'}
+                          {changing === u.id ? t('users.actions.changing') : t('users.actions.changeToClient')}
                         </button>
                       )}
                     </div>
@@ -138,7 +140,7 @@ export default function UsersPage() {
       </div>
 
       <p className="text-xs text-gray-400">
-        Un usuario con rol CLIENT solo accede al portal de seguimiento. Un ADMIN tiene acceso total al panel de gestión.
+        {t('users.footer')}
       </p>
     </div>
   );

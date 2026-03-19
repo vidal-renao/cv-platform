@@ -139,7 +139,8 @@
     },
     "topbar": {
       "logout": "Sair",
-      "redirecting": "Redirecionando para o seu portal do cliente..."
+      "redirecting": "Redirecionando para o seu portal do cliente...",
+      "activePackages": "pacotes ativos"
     }
   },
   "packages": {
@@ -224,6 +225,24 @@
       "changePasswordNote": "O cliente poderá alterar sua senha no portal.",
       "understood": "Entendido"
     }
+  },
+  "users": {
+    "title": "Usuários",
+    "subtitle": "Gerencie funções e acessos do sistema.",
+    "table": {
+      "email": "E-mail",
+      "currentRole": "Função atual",
+      "registered": "Registrado",
+      "changeRole": "Alterar função",
+      "empty": "Nenhum usuário registrado."
+    },
+    "actions": {
+      "promoteToAdmin": "Promover a ADMIN",
+      "changeToClient": "Mudar para CLIENT",
+      "changing": "Alterando..."
+    },
+    "footer": "Um usuário com função CLIENT só acessa o portal de rastreamento. Um ADMIN tem acesso total ao painel de gestão.",
+    "roleUpdated": "Função atualizada para"
   },
   "clientPortal": {
     "welcome": "Bem-vindo",
