@@ -111,5 +111,147 @@
       "PICKED_UP":        "Livré"
     }
   },
-  "lang": { "label": "Langue" }
+  "lang": { "label": "Langue" },
+  "common": {
+    "edit": "Modifier",
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "saving": "Enregistrement...",
+    "view": "Voir",
+    "understood": "Compris",
+    "copy": "Copier",
+    "copied": "Copié !"
+  },
+  "dashboard": {
+    "title": "Tableau de Bord",
+    "kpi": {
+      "totalClients": "Total Clients",
+      "packages": "Colis",
+      "pendingNotifications": "Notifications en attente"
+    },
+    "chart": { "monthlyVolume": "Volume mensuel de livraisons" },
+    "sidebar": {
+      "dashboard": "Tableau de bord",
+      "clients": "Clients",
+      "packages": "Colis",
+      "users": "Utilisateurs",
+      "viewSite": "Voir le site"
+    },
+    "topbar": {
+      "logout": "Déconnexion",
+      "redirecting": "Redirection vers votre portail client..."
+    }
+  },
+  "packages": {
+    "title": "Colis",
+    "addBtn": "Ajouter un colis",
+    "modal": {
+      "newTitle": "Nouveau colis",
+      "editTitle": "Modifier le colis",
+      "trackingLabel": "Numéro de suivi *",
+      "trackingPlaceholder": "ex. TRK-2024-001",
+      "clientLabel": "Client *",
+      "clientPlaceholder": "Sélectionner un client...",
+      "weightLabel": "Poids (kg)",
+      "weightPlaceholder": "ex. 2.5",
+      "weightHint": "Le coût est calculé automatiquement selon le poids.",
+      "descLabel": "Description",
+      "descPlaceholder": "Notes optionnelles sur ce colis",
+      "saveBtn": "Enregistrer les modifications",
+      "createBtn": "Créer le colis",
+      "saving": "Enregistrement..."
+    },
+    "table": {
+      "trackingId": "ID de suivi",
+      "client": "Client",
+      "status": "Statut",
+      "weightCost": "Poids / Coût",
+      "actions": "Actions"
+    },
+    "status": {
+      "ARRIVED": "Reçu",
+      "READY_FOR_PICKUP": "Prêt à récupérer",
+      "PICKED_UP": "Livré"
+    },
+    "empty": "Aucun colis pour l'instant. Cliquez sur Ajouter un colis pour commencer.",
+    "pickup": "Récupérer",
+    "pickupSaving": "Enregistrement..."
+  },
+  "clients": {
+    "title": "Clients",
+    "totalCount": "clients au total",
+    "form": {
+      "addTitle": "Ajouter un client",
+      "editTitle": "Modifier le client",
+      "namePlaceholder": "Nom *",
+      "phonePlaceholder": "Téléphone",
+      "emailPlaceholder": "E-mail",
+      "addressPlaceholder": "Adresse",
+      "createBtn": "Créer le client",
+      "updateBtn": "Mettre à jour le client",
+      "cancelBtn": "Annuler"
+    },
+    "table": {
+      "title": "Liste des clients",
+      "searchPlaceholder": "Rechercher des clients...",
+      "colClient": "Client",
+      "colPhone": "Téléphone",
+      "colStatus": "Statut",
+      "colAccess": "Accès",
+      "colActions": "Actions",
+      "empty": "Aucun client trouvé",
+      "deleteConfirm": "Supprimer ce client ?"
+    },
+    "status": {
+      "Active": "Actif",
+      "Pending": "En attente",
+      "Inactive": "Inactif"
+    },
+    "access": {
+      "generate": "Générer l'accès",
+      "resend": "Renvoyer les identifiants",
+      "generating": "Génération...",
+      "resending": "Renvoi...",
+      "noPhone": "Sans téléphone",
+      "modalTitle": "Accès généré",
+      "resendTitle": "Identifiants renvoyés",
+      "resendSub": "Un lien de réinitialisation du mot de passe a été envoyé.",
+      "emailSent": "E-mail envoyé",
+      "emailNotSent": "E-mail non envoyé",
+      "whatsappSent": "WhatsApp envoyé",
+      "whatsappNotSent": "WhatsApp non envoyé",
+      "passwordLabel": "Mot de passe :",
+      "changePasswordNote": "Le client pourra modifier son mot de passe depuis le portail.",
+      "understood": "Compris"
+    }
+  },
+  "clientPortal": {
+    "welcome": "Bienvenue",
+    "subtitle": "Ici vous pouvez suivre l'état de vos colis en temps réel.",
+    "stats": {
+      "total": "Total",
+      "packages": "colis",
+      "active": "Actifs",
+      "notPickedUp": "non récupérés",
+      "spent": "dépensé"
+    },
+    "myPackages": "Mes Colis",
+    "empty": "Vous n'avez pas encore de colis enregistrés.",
+    "changePassword": "Changer le mot de passe",
+    "packageDetail": {
+      "notFound": "Colis introuvable.",
+      "back": "Retour",
+      "received": "Reçu le :",
+      "weight": "Poids :",
+      "cost": "Coût :",
+      "proof": "Preuve de livraison",
+      "proofDate": "Enregistré le",
+      "signature": "Signature",
+      "photo": "Photo",
+      "messages": "Messages",
+      "noMessages": "Aucun message pour l'instant. Écrivez-nous si vous avez des questions.",
+      "messagePlaceholder": "Écrire un message...",
+      "send": "Envoyer"
+    }
+  }
 }

@@ -23,6 +23,7 @@ function SkeletonRow() {
   );
 }
 import { fetchWithAuth } from "../../../lib/api";
+import { useTranslation } from "../../../lib/i18n";
 
 import Card from "../../../components/ui/Card";
 import Button from "../../../components/ui/Button";
@@ -31,6 +32,7 @@ import Table from "../../../components/ui/Table";
 
 export default function ClientsPage() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [clients, setClients] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingClient, setEditingClient] = useState(null);
@@ -153,7 +155,7 @@ export default function ClientsPage() {
 
   const deleteClient = async (id) => {
 
-    if (!confirm("Delete this client?")) return;
+    if (!confirm(t('clients.table.deleteConfirm'))) return;
 
     try {
 
@@ -187,7 +189,7 @@ export default function ClientsPage() {
 
     return (
       <span className={`px-2 py-1 text-xs rounded-full font-medium ${map[status]}`}>
-        {status}
+        {t(`clients.status.${status}`) !== `clients.status.${status}` ? t(`clients.status.${status}`) : status}
       </span>
     );
 
@@ -207,26 +209,26 @@ export default function ClientsPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-gray-900 text-center">Acceso generado</h3>
+            <h3 className="text-lg font-bold text-gray-900 text-center">{t('clients.access.modalTitle')}</h3>
 
             {/* Notification status badges */}
             <div className="flex justify-center gap-2">
               <span className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full font-medium border ${accessModal.notifications?.email ? 'bg-green-50 text-green-700 border-green-200' : 'bg-gray-50 text-gray-400 border-gray-200'}`}>
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                {accessModal.notifications?.email ? 'Email enviado' : 'Email no enviado'}
+                {accessModal.notifications?.email ? t('clients.access.emailSent') : t('clients.access.emailNotSent')}
               </span>
               <span className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full font-medium border ${accessModal.notifications?.whatsapp ? 'bg-green-50 text-green-700 border-green-200' : 'bg-gray-50 text-gray-400 border-gray-200'}`}>
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-                {accessModal.notifications?.whatsapp ? 'WhatsApp enviado' : 'WhatsApp no enviado'}
+                {accessModal.notifications?.whatsapp ? t('clients.access.whatsappSent') : t('clients.access.whatsappNotSent')}
               </span>
             </div>
 
             {/* Credentials box */}
             <div className="bg-gray-50 rounded-lg p-4 space-y-2 text-sm font-mono border border-gray-200">
               <div><span className="text-gray-500">Email:</span> <span className="font-semibold text-gray-900">{accessModal.email}</span></div>
-              <div><span className="text-gray-500">Contraseña:</span> <span className="font-semibold text-gray-900">{accessModal.tempPassword}</span></div>
+              <div><span className="text-gray-500">{t('clients.access.passwordLabel')}</span> <span className="font-semibold text-gray-900">{accessModal.tempPassword}</span></div>
             </div>
-            <p className="text-xs text-gray-400 text-center">El cliente podrá cambiar su contraseña desde el portal.</p>
+            <p className="text-xs text-gray-400 text-center">{t('clients.access.changePasswordNote')}</p>
 
             {/* Action buttons */}
             <div className="grid grid-cols-2 gap-2">
@@ -242,7 +244,7 @@ export default function ClientsPage() {
                 ) : (
                   <>
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
-                    Copiar
+                    {t('common.copy')}
                   </>
                 )}
               </button>
@@ -259,7 +261,7 @@ export default function ClientsPage() {
                 </a>
               ) : (
                 <button disabled className="flex items-center justify-center gap-1.5 py-2.5 bg-gray-100 text-gray-400 text-sm font-medium rounded-lg cursor-not-allowed">
-                  Sin teléfono
+                  {t('clients.access.noPhone')}
                 </button>
               )}
             </div>
@@ -268,7 +270,7 @@ export default function ClientsPage() {
               onClick={() => setAccessModal(null)}
               className="w-full py-2.5 bg-primary-600 text-white text-sm font-semibold rounded-lg hover:bg-primary-700 transition"
             >
-              Entendido
+              {t('clients.access.understood')}
             </button>
           </div>
         </div>
@@ -283,17 +285,17 @@ export default function ClientsPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
               </svg>
             </div>
-            <h3 className="text-lg font-bold text-gray-900 text-center">Credenciales reenviadas</h3>
-            <p className="text-sm text-gray-500 text-center">Se envió un enlace para restablecer la contraseña.</p>
+            <h3 className="text-lg font-bold text-gray-900 text-center">{t('clients.access.resendTitle')}</h3>
+            <p className="text-sm text-gray-500 text-center">{t('clients.access.resendSub')}</p>
 
             <div className="flex justify-center gap-2">
               <span className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full font-medium border ${resendModal.notifications?.email ? 'bg-green-50 text-green-700 border-green-200' : 'bg-gray-50 text-gray-400 border-gray-200'}`}>
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                {resendModal.notifications?.email ? 'Email enviado' : 'Email no enviado'}
+                {resendModal.notifications?.email ? t('clients.access.emailSent') : t('clients.access.emailNotSent')}
               </span>
               <span className={`inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full font-medium border ${resendModal.notifications?.whatsapp ? 'bg-green-50 text-green-700 border-green-200' : 'bg-gray-50 text-gray-400 border-gray-200'}`}>
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-                {resendModal.notifications?.whatsapp ? 'WhatsApp enviado' : 'WhatsApp no enviado'}
+                {resendModal.notifications?.whatsapp ? t('clients.access.whatsappSent') : t('clients.access.whatsappNotSent')}
               </span>
             </div>
 
@@ -305,7 +307,7 @@ export default function ClientsPage() {
               onClick={() => setResendModal(null)}
               className="w-full py-2.5 bg-primary-600 text-white text-sm font-semibold rounded-lg hover:bg-primary-700 transition"
             >
-              Entendido
+              {t('clients.access.understood')}
             </button>
           </div>
         </div>
@@ -316,11 +318,11 @@ export default function ClientsPage() {
       <div className="flex items-center justify-between">
 
         <h1 className="text-3xl font-bold">
-          Clients
+          {t('clients.title')}
         </h1>
 
         <div className="text-sm text-gray-500">
-          {clients.length} total clients
+          {clients.length} {t('clients.totalCount')}
         </div>
 
       </div>
@@ -331,7 +333,7 @@ export default function ClientsPage() {
       <Card>
 
         <h2 className="font-semibold mb-4">
-          {editingClient ? "Edit Client" : "Add Client"}
+          {editingClient ? t('clients.form.editTitle') : t('clients.form.addTitle')}
         </h2>
 
         <form
@@ -340,25 +342,25 @@ export default function ClientsPage() {
         >
 
           <Input
-            placeholder="Name *"
+            placeholder={t('clients.form.namePlaceholder')}
             value={form.name}
             onChange={(e)=>setForm({...form,name:e.target.value})}
           />
 
           <Input
-            placeholder="Phone"
+            placeholder={t('clients.form.phonePlaceholder')}
             value={form.phone}
             onChange={(e)=>setForm({...form,phone:e.target.value})}
           />
 
           <Input
-            placeholder="Email"
+            placeholder={t('clients.form.emailPlaceholder')}
             value={form.email}
             onChange={(e)=>setForm({...form,email:e.target.value})}
           />
 
           <Input
-            placeholder="Address"
+            placeholder={t('clients.form.addressPlaceholder')}
             value={form.address}
             onChange={(e)=>setForm({...form,address:e.target.value})}
           />
@@ -375,7 +377,7 @@ export default function ClientsPage() {
           <div className="col-span-2 flex gap-3 mt-2">
 
             <Button type="submit">
-              {editingClient ? "Update Client" : "Create Client"}
+              {editingClient ? t('clients.form.updateBtn') : t('clients.form.createBtn')}
             </Button>
 
             {editingClient && (
@@ -388,7 +390,7 @@ export default function ClientsPage() {
                   setFormError('');
                 }}
               >
-                Cancel
+                {t('clients.form.cancelBtn')}
               </Button>
 
             )}
@@ -407,13 +409,13 @@ export default function ClientsPage() {
         <div className="flex items-center justify-between mb-4">
 
           <h2 className="font-semibold">
-            Clients List
+            {t('clients.table.title')}
           </h2>
 
           <div className="w-64">
 
             <Input
-              placeholder="Search clients..."
+              placeholder={t('clients.table.searchPlaceholder')}
               value={search}
               onChange={(e)=>setSearch(e.target.value)}
             />
@@ -427,11 +429,11 @@ export default function ClientsPage() {
           <Table>
             <thead className="bg-gray-50 text-sm text-gray-600">
               <tr>
-                <th className="text-left p-4">Client</th>
-                <th className="text-left p-4">Phone</th>
-                <th className="text-left p-4">Status</th>
-                <th className="text-left p-4">Acceso</th>
-                <th className="text-right p-4">Actions</th>
+                <th className="text-left p-4">{t('clients.table.colClient')}</th>
+                <th className="text-left p-4">{t('clients.table.colPhone')}</th>
+                <th className="text-left p-4">{t('clients.table.colStatus')}</th>
+                <th className="text-left p-4">{t('clients.table.colAccess')}</th>
+                <th className="text-right p-4">{t('clients.table.colActions')}</th>
               </tr>
             </thead>
             <tbody>
@@ -442,7 +444,7 @@ export default function ClientsPage() {
         ) : filteredClients.length === 0 ? (
 
           <div className="p-4 text-gray-500">
-            No clients found
+            {t('clients.table.empty')}
           </div>
 
         ) : (
@@ -453,10 +455,10 @@ export default function ClientsPage() {
 
               <tr>
 
-                <th className="text-left p-4">Client</th>
-                <th className="text-left p-4">Phone</th>
-                <th className="text-left p-4">Status</th>
-                <th className="text-right p-4">Actions</th>
+                <th className="text-left p-4">{t('clients.table.colClient')}</th>
+                <th className="text-left p-4">{t('clients.table.colPhone')}</th>
+                <th className="text-left p-4">{t('clients.table.colStatus')}</th>
+                <th className="text-right p-4">{t('clients.table.colActions')}</th>
 
               </tr>
 
@@ -524,7 +526,7 @@ export default function ClientsPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                           </svg>
                         )}
-                        Reenviar Credenciales
+                        {t('clients.access.resend')}
                       </button>
                     ) : (
                       <button
@@ -542,7 +544,7 @@ export default function ClientsPage() {
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" />
                           </svg>
                         )}
-                        Generar Acceso
+                        {t('clients.access.generate')}
                       </button>
                     )}
                   </td>

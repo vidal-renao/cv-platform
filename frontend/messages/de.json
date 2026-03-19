@@ -111,5 +111,147 @@
       "PICKED_UP":        "Zugestellt"
     }
   },
-  "lang": { "label": "Sprache" }
+  "lang": { "label": "Sprache" },
+  "common": {
+    "edit": "Bearbeiten",
+    "cancel": "Abbrechen",
+    "delete": "Löschen",
+    "saving": "Wird gespeichert...",
+    "view": "Ansehen",
+    "understood": "Verstanden",
+    "copy": "Kopieren",
+    "copied": "Kopiert!"
+  },
+  "dashboard": {
+    "title": "Übersicht",
+    "kpi": {
+      "totalClients": "Kunden gesamt",
+      "packages": "Pakete",
+      "pendingNotifications": "Ausstehende Benachrichtigungen"
+    },
+    "chart": { "monthlyVolume": "Monatliches Liefervolumen" },
+    "sidebar": {
+      "dashboard": "Übersicht",
+      "clients": "Kunden",
+      "packages": "Pakete",
+      "users": "Benutzer",
+      "viewSite": "Website ansehen"
+    },
+    "topbar": {
+      "logout": "Abmelden",
+      "redirecting": "Weiterleitung zu Ihrem Kundenportal..."
+    }
+  },
+  "packages": {
+    "title": "Pakete",
+    "addBtn": "Paket hinzufügen",
+    "modal": {
+      "newTitle": "Neues Paket",
+      "editTitle": "Paket bearbeiten",
+      "trackingLabel": "Tracking-Nummer *",
+      "trackingPlaceholder": "z.B. TRK-2024-001",
+      "clientLabel": "Kunde *",
+      "clientPlaceholder": "Kunde auswählen...",
+      "weightLabel": "Gewicht (kg)",
+      "weightPlaceholder": "z.B. 2.5",
+      "weightHint": "Die Kosten werden automatisch nach Gewichtsklassen berechnet.",
+      "descLabel": "Beschreibung",
+      "descPlaceholder": "Optionale Notizen zu diesem Paket",
+      "saveBtn": "Änderungen speichern",
+      "createBtn": "Paket erstellen",
+      "saving": "Wird gespeichert..."
+    },
+    "table": {
+      "trackingId": "Tracking-ID",
+      "client": "Kunde",
+      "status": "Status",
+      "weightCost": "Gewicht / Kosten",
+      "actions": "Aktionen"
+    },
+    "status": {
+      "ARRIVED": "Eingegangen",
+      "READY_FOR_PICKUP": "Abholbereit",
+      "PICKED_UP": "Zugestellt"
+    },
+    "empty": "Noch keine Pakete. Klicken Sie auf Paket hinzufügen, um zu beginnen.",
+    "pickup": "Abholen",
+    "pickupSaving": "Wird gespeichert..."
+  },
+  "clients": {
+    "title": "Kunden",
+    "totalCount": "Kunden insgesamt",
+    "form": {
+      "addTitle": "Kunde hinzufügen",
+      "editTitle": "Kunde bearbeiten",
+      "namePlaceholder": "Name *",
+      "phonePlaceholder": "Telefon",
+      "emailPlaceholder": "E-Mail",
+      "addressPlaceholder": "Adresse",
+      "createBtn": "Kunde erstellen",
+      "updateBtn": "Kunde aktualisieren",
+      "cancelBtn": "Abbrechen"
+    },
+    "table": {
+      "title": "Kundenliste",
+      "searchPlaceholder": "Kunden suchen...",
+      "colClient": "Kunde",
+      "colPhone": "Telefon",
+      "colStatus": "Status",
+      "colAccess": "Zugang",
+      "colActions": "Aktionen",
+      "empty": "Keine Kunden gefunden",
+      "deleteConfirm": "Diesen Kunden löschen?"
+    },
+    "status": {
+      "Active": "Aktiv",
+      "Pending": "Ausstehend",
+      "Inactive": "Inaktiv"
+    },
+    "access": {
+      "generate": "Zugang generieren",
+      "resend": "Zugangsdaten erneut senden",
+      "generating": "Wird generiert...",
+      "resending": "Wird gesendet...",
+      "noPhone": "Kein Telefon",
+      "modalTitle": "Zugang erstellt",
+      "resendTitle": "Zugangsdaten erneut gesendet",
+      "resendSub": "Ein Link zum Zurücksetzen des Passworts wurde gesendet.",
+      "emailSent": "E-Mail gesendet",
+      "emailNotSent": "E-Mail nicht gesendet",
+      "whatsappSent": "WhatsApp gesendet",
+      "whatsappNotSent": "WhatsApp nicht gesendet",
+      "passwordLabel": "Passwort:",
+      "changePasswordNote": "Der Kunde kann sein Passwort im Portal ändern.",
+      "understood": "Verstanden"
+    }
+  },
+  "clientPortal": {
+    "welcome": "Willkommen",
+    "subtitle": "Hier können Sie den Status Ihrer Pakete in Echtzeit verfolgen.",
+    "stats": {
+      "total": "Gesamt",
+      "packages": "Pakete",
+      "active": "Aktiv",
+      "notPickedUp": "nicht abgeholt",
+      "spent": "ausgegeben"
+    },
+    "myPackages": "Meine Pakete",
+    "empty": "Sie haben noch keine registrierten Pakete.",
+    "changePassword": "Passwort ändern",
+    "packageDetail": {
+      "notFound": "Paket nicht gefunden.",
+      "back": "Zurück",
+      "received": "Eingegangen:",
+      "weight": "Gewicht:",
+      "cost": "Kosten:",
+      "proof": "Liefernachweis",
+      "proofDate": "Registriert am",
+      "signature": "Unterschrift",
+      "photo": "Foto",
+      "messages": "Nachrichten",
+      "noMessages": "Noch keine Nachrichten. Schreiben Sie uns, wenn Sie Fragen haben.",
+      "messagePlaceholder": "Nachricht schreiben...",
+      "send": "Senden"
+    }
+  }
 }

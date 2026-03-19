@@ -111,5 +111,147 @@
       "PICKED_UP":        "Consegnato"
     }
   },
-  "lang": { "label": "Lingua" }
+  "lang": { "label": "Lingua" },
+  "common": {
+    "edit": "Modifica",
+    "cancel": "Annulla",
+    "delete": "Elimina",
+    "saving": "Salvataggio...",
+    "view": "Visualizza",
+    "understood": "Capito",
+    "copy": "Copia",
+    "copied": "Copiato!"
+  },
+  "dashboard": {
+    "title": "Pannello di Controllo",
+    "kpi": {
+      "totalClients": "Clienti Totali",
+      "packages": "Pacchi",
+      "pendingNotifications": "Notifiche in Attesa"
+    },
+    "chart": { "monthlyVolume": "Volume Mensile di Consegne" },
+    "sidebar": {
+      "dashboard": "Pannello",
+      "clients": "Clienti",
+      "packages": "Pacchi",
+      "users": "Utenti",
+      "viewSite": "Visualizza sito"
+    },
+    "topbar": {
+      "logout": "Esci",
+      "redirecting": "Reindirizzamento al tuo portale cliente..."
+    }
+  },
+  "packages": {
+    "title": "Pacchi",
+    "addBtn": "Aggiungi Pacco",
+    "modal": {
+      "newTitle": "Nuovo Pacco",
+      "editTitle": "Modifica Pacco",
+      "trackingLabel": "Numero di Tracciamento *",
+      "trackingPlaceholder": "es. TRK-2024-001",
+      "clientLabel": "Cliente *",
+      "clientPlaceholder": "Seleziona un cliente...",
+      "weightLabel": "Peso (kg)",
+      "weightPlaceholder": "es. 2.5",
+      "weightHint": "Il costo viene calcolato automaticamente in base al peso.",
+      "descLabel": "Descrizione",
+      "descPlaceholder": "Note opzionali su questo pacco",
+      "saveBtn": "Salva Modifiche",
+      "createBtn": "Crea Pacco",
+      "saving": "Salvataggio..."
+    },
+    "table": {
+      "trackingId": "ID Tracciamento",
+      "client": "Cliente",
+      "status": "Stato",
+      "weightCost": "Peso / Costo",
+      "actions": "Azioni"
+    },
+    "status": {
+      "ARRIVED": "Ricevuto",
+      "READY_FOR_PICKUP": "Pronto per il ritiro",
+      "PICKED_UP": "Consegnato"
+    },
+    "empty": "Nessun pacco ancora. Clicca su Aggiungi Pacco per iniziare.",
+    "pickup": "Ritira",
+    "pickupSaving": "Salvataggio..."
+  },
+  "clients": {
+    "title": "Clienti",
+    "totalCount": "clienti in totale",
+    "form": {
+      "addTitle": "Aggiungi Cliente",
+      "editTitle": "Modifica Cliente",
+      "namePlaceholder": "Nome *",
+      "phonePlaceholder": "Telefono",
+      "emailPlaceholder": "Email",
+      "addressPlaceholder": "Indirizzo",
+      "createBtn": "Crea Cliente",
+      "updateBtn": "Aggiorna Cliente",
+      "cancelBtn": "Annulla"
+    },
+    "table": {
+      "title": "Lista Clienti",
+      "searchPlaceholder": "Cerca clienti...",
+      "colClient": "Cliente",
+      "colPhone": "Telefono",
+      "colStatus": "Stato",
+      "colAccess": "Accesso",
+      "colActions": "Azioni",
+      "empty": "Nessun cliente trovato",
+      "deleteConfirm": "Eliminare questo cliente?"
+    },
+    "status": {
+      "Active": "Attivo",
+      "Pending": "In attesa",
+      "Inactive": "Inattivo"
+    },
+    "access": {
+      "generate": "Genera Accesso",
+      "resend": "Reinvia Credenziali",
+      "generating": "Generazione...",
+      "resending": "Reinvio...",
+      "noPhone": "Nessun telefono",
+      "modalTitle": "Accesso generato",
+      "resendTitle": "Credenziali reinviate",
+      "resendSub": "È stato inviato un link per reimpostare la password.",
+      "emailSent": "Email inviata",
+      "emailNotSent": "Email non inviata",
+      "whatsappSent": "WhatsApp inviato",
+      "whatsappNotSent": "WhatsApp non inviato",
+      "passwordLabel": "Password:",
+      "changePasswordNote": "Il cliente potrà cambiare la password dal portale.",
+      "understood": "Capito"
+    }
+  },
+  "clientPortal": {
+    "welcome": "Benvenuto",
+    "subtitle": "Qui puoi seguire lo stato dei tuoi pacchi in tempo reale.",
+    "stats": {
+      "total": "Totale",
+      "packages": "pacchi",
+      "active": "Attivi",
+      "notPickedUp": "non ritirati",
+      "spent": "speso"
+    },
+    "myPackages": "I Miei Pacchi",
+    "empty": "Non hai ancora pacchi registrati.",
+    "changePassword": "Cambia password",
+    "packageDetail": {
+      "notFound": "Pacco non trovato.",
+      "back": "Indietro",
+      "received": "Ricevuto:",
+      "weight": "Peso:",
+      "cost": "Costo:",
+      "proof": "Prova di Consegna",
+      "proofDate": "Registrato il",
+      "signature": "Firma",
+      "photo": "Foto",
+      "messages": "Messaggi",
+      "noMessages": "Ancora nessun messaggio. Scrivici se hai domande.",
+      "messagePlaceholder": "Scrivi un messaggio...",
+      "send": "Invia"
+    }
+  }
 }

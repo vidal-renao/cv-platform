@@ -37,22 +37,22 @@ export default function DashboardPage() {
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="bg-white p-6 rounded-2xl shadow-sm border">
-          <h3 className="text-sm font-semibold text-gray-500 uppercase">Total Clients</h3>
+          <h3 className="text-sm font-semibold text-gray-500 uppercase">{t('dashboard.kpi.totalClients')}</h3>
           <p className="text-4xl font-black mt-2">{metrics.totalClients}</p>
         </div>
         <div className="bg-white p-6 rounded-2xl shadow-sm border">
-          <h3 className="text-sm font-semibold text-gray-500 uppercase">Packages</h3>
+          <h3 className="text-sm font-semibold text-gray-500 uppercase">{t('dashboard.kpi.packages')}</h3>
           <p className="text-4xl font-black mt-2">{metrics.totalPackages}</p>
         </div>
         <div className="bg-white p-6 rounded-2xl shadow-sm border">
-          <h3 className="text-sm font-semibold text-gray-500 uppercase">Pending Notifications</h3>
+          <h3 className="text-sm font-semibold text-gray-500 uppercase">{t('dashboard.kpi.pendingNotifications')}</h3>
           <p className="text-4xl font-black mt-2">{metrics.pendingNotifications}</p>
         </div>
       </div>
 
       {/* Monthly Volume Chart */}
       <div className="bg-white rounded-2xl shadow-sm border p-6">
-        <h2 className="text-base font-semibold text-gray-900 mb-4">Monthly Delivery Volume</h2>
+        <h2 className="text-base font-semibold text-gray-900 mb-4">{t('dashboard.chart.monthlyVolume')}</h2>
         <MonthlyChart data={monthly} />
       </div>
 

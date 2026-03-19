@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchWithAuth } from '../../../lib/api';
+import { useTranslation } from '../../../lib/i18n';
 
 const STATUS_STYLES = {
   PICKED_UP:        'bg-green-50 text-green-700 border-green-200',
@@ -13,6 +14,7 @@ const STATUS_FALLBACK = 'bg-gray-50 text-gray-600 border-gray-200';
 
 export default function ClientDashboard() {
   const router = useRouter();
+  const { t } = useTranslation();
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [clientInfo, setClientInfo] = useState(null);
@@ -34,34 +36,34 @@ export default function ClientDashboard() {
       {/* Welcome */}
       <div>
         <h1 className="text-2xl font-bold text-gray-900">
-          Bienvenido{clientInfo?.name ? `, ${clientInfo.name}` : ''}
+          {t('clientPortal.welcome')}{clientInfo?.name ? `, ${clientInfo.name}` : ''}
         </h1>
-        <p className="text-gray-500 text-sm mt-1">Aquí puedes seguir el estado de tus paquetes en tiempo real.</p>
+        <p className="text-gray-500 text-sm mt-1">{t('clientPortal.subtitle')}</p>
       </div>
 
       {/* Stats */}
       <div className="grid grid-cols-3 gap-4">
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-          <p className="text-xs font-semibold text-gray-400 uppercase">Total</p>
+          <p className="text-xs font-semibold text-gray-400 uppercase">{t('clientPortal.stats.total')}</p>
           <p className="text-3xl font-black text-gray-900 mt-1">{packages.length}</p>
-          <p className="text-xs text-gray-400 mt-1">paquetes</p>
+          <p className="text-xs text-gray-400 mt-1">{t('clientPortal.stats.packages')}</p>
         </div>
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-          <p className="text-xs font-semibold text-gray-400 uppercase">Activos</p>
+          <p className="text-xs font-semibold text-gray-400 uppercase">{t('clientPortal.stats.active')}</p>
           <p className="text-3xl font-black text-yellow-600 mt-1">{active}</p>
-          <p className="text-xs text-gray-400 mt-1">sin retirar</p>
+          <p className="text-xs text-gray-400 mt-1">{t('clientPortal.stats.notPickedUp')}</p>
         </div>
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
-          <p className="text-xs font-semibold text-gray-400 uppercase">Total</p>
+          <p className="text-xs font-semibold text-gray-400 uppercase">{t('clientPortal.stats.total')}</p>
           <p className="text-3xl font-black text-green-600 mt-1">${totalSpent.toFixed(2)}</p>
-          <p className="text-xs text-gray-400 mt-1">gastado</p>
+          <p className="text-xs text-gray-400 mt-1">{t('clientPortal.stats.spent')}</p>
         </div>
       </div>
 
       {/* Package list */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-100">
-          <h2 className="font-semibold text-gray-900">Mis Paquetes</h2>
+          <h2 className="font-semibold text-gray-900">{t('clientPortal.myPackages')}</h2>
         </div>
 
         {loading ? (
@@ -75,7 +77,7 @@ export default function ClientDashboard() {
           </div>
         ) : packages.length === 0 ? (
           <p className="px-6 py-10 text-center text-gray-400 text-sm">
-            No tienes paquetes registrados aún.
+            {t('clientPortal.empty')}
           </p>
         ) : (
           <div className="divide-y divide-gray-100">
@@ -97,7 +99,7 @@ export default function ClientDashboard() {
                 </div>
                 <div className="flex items-center gap-3">
                   <span className={`px-2.5 py-1 text-xs leading-5 font-semibold rounded-full border ${STATUS_STYLES[pkg.status] || STATUS_FALLBACK}`}>
-                    {pkg.status?.replace(/_/g, ' ')}
+                    {t(`packages.status.${pkg.status}`) !== `packages.status.${pkg.status}` ? t(`packages.status.${pkg.status}`) : pkg.status?.replace(/_/g, ' ')}
                   </span>
                   <svg className="w-4 h-4 text-gray-300 group-hover:text-gray-500 transition" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
@@ -115,7 +117,7 @@ export default function ClientDashboard() {
           onClick={() => router.push('/client/settings')}
           className="text-sm text-gray-400 hover:text-gray-600 transition"
         >
-          Cambiar contraseña
+          {t('clientPortal.changePassword')}
         </button>
       </div>
     </div>

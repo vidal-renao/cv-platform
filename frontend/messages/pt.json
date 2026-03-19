@@ -111,5 +111,147 @@
       "PICKED_UP":        "Entregue"
     }
   },
-  "lang": { "label": "Idioma" }
+  "lang": { "label": "Idioma" },
+  "common": {
+    "edit": "Editar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "saving": "Salvando...",
+    "view": "Ver",
+    "understood": "Entendido",
+    "copy": "Copiar",
+    "copied": "Copiado!"
+  },
+  "dashboard": {
+    "title": "Painel de Controle",
+    "kpi": {
+      "totalClients": "Total de Clientes",
+      "packages": "Pacotes",
+      "pendingNotifications": "Notificações Pendentes"
+    },
+    "chart": { "monthlyVolume": "Volume Mensal de Entregas" },
+    "sidebar": {
+      "dashboard": "Painel",
+      "clients": "Clientes",
+      "packages": "Pacotes",
+      "users": "Usuários",
+      "viewSite": "Ver site"
+    },
+    "topbar": {
+      "logout": "Sair",
+      "redirecting": "Redirecionando para o seu portal do cliente..."
+    }
+  },
+  "packages": {
+    "title": "Pacotes",
+    "addBtn": "Adicionar Pacote",
+    "modal": {
+      "newTitle": "Novo Pacote",
+      "editTitle": "Editar Pacote",
+      "trackingLabel": "Número de Rastreamento *",
+      "trackingPlaceholder": "ex. TRK-2024-001",
+      "clientLabel": "Cliente *",
+      "clientPlaceholder": "Selecionar cliente...",
+      "weightLabel": "Peso (kg)",
+      "weightPlaceholder": "ex. 2.5",
+      "weightHint": "O custo é calculado automaticamente com base no peso.",
+      "descLabel": "Descrição",
+      "descPlaceholder": "Notas opcionais sobre este pacote",
+      "saveBtn": "Salvar Alterações",
+      "createBtn": "Criar Pacote",
+      "saving": "Salvando..."
+    },
+    "table": {
+      "trackingId": "ID de Rastreamento",
+      "client": "Cliente",
+      "status": "Status",
+      "weightCost": "Peso / Custo",
+      "actions": "Ações"
+    },
+    "status": {
+      "ARRIVED": "Recebido",
+      "READY_FOR_PICKUP": "Pronto para retirada",
+      "PICKED_UP": "Entregue"
+    },
+    "empty": "Nenhum pacote ainda. Clique em Adicionar Pacote para começar.",
+    "pickup": "Retirar",
+    "pickupSaving": "Salvando..."
+  },
+  "clients": {
+    "title": "Clientes",
+    "totalCount": "clientes no total",
+    "form": {
+      "addTitle": "Adicionar Cliente",
+      "editTitle": "Editar Cliente",
+      "namePlaceholder": "Nome *",
+      "phonePlaceholder": "Telefone",
+      "emailPlaceholder": "E-mail",
+      "addressPlaceholder": "Endereço",
+      "createBtn": "Criar Cliente",
+      "updateBtn": "Atualizar Cliente",
+      "cancelBtn": "Cancelar"
+    },
+    "table": {
+      "title": "Lista de Clientes",
+      "searchPlaceholder": "Buscar clientes...",
+      "colClient": "Cliente",
+      "colPhone": "Telefone",
+      "colStatus": "Status",
+      "colAccess": "Acesso",
+      "colActions": "Ações",
+      "empty": "Nenhum cliente encontrado",
+      "deleteConfirm": "Excluir este cliente?"
+    },
+    "status": {
+      "Active": "Ativo",
+      "Pending": "Pendente",
+      "Inactive": "Inativo"
+    },
+    "access": {
+      "generate": "Gerar Acesso",
+      "resend": "Reenviar Credenciais",
+      "generating": "Gerando...",
+      "resending": "Reenviando...",
+      "noPhone": "Sem telefone",
+      "modalTitle": "Acesso gerado",
+      "resendTitle": "Credenciais reenviadas",
+      "resendSub": "Um link para redefinir a senha foi enviado.",
+      "emailSent": "E-mail enviado",
+      "emailNotSent": "E-mail não enviado",
+      "whatsappSent": "WhatsApp enviado",
+      "whatsappNotSent": "WhatsApp não enviado",
+      "passwordLabel": "Senha:",
+      "changePasswordNote": "O cliente poderá alterar sua senha no portal.",
+      "understood": "Entendido"
+    }
+  },
+  "clientPortal": {
+    "welcome": "Bem-vindo",
+    "subtitle": "Aqui você pode acompanhar o status dos seus pacotes em tempo real.",
+    "stats": {
+      "total": "Total",
+      "packages": "pacotes",
+      "active": "Ativos",
+      "notPickedUp": "não retirados",
+      "spent": "gasto"
+    },
+    "myPackages": "Meus Pacotes",
+    "empty": "Você ainda não tem pacotes registrados.",
+    "changePassword": "Alterar senha",
+    "packageDetail": {
+      "notFound": "Pacote não encontrado.",
+      "back": "Voltar",
+      "received": "Recebido:",
+      "weight": "Peso:",
+      "cost": "Custo:",
+      "proof": "Comprovante de Entrega",
+      "proofDate": "Registrado em",
+      "signature": "Assinatura",
+      "photo": "Foto",
+      "messages": "Mensagens",
+      "noMessages": "Ainda não há mensagens. Escreva-nos se tiver alguma dúvida.",
+      "messagePlaceholder": "Digite uma mensagem...",
+      "send": "Enviar"
+    }
+  }
 }

@@ -111,5 +111,147 @@
       "PICKED_UP":        "Delivered"
     }
   },
-  "lang": { "label": "Language" }
+  "lang": { "label": "Language" },
+  "common": {
+    "edit": "Edit",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "saving": "Saving...",
+    "view": "View",
+    "understood": "Got it",
+    "copy": "Copy",
+    "copied": "Copied!"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "kpi": {
+      "totalClients": "Total Clients",
+      "packages": "Packages",
+      "pendingNotifications": "Pending Notifications"
+    },
+    "chart": { "monthlyVolume": "Monthly Delivery Volume" },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "clients": "Clients",
+      "packages": "Packages",
+      "users": "Users",
+      "viewSite": "View website"
+    },
+    "topbar": {
+      "logout": "Logout",
+      "redirecting": "Redirecting to your client portal..."
+    }
+  },
+  "packages": {
+    "title": "Packages",
+    "addBtn": "Add Package",
+    "modal": {
+      "newTitle": "New Package",
+      "editTitle": "Edit Package",
+      "trackingLabel": "Tracking Number *",
+      "trackingPlaceholder": "e.g. TRK-2024-001",
+      "clientLabel": "Client *",
+      "clientPlaceholder": "Select a client...",
+      "weightLabel": "Weight (kg)",
+      "weightPlaceholder": "e.g. 2.5",
+      "weightHint": "Cost is calculated automatically from pricing tiers.",
+      "descLabel": "Description",
+      "descPlaceholder": "Optional notes about this package",
+      "saveBtn": "Save Changes",
+      "createBtn": "Create Package",
+      "saving": "Saving..."
+    },
+    "table": {
+      "trackingId": "Tracking ID",
+      "client": "Client",
+      "status": "Status",
+      "weightCost": "Weight / Cost",
+      "actions": "Actions"
+    },
+    "status": {
+      "ARRIVED": "Received",
+      "READY_FOR_PICKUP": "Ready for Pickup",
+      "PICKED_UP": "Delivered"
+    },
+    "empty": "No packages yet. Click Add Package to get started.",
+    "pickup": "Pickup",
+    "pickupSaving": "Saving..."
+  },
+  "clients": {
+    "title": "Clients",
+    "totalCount": "total clients",
+    "form": {
+      "addTitle": "Add Client",
+      "editTitle": "Edit Client",
+      "namePlaceholder": "Name *",
+      "phonePlaceholder": "Phone",
+      "emailPlaceholder": "Email",
+      "addressPlaceholder": "Address",
+      "createBtn": "Create Client",
+      "updateBtn": "Update Client",
+      "cancelBtn": "Cancel"
+    },
+    "table": {
+      "title": "Clients List",
+      "searchPlaceholder": "Search clients...",
+      "colClient": "Client",
+      "colPhone": "Phone",
+      "colStatus": "Status",
+      "colAccess": "Access",
+      "colActions": "Actions",
+      "empty": "No clients found",
+      "deleteConfirm": "Delete this client?"
+    },
+    "status": {
+      "Active": "Active",
+      "Pending": "Pending",
+      "Inactive": "Inactive"
+    },
+    "access": {
+      "generate": "Generate Access",
+      "resend": "Resend Credentials",
+      "generating": "Generating...",
+      "resending": "Resending...",
+      "noPhone": "No phone",
+      "modalTitle": "Access generated",
+      "resendTitle": "Credentials resent",
+      "resendSub": "A password reset link has been sent.",
+      "emailSent": "Email sent",
+      "emailNotSent": "Email not sent",
+      "whatsappSent": "WhatsApp sent",
+      "whatsappNotSent": "WhatsApp not sent",
+      "passwordLabel": "Password:",
+      "changePasswordNote": "The client can change their password from the portal.",
+      "understood": "Got it"
+    }
+  },
+  "clientPortal": {
+    "welcome": "Welcome",
+    "subtitle": "Here you can track the status of your packages in real time.",
+    "stats": {
+      "total": "Total",
+      "packages": "packages",
+      "active": "Active",
+      "notPickedUp": "not picked up",
+      "spent": "spent"
+    },
+    "myPackages": "My Packages",
+    "empty": "You have no registered packages yet.",
+    "changePassword": "Change password",
+    "packageDetail": {
+      "notFound": "Package not found.",
+      "back": "Back",
+      "received": "Received:",
+      "weight": "Weight:",
+      "cost": "Cost:",
+      "proof": "Proof of Delivery",
+      "proofDate": "Registered on",
+      "signature": "Signature",
+      "photo": "Photo",
+      "messages": "Messages",
+      "noMessages": "No messages yet. Write us if you have any questions.",
+      "messagePlaceholder": "Type a message...",
+      "send": "Send"
+    }
+  }
 }

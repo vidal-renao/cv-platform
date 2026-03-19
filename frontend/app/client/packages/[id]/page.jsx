@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { fetchWithAuth } from '../../../../lib/api';
+import { useTranslation } from '../../../../lib/i18n';
 
 const STATUS_STYLES = {
   PICKED_UP:        'bg-green-50 text-green-700 border-green-200',
@@ -14,6 +15,7 @@ const STATUS_FALLBACK = 'bg-gray-50 text-gray-600 border-gray-200';
 export default function ClientPackageDetail() {
   const { id } = useParams();
   const router = useRouter();
+  const { t } = useTranslation();
   const [pkg, setPkg] = useState(null);
   const [comments, setComments] = useState([]);
   const [proof, setProof] = useState(null);
@@ -75,7 +77,7 @@ export default function ClientPackageDetail() {
   }
 
   if (!pkg) {
-    return <p className="text-center text-red-500 py-16">Paquete no encontrado.</p>;
+    return <p className="text-center text-red-500 py-16">{t('clientPortal.packageDetail.notFound')}</p>;
   }
 
   return (
@@ -84,7 +86,7 @@ export default function ClientPackageDetail() {
       {/* Back */}
       <button onClick={() => router.back()} className="text-sm text-gray-400 hover:text-gray-600 flex items-center gap-1">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-        Volver
+        {t('clientPortal.packageDetail.back')}
       </button>
 
       {/* Package info */}
@@ -93,15 +95,15 @@ export default function ClientPackageDetail() {
           <div>
             <h1 className="text-xl font-bold text-gray-900">{pkg.tracking_number}</h1>
             <p className="text-sm text-gray-400 mt-1">
-              Recibido: {new Date(pkg.created_at).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}
+              {t('clientPortal.packageDetail.received')} {new Date(pkg.created_at).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}
             </p>
           </div>
           <span className={`px-3 py-1.5 text-xs font-semibold rounded-full border ${STATUS_STYLES[pkg.status] || STATUS_FALLBACK}`}>
-            {pkg.status?.replace(/_/g, ' ')}
+            {t(`packages.status.${pkg.status}`) !== `packages.status.${pkg.status}` ? t(`packages.status.${pkg.status}`) : pkg.status?.replace(/_/g, ' ')}
           </span>
         </div>
-        {pkg.weight && <p className="text-sm text-gray-600">Peso: <span className="font-medium">{pkg.weight} kg</span></p>}
-        {pkg.cost && <p className="text-sm text-gray-600">Costo: <span className="font-medium text-green-600">${Number(pkg.cost).toFixed(2)}</span></p>}
+        {pkg.weight && <p className="text-sm text-gray-600">{t('clientPortal.packageDetail.weight')} <span className="font-medium">{pkg.weight} kg</span></p>}
+        {pkg.cost && <p className="text-sm text-gray-600">{t('clientPortal.packageDetail.cost')} <span className="font-medium text-green-600">${Number(pkg.cost).toFixed(2)}</span></p>}
         {pkg.description && <p className="text-sm text-gray-500">{pkg.description}</p>}
       </div>
 
@@ -110,22 +112,22 @@ export default function ClientPackageDetail() {
         <div className="bg-green-50 border border-green-200 rounded-2xl p-6 space-y-4">
           <div className="flex items-center gap-2">
             <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            <h2 className="font-semibold text-green-800">Prueba de Entrega</h2>
+            <h2 className="font-semibold text-green-800">{t('clientPortal.packageDetail.proof')}</h2>
           </div>
           <p className="text-xs text-green-600">
-            Registrada el {new Date(proof.created_at).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
+            {t('clientPortal.packageDetail.proofDate')} {new Date(proof.created_at).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' })}
           </p>
           {proof.notes && <p className="text-sm text-green-700">{proof.notes}</p>}
           <div className="flex gap-4 flex-wrap">
             {proof.signature_data && (
               <div>
-                <p className="text-xs text-green-600 mb-1 font-medium">Firma</p>
+                <p className="text-xs text-green-600 mb-1 font-medium">{t('clientPortal.packageDetail.signature')}</p>
                 <img src={proof.signature_data} alt="Firma" className="border border-green-200 rounded-lg max-h-28 bg-white" />
               </div>
             )}
             {proof.photo_data && (
               <div>
-                <p className="text-xs text-green-600 mb-1 font-medium">Foto</p>
+                <p className="text-xs text-green-600 mb-1 font-medium">{t('clientPortal.packageDetail.photo')}</p>
                 <img src={proof.photo_data} alt="Foto de entrega" className="border border-green-200 rounded-lg max-h-28 object-cover" />
               </div>
             )}
@@ -136,12 +138,12 @@ export default function ClientPackageDetail() {
       {/* Comments timeline */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-100">
-          <h2 className="font-semibold text-gray-900">Mensajes</h2>
+          <h2 className="font-semibold text-gray-900">{t('clientPortal.packageDetail.messages')}</h2>
         </div>
 
         <div className="px-6 py-4 space-y-4 max-h-80 overflow-y-auto">
           {comments.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-4">Aún no hay mensajes. Escríbenos si tienes alguna pregunta.</p>
+            <p className="text-sm text-gray-400 text-center py-4">{t('clientPortal.packageDetail.noMessages')}</p>
           ) : comments.map(c => {
             const isClient = c.author_role === 'CLIENT';
             return (
@@ -166,7 +168,7 @@ export default function ClientPackageDetail() {
           <input
             value={newComment}
             onChange={e => setNewComment(e.target.value)}
-            placeholder="Escribe un mensaje..."
+            placeholder={t('clientPortal.packageDetail.messagePlaceholder')}
             className="flex-1 px-4 py-2.5 text-sm border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
           />
           <button
@@ -174,7 +176,7 @@ export default function ClientPackageDetail() {
             disabled={sending || !newComment.trim()}
             className="px-4 py-2.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
           >
-            Enviar
+            {t('clientPortal.packageDetail.send')}
           </button>
         </form>
       </div>

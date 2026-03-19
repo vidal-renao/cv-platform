@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from "next/link";
 import { fetchWithAuth, logout } from '../../lib/api';
+import { useTranslation } from '../../lib/i18n';
 
 function GlobalSearch() {
   const [query, setQuery] = useState('');
@@ -13,6 +14,7 @@ function GlobalSearch() {
   const timerRef = useRef(null);
   const wrapperRef = useRef(null);
   const router = useRouter();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (!query.trim()) { setResults([]); setOpen(false); return; }
@@ -56,7 +58,7 @@ function GlobalSearch() {
           type="text"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search clients..."
+          placeholder={t('nav.searchClients')}
           className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:bg-white transition"
         />
         {loading && (
@@ -92,18 +94,18 @@ function GlobalSearch() {
 
       {open && query && results.length === 0 && !loading && (
         <div className="absolute z-50 top-full mt-1.5 w-full bg-white border border-gray-200 rounded-xl shadow-xl px-4 py-3 text-sm text-gray-400">
-          No clients found for &quot;{query}&quot;
+          {t('nav.noClientsFound')} &quot;{query}&quot;
         </div>
       )}
     </div>
   );
 }
 
-const NAV_LINKS = [
-  { href: '/dashboard',          label: 'Dashboard',  icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6', adminOnly: false },
-  { href: '/dashboard/clients',  label: 'Clientes',   icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z', adminOnly: false },
-  { href: '/dashboard/packages', label: 'Paquetes',   icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4', adminOnly: false },
-  { href: '/dashboard/users',    label: 'Usuarios',   icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z', adminOnly: true },
+const NAV_LINK_DEFS = [
+  { href: '/dashboard',          key: 'dashboard', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6', adminOnly: false },
+  { href: '/dashboard/clients',  key: 'clients',   icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z', adminOnly: false },
+  { href: '/dashboard/packages', key: 'packages',  icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4', adminOnly: false },
+  { href: '/dashboard/users',    key: 'users',     icon: 'M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z', adminOnly: true },
 ];
 
 const ROLE_BADGE = {
@@ -115,6 +117,7 @@ const ROLE_BADGE = {
 export default function DashboardLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
+  const { t } = useTranslation();
   const [user, setUser] = useState(null);
   const [redirecting, setRedirecting] = useState(false);
 
@@ -150,7 +153,7 @@ export default function DashboardLayout({ children }) {
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center space-y-2">
           <div className="w-8 h-8 border-2 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-sm text-gray-500">Redirigiendo a tu portal de cliente...</p>
+          <p className="text-sm text-gray-500">{t('dashboard.topbar.redirecting')}</p>
         </div>
       </div>
     );
@@ -163,12 +166,12 @@ export default function DashboardLayout({ children }) {
       <aside className="w-64 bg-slate-900 p-6 flex-shrink-0 flex flex-col">
         <h2 className="text-xl font-bold mb-6 text-white tracking-tight">CV Platform</h2>
         <nav className="space-y-0.5 flex-1">
-          {NAV_LINKS
+          {NAV_LINK_DEFS
             .filter(({ adminOnly }) => {
               if (!adminOnly) return true;
               return user?.role === 'ADMIN' || user?.role === 'SUPERADMIN';
             })
-            .map(({ href, label, icon }) => {
+            .map(({ href, key, icon }) => {
               const isActive = href === '/dashboard'
                 ? pathname === '/dashboard'
                 : pathname?.startsWith(href);
@@ -185,7 +188,7 @@ export default function DashboardLayout({ children }) {
                   <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={icon} />
                   </svg>
-                  {label}
+                  {t(`dashboard.sidebar.${key}`)}
                 </Link>
               );
             })}
@@ -200,7 +203,7 @@ export default function DashboardLayout({ children }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                 d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
             </svg>
-            Ver sitio web
+            {t('dashboard.sidebar.viewSite')}
           </Link>
         </div>
       </aside>
@@ -227,7 +230,7 @@ export default function DashboardLayout({ children }) {
                   onClick={handleLogout}
                   className="text-sm text-gray-400 hover:text-red-600 font-medium transition"
                 >
-                  Salir
+                  {t('dashboard.topbar.logout')}
                 </button>
               </>
             )}
