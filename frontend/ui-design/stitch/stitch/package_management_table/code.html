@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Package Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header Section -->
+<header class="flex items-center bg-background-light dark:bg-background-dark p-4 border-b border-primary/10">
+<div class="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-primary/10 cursor-pointer">
+<span class="material-symbols-outlined">arrow_back</span>
+</div>
+<h1 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight flex-1 ml-2">Package Management</h1>
+<div class="flex items-center gap-2">
+<button class="flex size-10 items-center justify-center rounded-full text-slate-900 dark:text-slate-100 hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="size-8 rounded-full bg-primary/20 flex items-center justify-center border border-primary/30">
+<span class="material-symbols-outlined text-primary text-xl">account_circle</span>
+</div>
+</div>
+</header>
+<!-- Search and Filter Section -->
+<div class="px-4 py-4 space-y-4">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-3 bg-white dark:bg-slate-800 border-none rounded-xl focus:ring-2 focus:ring-primary shadow-sm text-sm placeholder:text-slate-400" placeholder="Search Package ID, Client or Carrier" type="text"/>
+</div>
+<div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-4 text-sm font-medium shadow-sm">
+                    All Packages
+                </button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 text-sm font-medium border border-slate-200 dark:border-slate-700">
+                    Arrived
+                </button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 text-sm font-medium border border-slate-200 dark:border-slate-700">
+                    Ready
+                </button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-4 text-sm font-medium border border-slate-200 dark:border-slate-700">
+                    Picked Up
+                </button>
+<button class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-full bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-3 border border-slate-200 dark:border-slate-700">
+<span class="material-symbols-outlined text-lg text-primary">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Package List Container -->
+<div class="flex-1 px-4 pb-24">
+<div class="flex items-center justify-between mb-3 px-1">
+<h3 class="text-xs font-bold uppercase tracking-wider text-slate-500">Recent Shipments</h3>
+<span class="text-xs text-primary font-medium">12 Results</span>
+</div>
+<div class="space-y-3">
+<!-- Package Item 1: Arrived -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-primary/10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">package_2</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-slate-100">PKG-88291</h4>
+<p class="text-xs text-slate-500">Carrier: FedEx</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-primary/10 text-primary uppercase">Arrived</span>
+</div>
+<div class="mt-3 pt-3 border-t border-slate-50 dark:border-slate-700 flex justify-between items-end">
+<div class="space-y-1">
+<p class="text-xs text-slate-400">Client</p>
+<p class="text-sm font-medium">Johnathan Doe</p>
+</div>
+<div class="text-right space-y-1">
+<p class="text-xs text-slate-400">Arrival Date</p>
+<p class="text-sm font-medium">Oct 24, 2023</p>
+</div>
+</div>
+</div>
+<!-- Package Item 2: Ready for Pickup -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-orange-100 dark:bg-orange-900/30 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-orange-600 dark:text-orange-400">inventory_2</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-slate-100">PKG-91022</h4>
+<p class="text-xs text-slate-500">Carrier: UPS</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-orange-100 dark:bg-orange-900/40 text-orange-600 dark:text-orange-400 uppercase">Ready for Pickup</span>
+</div>
+<div class="mt-3 pt-3 border-t border-slate-50 dark:border-slate-700 flex justify-between items-end">
+<div class="space-y-1">
+<p class="text-xs text-slate-400">Client</p>
+<p class="text-sm font-medium">Sarah Jenkins</p>
+</div>
+<div class="text-right space-y-1">
+<p class="text-xs text-slate-400">Arrival Date</p>
+<p class="text-sm font-medium">Oct 23, 2023</p>
+</div>
+</div>
+</div>
+<!-- Package Item 3: Picked Up -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-green-600 dark:text-green-400">check_circle</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-slate-100">PKG-77340</h4>
+<p class="text-xs text-slate-500">Carrier: DHL Express</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400 uppercase">Picked Up</span>
+</div>
+<div class="mt-3 pt-3 border-t border-slate-50 dark:border-slate-700 flex justify-between items-end">
+<div class="space-y-1">
+<p class="text-xs text-slate-400">Client</p>
+<p class="text-sm font-medium">Robert Chen</p>
+</div>
+<div class="text-right space-y-1">
+<p class="text-xs text-slate-400">Arrival Date</p>
+<p class="text-sm font-medium">Oct 22, 2023</p>
+</div>
+</div>
+</div>
+<!-- Package Item 4: Arrived -->
+<div class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-sm border border-slate-100 dark:border-slate-700 opacity-80">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-3">
+<div class="size-10 bg-primary/10 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">package_2</span>
+</div>
+<div>
+<h4 class="font-bold text-slate-900 dark:text-slate-100">PKG-44910</h4>
+<p class="text-xs text-slate-500">Carrier: USPS</p>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-primary/10 text-primary uppercase">Arrived</span>
+</div>
+<div class="mt-3 pt-3 border-t border-slate-50 dark:border-slate-700 flex justify-between items-end">
+<div class="space-y-1">
+<p class="text-xs text-slate-400">Client</p>
+<p class="text-sm font-medium">Elena Rodriguez</p>
+</div>
+<div class="text-right space-y-1">
+<p class="text-xs text-slate-400">Arrival Date</p>
+<p class="text-sm font-medium">Oct 21, 2023</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Floating Action Button -->
+<button class="fixed right-4 bottom-20 size-14 bg-primary text-white rounded-full shadow-lg flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-10">
+<span class="material-symbols-outlined text-2xl">add</span>
+</button>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 bg-white dark:bg-slate-900 border-t border-primary/10 px-4 pb-4 pt-2 flex items-center justify-around z-20">
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-medium leading-none">Dashboard</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined filled">inventory_2</span>
+<span class="text-[10px] font-medium leading-none">Packages</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-medium leading-none">Clients</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 dark:text-slate-500" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-medium leading-none">Settings</span>
+</a>
+</nav>
+</div>
+</body></html>

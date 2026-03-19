@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<title>Package Management | CV Platform</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="max-w-md mx-auto bg-white dark:bg-slate-900 min-h-screen flex flex-col shadow-xl">
+<!-- Header Section -->
+<header class="sticky top-0 z-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between p-4">
+<div class="flex items-center gap-3">
+<div class="bg-primary/10 p-2 rounded-lg">
+<span class="material-symbols-outlined text-primary">inventory_2</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight">Logistics Hub</h1>
+</div>
+<button class="relative p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+</span>
+</button>
+</div>
+<!-- Search Bar Component -->
+<div class="px-4 pb-4">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-2.5 bg-slate-100 dark:bg-slate-800 border-transparent border focus:border-primary focus:ring-2 focus:ring-primary/20 rounded-xl text-sm transition-all" placeholder="Search package ID, carrier, or recipient..." type="text"/>
+</div>
+</div>
+<!-- Filter Tabs -->
+<div class="flex px-4 gap-6 overflow-x-auto no-scrollbar border-b border-slate-100 dark:border-slate-800">
+<button class="pb-3 text-sm font-semibold border-b-2 border-primary text-primary whitespace-nowrap">All Packages</button>
+<button class="pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 whitespace-nowrap">In Transit</button>
+<button class="pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 whitespace-nowrap">Arrived</button>
+<button class="pb-3 text-sm font-medium text-slate-500 hover:text-slate-700 dark:text-slate-400 dark:hover:text-slate-200 whitespace-nowrap">Pick-up</button>
+</div>
+</header>
+<!-- Package List -->
+<main class="flex-1 overflow-y-auto p-4 space-y-3">
+<!-- Entry 1: ARRIVED (Blue) -->
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl hover:shadow-md transition-shadow">
+<div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400">local_shipping</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<p class="text-sm font-bold truncate">PKG-8829102</p>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">ARRIVED</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="font-medium text-slate-700 dark:text-slate-300">FedEx Express</span>
+<span>•</span>
+<span>Today, 10:30 AM</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+<!-- Entry 2: READY_FOR_PICKUP (Amber) -->
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl hover:shadow-md transition-shadow">
+<div class="bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400">inventory_2</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<p class="text-sm font-bold truncate">PKG-7740129</p>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">READY_FOR_PICKUP</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="font-medium text-slate-700 dark:text-slate-300">UPS Ground</span>
+<span>•</span>
+<span>Oct 23, 03:15 PM</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+<!-- Entry 3: DELIVERED (Green) -->
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl hover:shadow-md transition-shadow">
+<div class="bg-emerald-50 dark:bg-emerald-900/20 p-3 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-emerald-600 dark:text-emerald-400">check_circle</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<p class="text-sm font-bold truncate">PKG-9910234</p>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300">DELIVERED</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="font-medium text-slate-700 dark:text-slate-300">DHL Global</span>
+<span>•</span>
+<span>Oct 22, 11:45 AM</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+<!-- Entry 4: ARRIVED (Blue) -->
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl hover:shadow-md transition-shadow">
+<div class="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-600 dark:text-blue-400">local_shipping</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<p class="text-sm font-bold truncate">PKG-4412903</p>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300">ARRIVED</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="font-medium text-slate-700 dark:text-slate-300">USPS Priority</span>
+<span>•</span>
+<span>Oct 22, 09:20 AM</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+<!-- Entry 5: READY_FOR_PICKUP (Amber) -->
+<div class="flex items-center gap-4 p-4 bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl hover:shadow-md transition-shadow">
+<div class="bg-amber-50 dark:bg-amber-900/20 p-3 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-amber-600 dark:text-amber-400">inventory_2</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between mb-1">
+<p class="text-sm font-bold truncate">PKG-1123485</p>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300">READY_FOR_PICKUP</span>
+</div>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="font-medium text-slate-700 dark:text-slate-300">Amazon Logistics</span>
+<span>•</span>
+<span>Oct 21, 05:50 PM</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300">chevron_right</span>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="sticky bottom-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-4 py-2 flex items-center justify-between">
+<a class="flex flex-col items-center gap-1 p-2 text-primary" href="#">
+<span class="material-symbols-outlined filled">package_2</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Packages</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Stats</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Clients</span>
+</a>
+<a class="flex flex-col items-center gap-1 p-2 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-bold uppercase tracking-wider">Settings</span>
+</a>
+</nav>
+<!-- Floating Action Button -->
+<div class="fixed bottom-20 right-4 lg:right-[calc(50%-220px)]">
+<button class="bg-primary text-white p-4 rounded-full shadow-lg hover:bg-primary/90 transition-transform active:scale-95 flex items-center justify-center">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+</div>
+<style>
+        .material-symbols-outlined.filled {
+            font-variation-settings: 'FILL' 1;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</body></html>

@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "home": "Início",
+    "servicios": "Serviços",
+    "nosotros": "Quem Somos",
+    "contacto": "Contato",
+    "login": "Entrar",
+    "access": "Acessar",
+    "panel": "Meu Painel",
+    "logout": "Sair",
+    "searchClients": "Buscar clientes...",
+    "noClientsFound": "Nenhum cliente encontrado para"
+  },
+  "hero": {
+    "badge": "Sistema de Gestão Logística",
+    "title1": "Seu pacote,",
+    "title2": "sempre sob controle",
+    "subtitle": "Rastreie seu envio instantaneamente. Sem necessidade de criar uma conta.",
+    "placeholder": "Insira seu número de rastreamento — Ex: CVP-2024-0001",
+    "trackBtn": "Rastrear",
+    "loginCtaPre": "Tem uma conta?",
+    "loginLink": "Entre",
+    "loginCtaPost": "para ver o histórico completo dos seus envios."
+  },
+  "stats": {
+    "packages": "Pacotes entregues",
+    "satisfaction": "Satisfação do cliente",
+    "deliveryTime": "Tempo médio de entrega",
+    "support": "Suporte disponível"
+  },
+  "services": {
+    "label": "Nossos Serviços",
+    "title": "Tudo que você precisa para gerenciar seus envios",
+    "subtitle": "Oferecemos soluções logísticas completas para pessoas e empresas, com tecnologia de rastreamento em tempo real.",
+    "tagPopular": "Mais popular",
+    "tagNew": "Novo",
+    "items": [
+      { "title": "Caixa Postal Internacional", "desc": "Atribuímos um endereço nos EUA para que você compre em qualquer loja online e nós entregamos diretamente na sua porta." },
+      { "title": "Transporte Nacional", "desc": "Coleta e entrega porta a porta em todo o território nacional. Rastreamento em tempo real desde o momento do despacho." },
+      { "title": "Gestão Aduaneira", "desc": "Cuidamos de todo o processo de importação: tarifas, documentação e liberação de mercadorias." },
+      { "title": "Consolidação de Carga", "desc": "Agrupamos vários pacotes em um único envio para reduzir custos de frete e agilizar a importação." },
+      { "title": "Entrega Expressa", "desc": "Serviço prioritário com prazos de entrega reduzidos para envios urgentes, com rastreamento a cada hora." },
+      { "title": "Portal Corporativo", "desc": "Acesso multiusuário para empresas: gerencie todos os seus envios, gere relatórios e controle custos em um só painel." }
+    ]
+  },
+  "about": {
+    "label": "Quem Somos",
+    "title": "Conectamos o mundo à sua porta",
+    "p1": "Somos uma empresa de logística com mais de 10 anos de experiência na importação e transporte de mercadorias. Nossa missão é simplificar o comércio global para que qualquer pessoa possa acessar produtos de todo o mundo de forma segura e eficiente.",
+    "p2": "Com tecnologia própria, oferecemos aos nossos clientes visibilidade total sobre seus envios — desde que saem do armazém até chegar às suas mãos.",
+    "badge1": "Empresa certificada",
+    "badge1sub": "Operador logístico autorizado",
+    "badge2": "Cobertura global",
+    "badge2sub": "Mais de 30 países de origem",
+    "missionTitle": "Nossa Missão",
+    "missionSub": "Tornar o comércio global acessível a todos",
+    "bullets": [
+      "Transparência total em cada envio",
+      "Notificações automáticas em tempo real",
+      "Atendimento personalizado 24/7",
+      "Preços competitivos sem surpresas"
+    ]
+  },
+  "contact": {
+    "label": "Contato",
+    "title": "Estamos aqui para ajudá-lo",
+    "subtitle": "Tem alguma dúvida sobre seus envios ou quer conhecer nossos serviços? Escreva-nos e responderemos em menos de 24 horas.",
+    "emailLabel": "E-mail de suporte",
+    "phoneLabel": "Telefone / WhatsApp",
+    "formTitle": "Envie-nos uma mensagem",
+    "nameLabel": "Nome",
+    "namePlaceholder": "Seu nome completo",
+    "emailFieldLabel": "E-mail",
+    "emailPlaceholder": "voce@email.com",
+    "messageLabel": "Mensagem",
+    "messagePlaceholder": "Como podemos ajudá-lo?",
+    "sendBtn": "Enviar mensagem",
+    "sending": "Enviando...",
+    "successTitle": "Mensagem enviada!",
+    "successText": "Responderemos em menos de 24 horas.",
+    "sendAnother": "Enviar outra mensagem"
+  },
+  "footer": {
+    "tagline": "Soluções logísticas confiáveis para pessoas e empresas. Conectamos o mundo à sua porta.",
+    "servicesTitle": "Serviços",
+    "contactTitle": "Contato",
+    "copyright": "Todos os direitos reservados.",
+    "terms": "Termos de uso",
+    "privacy": "Privacidade",
+    "staffAccess": "Acesso Staff",
+    "serviceLinks": ["Caixa Postal Internacional","Transporte Nacional","Gestão Aduaneira","Entrega Expressa","Portal Corporativo"]
+  },
+  "tracking": {
+    "loginLink": "Entrar →",
+    "trackBtn": "Rastrear",
+    "notFoundTitle": "Pacote não encontrado",
+    "backHome": "← Voltar ao início",
+    "trackingNumberLabel": "Número de Rastreamento",
+    "registeredLabel": "Registrado:",
+    "shipmentStatus": "Status do envio",
+    "loginCta": "Você é o destinatário? Entre para ver detalhes completos, comentários e comprovante de entrega.",
+    "loginBtn": "Entrar →",
+    "steps": [
+      { "key": "ARRIVED",          "label": "Pacote recebido",       "desc": "Seu pacote foi registrado em nosso sistema." },
+      { "key": "READY_FOR_PICKUP", "label": "Pronto para retirada",  "desc": "Seu pacote está disponível para retirada." },
+      { "key": "PICKED_UP",        "label": "Entregue",               "desc": "O pacote foi entregue com sucesso." }
+    ],
+    "statusLabels": {
+      "ARRIVED":          "Recebido",
+      "READY_FOR_PICKUP": "Pronto para retirada",
+      "PICKED_UP":        "Entregue"
+    }
+  },
+  "lang": { "label": "Idioma" }
+}

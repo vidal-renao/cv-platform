@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CV Platform Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 p-4 sticky top-0 z-50">
+<div class="text-primary flex size-12 shrink-0 items-center justify-start">
+<span class="material-symbols-outlined text-3xl">menu</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight flex-1 text-center">CV Platform</h2>
+<div class="flex w-12 items-center justify-end">
+<button class="relative flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-700 dark:text-slate-300">notifications</span>
+<span class="absolute top-2 right-2 flex h-2 w-2 rounded-full bg-red-500 border-2 border-white dark:border-slate-900"></span>
+</button>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 p-4 md:p-6 lg:p-8 max-w-7xl mx-auto w-full">
+<!-- Welcome Section -->
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+<div>
+<h1 class="text-2xl md:text-3xl font-bold text-slate-900 dark:text-slate-100">Dashboard Overview</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Welcome back. Here's what's happening today.</p>
+</div>
+<button class="flex items-center justify-center gap-2 bg-primary text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined">add_box</span>
+<span>Register New Package</span>
+</button>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+<!-- Total Packages Card -->
+<div class="flex flex-col gap-4 rounded-xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="p-3 bg-primary/10 rounded-lg">
+<span class="material-symbols-outlined text-primary text-2xl">inventory_2</span>
+</div>
+<span class="text-emerald-600 dark:text-emerald-400 text-sm font-bold bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-full">+15%</span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Total Packages Today</p>
+<p class="text-slate-900 dark:text-slate-100 text-3xl font-bold mt-1">128</p>
+</div>
+</div>
+<!-- Pending Notifications Card -->
+<div class="flex flex-col gap-4 rounded-xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="p-3 bg-amber-500/10 rounded-lg">
+<span class="material-symbols-outlined text-amber-500 text-2xl">notification_important</span>
+</div>
+<span class="text-slate-400 dark:text-slate-500 text-sm">Last 24h</span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Pending Notifications</p>
+<p class="text-slate-900 dark:text-slate-100 text-3xl font-bold mt-1">12</p>
+</div>
+</div>
+<!-- Ready for Pickup Card -->
+<div class="flex flex-col gap-4 rounded-xl p-6 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="flex items-center justify-between">
+<div class="p-3 bg-emerald-500/10 rounded-lg">
+<span class="material-symbols-outlined text-emerald-500 text-2xl">local_shipping</span>
+</div>
+<span class="text-emerald-600 dark:text-emerald-400 text-sm font-bold bg-emerald-50 dark:bg-emerald-900/30 px-2 py-1 rounded-full">+5%</span>
+</div>
+<div>
+<p class="text-slate-500 dark:text-slate-400 text-sm font-medium">Ready for Pickup</p>
+<p class="text-slate-900 dark:text-slate-100 text-3xl font-bold mt-1">45</p>
+</div>
+</div>
+</div>
+<!-- Recent Activity Section (Example Quick Action Integration) -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h3 class="text-lg font-bold text-slate-900 dark:text-slate-100">Quick Track</h3>
+<button class="text-primary text-sm font-medium hover:underline">View All History</button>
+</div>
+<div class="p-6">
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-slate-400">search</span>
+</div>
+<input class="block w-full pl-10 pr-3 py-3 border border-slate-200 dark:border-slate-700 rounded-lg bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-all" placeholder="Enter Tracking Number or Package ID" type="text"/>
+</div>
+</div>
+<div class="px-6 pb-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="flex items-center p-4 rounded-lg bg-background-light dark:bg-background-dark border border-slate-200 dark:border-slate-800">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-primary">history</span>
+</div>
+<div>
+<p class="text-sm font-semibold">PKG-99283-X</p>
+<p class="text-xs text-slate-500">Delivered yesterday</p>
+</div>
+</div>
+<div class="flex items-center p-4 rounded-lg bg-background-light dark:bg-background-dark border border-slate-200 dark:border-slate-800">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center mr-4">
+<span class="material-symbols-outlined text-primary">history</span>
+</div>
+<div>
+<p class="text-sm font-semibold">PKG-88124-A</p>
+<p class="text-xs text-slate-500">In transit (Est. 2h)</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="sticky bottom-0 w-full bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-4 pb-6 pt-2 flex justify-between items-center md:hidden">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<p class="text-[10px] font-bold">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+<p class="text-[10px] font-medium">Packages</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">history</span>
+<p class="text-[10px] font-medium">History</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500 dark:text-slate-400" href="#">
+<span class="material-symbols-outlined">account_circle</span>
+<p class="text-[10px] font-medium">Profile</p>
+</a>
+</nav>
+<!-- Desktop Sidebar (Hidden on mobile) -->
+<div class="hidden lg:flex fixed left-0 top-0 bottom-0 w-64 flex-col bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800">
+<div class="p-6">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl">deployed_code</span>
+<span class="text-xl font-bold text-slate-900 dark:text-slate-100 tracking-tight">CV Platform</span>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-3 px-4 py-3 bg-primary/10 text-primary rounded-xl font-semibold" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">grid_view</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined">inventory_2</span>
+                    All Packages
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined">pending_actions</span>
+                    Notifications
+                </a>
+<a class="flex items-center gap-3 px-4 py-3 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+                    Audit Trail
+                </a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2">
+<div class="size-10 rounded-full bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">person</span>
+</div>
+<div>
+<p class="text-sm font-bold truncate">Admin User</p>
+<p class="text-xs text-slate-500 truncate">admin@cvplatform.io</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</body></html>

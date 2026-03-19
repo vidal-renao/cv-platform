@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "home": "Home",
+    "servicios": "Services",
+    "nosotros": "About Us",
+    "contacto": "Contact",
+    "login": "Sign In",
+    "access": "Access",
+    "panel": "My Panel",
+    "logout": "Logout",
+    "searchClients": "Search clients...",
+    "noClientsFound": "No clients found for"
+  },
+  "hero": {
+    "badge": "Logistics Management System",
+    "title1": "Your package,",
+    "title2": "always in control",
+    "subtitle": "Track your shipment instantly. No account needed.",
+    "placeholder": "Enter your tracking number — e.g.: CVP-2024-0001",
+    "trackBtn": "Track",
+    "loginCtaPre": "Have an account?",
+    "loginLink": "Sign in",
+    "loginCtaPost": "to see the full history of your shipments."
+  },
+  "stats": {
+    "packages": "Packages delivered",
+    "satisfaction": "Customer satisfaction",
+    "deliveryTime": "Average delivery time",
+    "support": "Support available"
+  },
+  "services": {
+    "label": "Our Services",
+    "title": "Everything you need to manage your shipments",
+    "subtitle": "We offer complete logistics solutions for individuals and businesses, with real-time tracking technology.",
+    "tagPopular": "Most popular",
+    "tagNew": "New",
+    "items": [
+      { "title": "International Mailbox", "desc": "We assign you a US address so you can buy from any online store and we bring it directly to your door." },
+      { "title": "National Transport", "desc": "Door-to-door pickup and delivery throughout the national territory. Real-time tracking from the moment of dispatch." },
+      { "title": "Customs Management", "desc": "We handle the entire import process: tariffs, documentation, and cargo clearance." },
+      { "title": "Cargo Consolidation", "desc": "We group several packages into a single shipment to reduce freight costs and streamline imports." },
+      { "title": "Express Delivery", "desc": "Priority service with reduced delivery times for urgent shipments, with hourly tracking." },
+      { "title": "Corporate Portal", "desc": "Multi-user access for businesses: manage all your shipments, generate reports and control costs from one panel." }
+    ]
+  },
+  "about": {
+    "label": "About Us",
+    "title": "We connect the world to your door",
+    "p1": "We are a logistics company with over 10 years of experience in the import and transport of goods. Our mission is to simplify global commerce so that anyone can access products from around the world safely and efficiently.",
+    "p2": "With our own technology, we offer our customers total visibility over their shipments — from the moment they leave the warehouse to when they arrive in their hands.",
+    "badge1": "Certified company",
+    "badge1sub": "Authorized logistics operator",
+    "badge2": "Global coverage",
+    "badge2sub": "More than 30 countries of origin",
+    "missionTitle": "Our Mission",
+    "missionSub": "Making global commerce accessible to everyone",
+    "bullets": [
+      "Full transparency in every shipment",
+      "Automatic real-time notifications",
+      "Personalized 24/7 support",
+      "Competitive prices without surprises"
+    ]
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "We are here to help you",
+    "subtitle": "Have a question about your shipments or want to know our services? Write to us and we will respond within 24 hours.",
+    "emailLabel": "Support email",
+    "phoneLabel": "Phone / WhatsApp",
+    "formTitle": "Send us a message",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your full name",
+    "emailFieldLabel": "Email",
+    "emailPlaceholder": "you@email.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "How can we help you?",
+    "sendBtn": "Send message",
+    "sending": "Sending...",
+    "successTitle": "Message sent!",
+    "successText": "We will respond within 24 hours.",
+    "sendAnother": "Send another message"
+  },
+  "footer": {
+    "tagline": "Reliable logistics solutions for individuals and businesses. We connect the world to your door.",
+    "servicesTitle": "Services",
+    "contactTitle": "Contact",
+    "copyright": "All rights reserved.",
+    "terms": "Terms of use",
+    "privacy": "Privacy",
+    "staffAccess": "Staff Access",
+    "serviceLinks": ["International Mailbox","National Transport","Customs Management","Express Delivery","Corporate Portal"]
+  },
+  "tracking": {
+    "loginLink": "Sign in →",
+    "trackBtn": "Track",
+    "notFoundTitle": "Package not found",
+    "backHome": "← Back to home",
+    "trackingNumberLabel": "Tracking Number",
+    "registeredLabel": "Registered:",
+    "shipmentStatus": "Shipment status",
+    "loginCta": "Are you the recipient? Sign in to see full details, comments and proof of delivery.",
+    "loginBtn": "Sign in →",
+    "steps": [
+      { "key": "ARRIVED",          "label": "Package received",   "desc": "Your package was registered in our system." },
+      { "key": "READY_FOR_PICKUP", "label": "Ready for pickup",   "desc": "Your package is available for pickup." },
+      { "key": "PICKED_UP",        "label": "Delivered",           "desc": "The package was successfully delivered." }
+    ],
+    "statusLabels": {
+      "ARRIVED":          "Received",
+      "READY_FOR_PICKUP": "Ready for pickup",
+      "PICKED_UP":        "Delivered"
+    }
+  },
+  "lang": { "label": "Language" }
+}

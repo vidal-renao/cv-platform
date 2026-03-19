@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "home": "Home",
+    "servicios": "Servicios",
+    "nosotros": "Quiénes Somos",
+    "contacto": "Contacto",
+    "login": "Iniciar Sesión",
+    "access": "Acceder",
+    "panel": "Ir a mi Panel",
+    "logout": "Salir",
+    "searchClients": "Buscar clientes...",
+    "noClientsFound": "No se encontraron clientes para"
+  },
+  "hero": {
+    "badge": "Sistema de Gestión Logística",
+    "title1": "Tu paquete,",
+    "title2": "siempre bajo control",
+    "subtitle": "Rastrea tu envío al instante. Sin necesidad de crear una cuenta.",
+    "placeholder": "Ingresa tu número de tracking — Ej: CVP-2024-0001",
+    "trackBtn": "Rastrear",
+    "loginCtaPre": "¿Tienes cuenta?",
+    "loginLink": "Inicia sesión",
+    "loginCtaPost": "para ver el historial completo de tus envíos."
+  },
+  "stats": {
+    "packages": "Paquetes entregados",
+    "satisfaction": "Satisfacción del cliente",
+    "deliveryTime": "Tiempo promedio de entrega",
+    "support": "Soporte disponible"
+  },
+  "services": {
+    "label": "Nuestros Servicios",
+    "title": "Todo lo que necesitas para gestionar tus envíos",
+    "subtitle": "Ofrecemos soluciones logísticas completas para personas y empresas, con tecnología de rastreo en tiempo real.",
+    "tagPopular": "Más popular",
+    "tagNew": "Nuevo",
+    "items": [
+      { "title": "Casillero Internacional", "desc": "Asignamos una dirección en EE.UU. para que compres en cualquier tienda online y nosotros te lo traemos directamente a la puerta." },
+      { "title": "Transporte Nacional", "desc": "Retiro y entrega puerta a puerta en todo el territorio nacional. Rastreo en tiempo real desde el momento del despacho." },
+      { "title": "Gestión Aduanera", "desc": "Nos encargamos de todo el proceso de importación: aranceles, documentación y liberación de mercancía." },
+      { "title": "Consolidación de Carga", "desc": "Agrupamos varios paquetes en un solo envío para reducir costos de flete y agilizar la importación." },
+      { "title": "Entrega Express", "desc": "Servicio prioritario con tiempos de entrega reducidos para envíos urgentes, con seguimiento cada hora." },
+      { "title": "Portal Corporativo", "desc": "Acceso multi-usuario para empresas: gestiona todos tus envíos, genera reportes y controla costos desde un solo panel." }
+    ]
+  },
+  "about": {
+    "label": "Quiénes Somos",
+    "title": "Conectamos el mundo con tu puerta",
+    "p1": "Somos una empresa logística con más de 10 años de experiencia en la importación y transporte de mercancía. Nuestra misión es simplificar el comercio global para que cualquier persona pueda acceder a productos de todo el mundo de forma segura y eficiente.",
+    "p2": "Con tecnología propia, ofrecemos a nuestros clientes visibilidad total sobre sus envíos — desde que salen del almacén hasta que llegan a sus manos.",
+    "badge1": "Empresa certificada",
+    "badge1sub": "Operador logístico autorizado",
+    "badge2": "Cobertura global",
+    "badge2sub": "Más de 30 países de origen",
+    "missionTitle": "Nuestra Misión",
+    "missionSub": "Hacer el comercio global accesible para todos",
+    "bullets": [
+      "Transparencia total en cada envío",
+      "Notificaciones automáticas en tiempo real",
+      "Atención personalizada 24/7",
+      "Precios competitivos sin sorpresas"
+    ]
+  },
+  "contact": {
+    "label": "Contacto",
+    "title": "Estamos aquí para ayudarte",
+    "subtitle": "¿Tienes alguna pregunta sobre tus envíos o quieres conocer nuestros servicios? Escríbenos y te respondemos en menos de 24 horas.",
+    "emailLabel": "Email de soporte",
+    "phoneLabel": "Teléfono / WhatsApp",
+    "formTitle": "Envíanos un mensaje",
+    "nameLabel": "Nombre",
+    "namePlaceholder": "Tu nombre completo",
+    "emailFieldLabel": "Email",
+    "emailPlaceholder": "tu@email.com",
+    "messageLabel": "Mensaje",
+    "messagePlaceholder": "¿En qué podemos ayudarte?",
+    "sendBtn": "Enviar mensaje",
+    "sending": "Enviando...",
+    "successTitle": "¡Mensaje enviado!",
+    "successText": "Te responderemos en menos de 24 horas.",
+    "sendAnother": "Enviar otro mensaje"
+  },
+  "footer": {
+    "tagline": "Soluciones logísticas confiables para personas y empresas. Conectamos el mundo con tu puerta.",
+    "servicesTitle": "Servicios",
+    "contactTitle": "Contacto",
+    "copyright": "Todos los derechos reservados.",
+    "terms": "Términos de uso",
+    "privacy": "Privacidad",
+    "staffAccess": "Acceso Staff",
+    "serviceLinks": ["Casillero Internacional","Transporte Nacional","Gestión Aduanera","Entrega Express","Portal Corporativo"]
+  },
+  "tracking": {
+    "loginLink": "Iniciar sesión →",
+    "trackBtn": "Rastrear",
+    "notFoundTitle": "Paquete no encontrado",
+    "backHome": "← Volver al inicio",
+    "trackingNumberLabel": "Número de Tracking",
+    "registeredLabel": "Registrado:",
+    "shipmentStatus": "Estado del envío",
+    "loginCta": "¿Eres el destinatario? Inicia sesión para ver detalles completos, comentarios y prueba de entrega.",
+    "loginBtn": "Iniciar sesión →",
+    "steps": [
+      { "key": "ARRIVED",          "label": "Paquete recibido",   "desc": "Tu paquete fue registrado en nuestro sistema." },
+      { "key": "READY_FOR_PICKUP", "label": "Listo para recoger", "desc": "Tu paquete está disponible para ser retirado." },
+      { "key": "PICKED_UP",        "label": "Entregado",           "desc": "El paquete fue entregado exitosamente." }
+    ],
+    "statusLabels": {
+      "ARRIVED":          "Recibido",
+      "READY_FOR_PICKUP": "Listo para recoger",
+      "PICKED_UP":        "Entregado"
+    }
+  },
+  "lang": { "label": "Idioma" }
+}

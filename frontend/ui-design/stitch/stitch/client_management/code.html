@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1152d4",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+            },
+            fontFamily: {
+              "display": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<title>Client Management - CV Platform</title>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 transition-colors duration-200">
+<div class="relative flex min-h-screen w-full flex-col max-w-md mx-auto bg-white dark:bg-slate-900 shadow-xl overflow-hidden">
+<header class="sticky top-0 z-10 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center p-4 justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">group</span>
+<h2 class="text-xl font-bold tracking-tight">Clients</h2>
+</div>
+<div class="flex gap-2">
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">filter_list</span>
+</button>
+<button class="flex size-10 items-center justify-center rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-400">more_vert</span>
+</button>
+</div>
+</div>
+<div class="px-4 pb-4">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-slate-400">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-xl py-2.5 pl-10 pr-4 text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-slate-500" placeholder="Search clients by name or phone..." type="text"/>
+</div>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto">
+<div class="px-4 py-2 space-y-1">
+<div class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-800">
+<div class="size-12 rounded-full bg-primary/10 flex items-center justify-center text-primary font-bold text-lg">JD</div>
+<div class="flex-1 min-w-0">
+<p class="font-semibold truncate">Johnathan Doe</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">+1 (555) 012-3456</p>
+</div>
+<div class="flex items-center gap-1">
+<button class="size-9 flex items-center justify-center rounded-full text-primary hover:bg-primary/10">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-800">
+<div class="size-12 rounded-full bg-emerald-500/10 flex items-center justify-center text-emerald-600 font-bold text-lg">AS</div>
+<div class="flex-1 min-w-0">
+<p class="font-semibold truncate">Alice Smith</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">+1 (555) 987-6543</p>
+</div>
+<div class="flex items-center gap-1">
+<button class="size-9 flex items-center justify-center rounded-full text-primary hover:bg-primary/10">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-800">
+<div class="size-12 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-600 font-bold text-lg">MR</div>
+<div class="flex-1 min-w-0">
+<p class="font-semibold truncate">Michael Richards</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">+1 (555) 234-5678</p>
+</div>
+<div class="flex items-center gap-1">
+<button class="size-9 flex items-center justify-center rounded-full text-primary hover:bg-primary/10">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-800">
+<div class="size-12 rounded-full bg-purple-500/10 flex items-center justify-center text-purple-600 font-bold text-lg">SW</div>
+<div class="flex-1 min-w-0">
+<p class="font-semibold truncate">Sarah Williams</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">+1 (555) 876-5432</p>
+</div>
+<div class="flex items-center gap-1">
+<button class="size-9 flex items-center justify-center rounded-full text-primary hover:bg-primary/10">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-800">
+<div class="size-12 rounded-full bg-rose-500/10 flex items-center justify-center text-rose-600 font-bold text-lg">DK</div>
+<div class="flex-1 min-w-0">
+<p class="font-semibold truncate">David Kim</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">+1 (555) 345-6789</p>
+</div>
+<div class="flex items-center gap-1">
+<button class="size-9 flex items-center justify-center rounded-full text-primary hover:bg-primary/10">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</div>
+<div class="flex items-center gap-4 p-3 rounded-xl hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors border border-transparent hover:border-slate-100 dark:hover:border-slate-800">
+<div class="size-12 rounded-full bg-sky-500/10 flex items-center justify-center text-sky-600 font-bold text-lg">EM</div>
+<div class="flex-1 min-w-0">
+<p class="font-semibold truncate">Emily Miller</p>
+<p class="text-xs text-slate-500 dark:text-slate-400">+1 (555) 765-4321</p>
+</div>
+<div class="flex items-center gap-1">
+<button class="size-9 flex items-center justify-center rounded-full text-primary hover:bg-primary/10">
+<span class="material-symbols-outlined text-[20px]">call</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-full text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<button class="absolute bottom-24 right-6 size-14 bg-primary text-white rounded-full shadow-lg shadow-primary/30 flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-20">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+<nav class="sticky bottom-0 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 px-6 py-2 flex justify-between items-center z-10">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-[10px] font-semibold">Clients</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-[10px] font-semibold">Resumes</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">work</span>
+<span class="text-[10px] font-semibold">Jobs</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-semibold">Settings</span>
+</a>
+</nav>
+</div>
+</body></html>

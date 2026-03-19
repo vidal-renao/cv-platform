@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "servicios": "Services",
+    "nosotros": "Qui Sommes-Nous",
+    "contacto": "Contact",
+    "login": "Se Connecter",
+    "access": "Accéder",
+    "panel": "Mon Panneau",
+    "logout": "Déconnexion",
+    "searchClients": "Rechercher des clients...",
+    "noClientsFound": "Aucun client trouvé pour"
+  },
+  "hero": {
+    "badge": "Système de Gestion Logistique",
+    "title1": "Votre colis,",
+    "title2": "toujours sous contrôle",
+    "subtitle": "Suivez votre envoi instantanément. Aucun compte nécessaire.",
+    "placeholder": "Entrez votre numéro de suivi — Ex : CVP-2024-0001",
+    "trackBtn": "Suivre",
+    "loginCtaPre": "Vous avez un compte ?",
+    "loginLink": "Connectez-vous",
+    "loginCtaPost": "pour voir l'historique complet de vos envois."
+  },
+  "stats": {
+    "packages": "Colis livrés",
+    "satisfaction": "Satisfaction client",
+    "deliveryTime": "Délai moyen de livraison",
+    "support": "Support disponible"
+  },
+  "services": {
+    "label": "Nos Services",
+    "title": "Tout ce dont vous avez besoin pour gérer vos envois",
+    "subtitle": "Nous offrons des solutions logistiques complètes pour les particuliers et les entreprises, avec une technologie de suivi en temps réel.",
+    "tagPopular": "Le plus populaire",
+    "tagNew": "Nouveau",
+    "items": [
+      { "title": "Boîte Postale Internationale", "desc": "Nous vous attribuons une adresse aux États-Unis pour que vous puissiez acheter dans n'importe quelle boutique en ligne et nous le livrons directement à votre porte." },
+      { "title": "Transport National", "desc": "Collecte et livraison porte-à-porte sur tout le territoire national. Suivi en temps réel dès l'expédition." },
+      { "title": "Gestion Douanière", "desc": "Nous prenons en charge tout le processus d'importation : droits de douane, documentation et dédouanement." },
+      { "title": "Consolidation de Fret", "desc": "Nous regroupons plusieurs colis en un seul envoi pour réduire les coûts de fret et accélérer l'importation." },
+      { "title": "Livraison Express", "desc": "Service prioritaire avec des délais de livraison réduits pour les envois urgents, avec un suivi toutes les heures." },
+      { "title": "Portail Entreprise", "desc": "Accès multi-utilisateurs pour les entreprises : gérez tous vos envois, générez des rapports et contrôlez les coûts depuis un seul panneau." }
+    ]
+  },
+  "about": {
+    "label": "Qui Sommes-Nous",
+    "title": "Nous connectons le monde à votre porte",
+    "p1": "Nous sommes une entreprise logistique avec plus de 10 ans d'expérience dans l'importation et le transport de marchandises. Notre mission est de simplifier le commerce mondial afin que tout le monde puisse accéder aux produits du monde entier de manière sûre et efficace.",
+    "p2": "Avec notre propre technologie, nous offrons à nos clients une visibilité totale sur leurs envois — depuis leur sortie de l'entrepôt jusqu'à leur arrivée entre leurs mains.",
+    "badge1": "Entreprise certifiée",
+    "badge1sub": "Opérateur logistique agréé",
+    "badge2": "Couverture mondiale",
+    "badge2sub": "Plus de 30 pays d'origine",
+    "missionTitle": "Notre Mission",
+    "missionSub": "Rendre le commerce mondial accessible à tous",
+    "bullets": [
+      "Transparence totale pour chaque envoi",
+      "Notifications automatiques en temps réel",
+      "Assistance personnalisée 24h/7j",
+      "Prix compétitifs sans mauvaises surprises"
+    ]
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Nous sommes là pour vous aider",
+    "subtitle": "Vous avez une question sur vos envois ou souhaitez en savoir plus sur nos services ? Écrivez-nous et nous vous répondrons dans les 24 heures.",
+    "emailLabel": "E-mail d'assistance",
+    "phoneLabel": "Téléphone / WhatsApp",
+    "formTitle": "Envoyez-nous un message",
+    "nameLabel": "Nom",
+    "namePlaceholder": "Votre nom complet",
+    "emailFieldLabel": "E-mail",
+    "emailPlaceholder": "vous@email.com",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Comment pouvons-nous vous aider ?",
+    "sendBtn": "Envoyer le message",
+    "sending": "Envoi en cours...",
+    "successTitle": "Message envoyé !",
+    "successText": "Nous vous répondrons dans les 24 heures.",
+    "sendAnother": "Envoyer un autre message"
+  },
+  "footer": {
+    "tagline": "Solutions logistiques fiables pour les particuliers et les entreprises. Nous connectons le monde à votre porte.",
+    "servicesTitle": "Services",
+    "contactTitle": "Contact",
+    "copyright": "Tous droits réservés.",
+    "terms": "Conditions d'utilisation",
+    "privacy": "Confidentialité",
+    "staffAccess": "Accès Staff",
+    "serviceLinks": ["Boîte Postale Internationale","Transport National","Gestion Douanière","Livraison Express","Portail Entreprise"]
+  },
+  "tracking": {
+    "loginLink": "Se connecter →",
+    "trackBtn": "Suivre",
+    "notFoundTitle": "Colis introuvable",
+    "backHome": "← Retour à l'accueil",
+    "trackingNumberLabel": "Numéro de Suivi",
+    "registeredLabel": "Enregistré :",
+    "shipmentStatus": "Statut de l'envoi",
+    "loginCta": "Êtes-vous le destinataire ? Connectez-vous pour voir les détails complets, les commentaires et la preuve de livraison.",
+    "loginBtn": "Se connecter →",
+    "steps": [
+      { "key": "ARRIVED",          "label": "Colis reçu",              "desc": "Votre colis a été enregistré dans notre système." },
+      { "key": "READY_FOR_PICKUP", "label": "Prêt à être récupéré",    "desc": "Votre colis est disponible pour être retiré." },
+      { "key": "PICKED_UP",        "label": "Livré",                    "desc": "Le colis a été livré avec succès." }
+    ],
+    "statusLabels": {
+      "ARRIVED":          "Reçu",
+      "READY_FOR_PICKUP": "Prêt à récupérer",
+      "PICKED_UP":        "Livré"
+    }
+  },
+  "lang": { "label": "Langue" }
+}

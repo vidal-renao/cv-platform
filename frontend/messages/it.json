@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "home": "Home",
+    "servicios": "Servizi",
+    "nosotros": "Chi Siamo",
+    "contacto": "Contatto",
+    "login": "Accedi",
+    "access": "Accedi",
+    "panel": "Il Mio Pannello",
+    "logout": "Esci",
+    "searchClients": "Cerca clienti...",
+    "noClientsFound": "Nessun cliente trovato per"
+  },
+  "hero": {
+    "badge": "Sistema di Gestione Logistica",
+    "title1": "Il tuo pacco,",
+    "title2": "sempre sotto controllo",
+    "subtitle": "Traccia la tua spedizione all'istante. Nessun account necessario.",
+    "placeholder": "Inserisci il numero di tracciamento — Es.: CVP-2024-0001",
+    "trackBtn": "Traccia",
+    "loginCtaPre": "Hai un account?",
+    "loginLink": "Accedi",
+    "loginCtaPost": "per vedere la cronologia completa delle tue spedizioni."
+  },
+  "stats": {
+    "packages": "Pacchi consegnati",
+    "satisfaction": "Soddisfazione del cliente",
+    "deliveryTime": "Tempo medio di consegna",
+    "support": "Supporto disponibile"
+  },
+  "services": {
+    "label": "I Nostri Servizi",
+    "title": "Tutto ciò di cui hai bisogno per gestire le tue spedizioni",
+    "subtitle": "Offriamo soluzioni logistiche complete per privati e aziende, con tecnologia di tracciamento in tempo reale.",
+    "tagPopular": "Più popolare",
+    "tagNew": "Nuovo",
+    "items": [
+      { "title": "Casella Postale Internazionale", "desc": "Ti assegniamo un indirizzo negli USA così puoi acquistare in qualsiasi negozio online e noi te lo portiamo direttamente a casa." },
+      { "title": "Trasporto Nazionale", "desc": "Ritiro e consegna porta a porta su tutto il territorio nazionale. Tracciamento in tempo reale dal momento della spedizione." },
+      { "title": "Gestione Doganale", "desc": "Ci occupiamo dell'intero processo di importazione: dazi, documentazione e sdoganamento della merce." },
+      { "title": "Consolidamento del Carico", "desc": "Raggruppiamo più pacchi in un'unica spedizione per ridurre i costi di trasporto e velocizzare l'importazione." },
+      { "title": "Consegna Express", "desc": "Servizio prioritario con tempi di consegna ridotti per spedizioni urgenti, con tracciamento ogni ora." },
+      { "title": "Portale Aziendale", "desc": "Accesso multi-utente per le aziende: gestisci tutte le spedizioni, genera report e controlla i costi da un unico pannello." }
+    ]
+  },
+  "about": {
+    "label": "Chi Siamo",
+    "title": "Colleghiamo il mondo alla tua porta",
+    "p1": "Siamo un'azienda logistica con oltre 10 anni di esperienza nell'importazione e nel trasporto di merci. La nostra missione è semplificare il commercio globale affinché chiunque possa accedere a prodotti da tutto il mondo in modo sicuro ed efficiente.",
+    "p2": "Con la nostra tecnologia proprietaria, offriamo ai nostri clienti visibilità totale sulle loro spedizioni — dal momento in cui lasciano il magazzino fino all'arrivo nelle loro mani.",
+    "badge1": "Azienda certificata",
+    "badge1sub": "Operatore logistico autorizzato",
+    "badge2": "Copertura globale",
+    "badge2sub": "Più di 30 paesi di origine",
+    "missionTitle": "La Nostra Missione",
+    "missionSub": "Rendere il commercio globale accessibile a tutti",
+    "bullets": [
+      "Piena trasparenza in ogni spedizione",
+      "Notifiche automatiche in tempo reale",
+      "Assistenza personalizzata 24/7",
+      "Prezzi competitivi senza sorprese"
+    ]
+  },
+  "contact": {
+    "label": "Contatto",
+    "title": "Siamo qui per aiutarti",
+    "subtitle": "Hai una domanda sulle tue spedizioni o vuoi conoscere i nostri servizi? Scrivici e ti risponderemo entro 24 ore.",
+    "emailLabel": "Email di supporto",
+    "phoneLabel": "Telefono / WhatsApp",
+    "formTitle": "Inviaci un messaggio",
+    "nameLabel": "Nome",
+    "namePlaceholder": "Il tuo nome completo",
+    "emailFieldLabel": "Email",
+    "emailPlaceholder": "tu@email.com",
+    "messageLabel": "Messaggio",
+    "messagePlaceholder": "Come possiamo aiutarti?",
+    "sendBtn": "Invia messaggio",
+    "sending": "Invio in corso...",
+    "successTitle": "Messaggio inviato!",
+    "successText": "Ti risponderemo entro 24 ore.",
+    "sendAnother": "Invia un altro messaggio"
+  },
+  "footer": {
+    "tagline": "Soluzioni logistiche affidabili per privati e aziende. Colleghiamo il mondo alla tua porta.",
+    "servicesTitle": "Servizi",
+    "contactTitle": "Contatto",
+    "copyright": "Tutti i diritti riservati.",
+    "terms": "Termini di utilizzo",
+    "privacy": "Privacy",
+    "staffAccess": "Accesso Staff",
+    "serviceLinks": ["Casella Postale Internazionale","Trasporto Nazionale","Gestione Doganale","Consegna Express","Portale Aziendale"]
+  },
+  "tracking": {
+    "loginLink": "Accedi →",
+    "trackBtn": "Traccia",
+    "notFoundTitle": "Pacco non trovato",
+    "backHome": "← Torna alla home",
+    "trackingNumberLabel": "Numero di Tracciamento",
+    "registeredLabel": "Registrato:",
+    "shipmentStatus": "Stato della spedizione",
+    "loginCta": "Sei il destinatario? Accedi per vedere i dettagli completi, commenti e prova di consegna.",
+    "loginBtn": "Accedi →",
+    "steps": [
+      { "key": "ARRIVED",          "label": "Pacco ricevuto",         "desc": "Il tuo pacco è stato registrato nel nostro sistema." },
+      { "key": "READY_FOR_PICKUP", "label": "Pronto per il ritiro",   "desc": "Il tuo pacco è disponibile per essere ritirato." },
+      { "key": "PICKED_UP",        "label": "Consegnato",              "desc": "Il pacco è stato consegnato con successo." }
+    ],
+    "statusLabels": {
+      "ARRIVED":          "Ricevuto",
+      "READY_FOR_PICKUP": "Pronto per il ritiro",
+      "PICKED_UP":        "Consegnato"
+    }
+  },
+  "lang": { "label": "Lingua" }
+}

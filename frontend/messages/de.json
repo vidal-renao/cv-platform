@@ -1,0 +1,115 @@
+{
+  "nav": {
+    "home": "Startseite",
+    "servicios": "Dienste",
+    "nosotros": "Über uns",
+    "contacto": "Kontakt",
+    "login": "Anmelden",
+    "access": "Zugang",
+    "panel": "Mein Panel",
+    "logout": "Abmelden",
+    "searchClients": "Kunden suchen...",
+    "noClientsFound": "Keine Kunden gefunden für"
+  },
+  "hero": {
+    "badge": "Logistikverwaltungssystem",
+    "title1": "Ihr Paket,",
+    "title2": "immer unter Kontrolle",
+    "subtitle": "Verfolgen Sie Ihre Sendung sofort. Kein Konto erforderlich.",
+    "placeholder": "Tracking-Nummer eingeben — z.B.: CVP-2024-0001",
+    "trackBtn": "Verfolgen",
+    "loginCtaPre": "Haben Sie ein Konto?",
+    "loginLink": "Anmelden",
+    "loginCtaPost": "um die vollständige Geschichte Ihrer Sendungen zu sehen."
+  },
+  "stats": {
+    "packages": "Zugestellte Pakete",
+    "satisfaction": "Kundenzufriedenheit",
+    "deliveryTime": "Durchschnittliche Lieferzeit",
+    "support": "Support verfügbar"
+  },
+  "services": {
+    "label": "Unsere Dienste",
+    "title": "Alles, was Sie für die Verwaltung Ihrer Sendungen benötigen",
+    "subtitle": "Wir bieten vollständige Logistiklösungen für Privatpersonen und Unternehmen mit Echtzeit-Tracking-Technologie.",
+    "tagPopular": "Beliebteste",
+    "tagNew": "Neu",
+    "items": [
+      { "title": "Internationales Postfach", "desc": "Wir weisen Ihnen eine US-Adresse zu, damit Sie in jedem Online-Shop einkaufen können und wir es direkt zu Ihrer Tür bringen." },
+      { "title": "Nationaler Transport", "desc": "Tür-zu-Tür-Abholung und -Lieferung im gesamten nationalen Gebiet. Echtzeit-Tracking ab dem Zeitpunkt des Versands." },
+      { "title": "Zollabwicklung", "desc": "Wir übernehmen den gesamten Importprozess: Zölle, Dokumentation und Warenfreigabe." },
+      { "title": "Frachtzusammenführung", "desc": "Wir fassen mehrere Pakete zu einer Sendung zusammen, um Frachtkosten zu senken und die Einfuhr zu beschleunigen." },
+      { "title": "Expresslieferung", "desc": "Prioritätsservice mit verkürzten Lieferzeiten für dringende Sendungen, mit stündlichem Tracking." },
+      { "title": "Unternehmensportal", "desc": "Mehrbenutzer-Zugang für Unternehmen: Verwalten Sie alle Sendungen, erstellen Sie Berichte und kontrollieren Sie Kosten." }
+    ]
+  },
+  "about": {
+    "label": "Über uns",
+    "title": "Wir verbinden die Welt mit Ihrer Tür",
+    "p1": "Wir sind ein Logistikunternehmen mit über 10 Jahren Erfahrung im Import und Transport von Waren. Unsere Mission ist es, den globalen Handel zu vereinfachen, damit jeder sicher und effizient auf Produkte aus der ganzen Welt zugreifen kann.",
+    "p2": "Mit eigener Technologie bieten wir unseren Kunden vollständige Transparenz über ihre Sendungen — vom Verlassen des Lagers bis zur Ankunft in ihren Händen.",
+    "badge1": "Zertifiziertes Unternehmen",
+    "badge1sub": "Zugelassener Logistikbetreiber",
+    "badge2": "Weltweite Abdeckung",
+    "badge2sub": "Mehr als 30 Herkunftsländer",
+    "missionTitle": "Unsere Mission",
+    "missionSub": "Den globalen Handel für alle zugänglich machen",
+    "bullets": [
+      "Vollständige Transparenz bei jeder Sendung",
+      "Automatische Echtzeit-Benachrichtigungen",
+      "Persönlicher 24/7-Support",
+      "Wettbewerbsfähige Preise ohne Überraschungen"
+    ]
+  },
+  "contact": {
+    "label": "Kontakt",
+    "title": "Wir sind hier, um Ihnen zu helfen",
+    "subtitle": "Haben Sie eine Frage zu Ihren Sendungen oder möchten Sie unsere Dienste kennenlernen? Schreiben Sie uns und wir antworten innerhalb von 24 Stunden.",
+    "emailLabel": "Support-E-Mail",
+    "phoneLabel": "Telefon / WhatsApp",
+    "formTitle": "Senden Sie uns eine Nachricht",
+    "nameLabel": "Name",
+    "namePlaceholder": "Ihr vollständiger Name",
+    "emailFieldLabel": "E-Mail",
+    "emailPlaceholder": "sie@email.com",
+    "messageLabel": "Nachricht",
+    "messagePlaceholder": "Wie können wir Ihnen helfen?",
+    "sendBtn": "Nachricht senden",
+    "sending": "Wird gesendet...",
+    "successTitle": "Nachricht gesendet!",
+    "successText": "Wir antworten innerhalb von 24 Stunden.",
+    "sendAnother": "Weitere Nachricht senden"
+  },
+  "footer": {
+    "tagline": "Zuverlässige Logistiklösungen für Privatpersonen und Unternehmen. Wir verbinden die Welt mit Ihrer Tür.",
+    "servicesTitle": "Dienste",
+    "contactTitle": "Kontakt",
+    "copyright": "Alle Rechte vorbehalten.",
+    "terms": "Nutzungsbedingungen",
+    "privacy": "Datenschutz",
+    "staffAccess": "Mitarbeiterzugang",
+    "serviceLinks": ["Internationales Postfach","Nationaler Transport","Zollabwicklung","Expresslieferung","Unternehmensportal"]
+  },
+  "tracking": {
+    "loginLink": "Anmelden →",
+    "trackBtn": "Verfolgen",
+    "notFoundTitle": "Paket nicht gefunden",
+    "backHome": "← Zurück zur Startseite",
+    "trackingNumberLabel": "Tracking-Nummer",
+    "registeredLabel": "Registriert:",
+    "shipmentStatus": "Sendungsstatus",
+    "loginCta": "Sind Sie der Empfänger? Melden Sie sich an, um vollständige Details, Kommentare und Liefernachweis zu sehen.",
+    "loginBtn": "Anmelden →",
+    "steps": [
+      { "key": "ARRIVED",          "label": "Paket eingegangen",       "desc": "Ihr Paket wurde in unserem System registriert." },
+      { "key": "READY_FOR_PICKUP", "label": "Abholbereit",             "desc": "Ihr Paket steht zur Abholung bereit." },
+      { "key": "PICKED_UP",        "label": "Zugestellt",               "desc": "Das Paket wurde erfolgreich zugestellt." }
+    ],
+    "statusLabels": {
+      "ARRIVED":          "Eingegangen",
+      "READY_FOR_PICKUP": "Abholbereit",
+      "PICKED_UP":        "Zugestellt"
+    }
+  },
+  "lang": { "label": "Sprache" }
+}

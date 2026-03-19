@@ -1,0 +1,31 @@
+# Project Overview: CV Platform
+Generate a fullstack SaaS application called CV Platform. The platform manages packages received by a physical store for its clients.
+
+## Core Features (Employee Facing)
+- Register packages
+- Assign packages to clients
+- Notify clients
+- Confirm package pickup
+
+## Architecture & Tech Stack
+- **Frontend:** Next.js, React, Tailwind CSS
+- **Backend:** Node.js, Express, REST API
+- **Database:** PostgreSQL
+- **Authentication:** JWT
+- **Testing:** Jest, Playwright
+- **DevOps:** CI/CD with GitHub Actions
+
+## Data Schema
+- **Users:** id, email, password_hash
+- **Clients:** id, name, phone, email, address
+- **Packages:** id, package_id, client_id, carrier, arrival_date, status (ARRIVED, READY_FOR_PICKUP, PICKED_UP), notes
+- **Notifications:** id, client_id, package_id, type, sent_at, status
+
+## Required Screens (Mobile)
+- Login
+- Dashboard (Statistics)
+- Client Management
+- Package Management
+- Notifications
+- Analytics Dashboard
+- Settings (i18n: ES, EN, DE)
