@@ -26,6 +26,7 @@ const clientPortalRoutes = require('./routes/client');
 const usersRoutes = require('./routes/users');
 const trackingRoutes = require('./routes/tracking');
 const contactRoutes  = require('./routes/contact');
+const chatRoutes     = require('./routes/chat');
 
 // 🧱 Middlewares
 const { errorHandler } = require('./middlewares/errorHandler');
@@ -67,6 +68,7 @@ app.use('/api/client', clientPortalRoutes);
 app.use('/api/users', usersRoutes);
 app.use('/api/track',   trackingRoutes);
 app.use('/api/contact', contactRoutes);
+app.use('/api/chat',   chatRoutes);
 
 // ❌ 404 handler
 app.use((req, res) => {

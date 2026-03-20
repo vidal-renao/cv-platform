@@ -10,17 +10,17 @@ export default function SettingsPage() {
       
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 space-y-8">
         <div>
-          <h3 className="text-lg font-bold text-gray-900">Profile Settings</h3>
-          <p className="mt-1 text-sm text-gray-500">Update your account information and preferences.</p>
+          <h3 className="text-lg font-bold text-gray-900">{t('settings.profileTitle')}</h3>
+          <p className="mt-1 text-sm text-gray-500">{t('settings.profileSubtitle')}</p>
         </div>
-        
+
         <div className="space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Company Name</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('settings.companyNameLabel')}</label>
             <input type="text" className="block w-full border border-gray-300 rounded-lg shadow-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm transition-shadow" defaultValue="CV Logistics Main" />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Admin Email</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('settings.adminEmailLabel')}</label>
             <input type="email" className="block w-full border border-gray-300 rounded-lg shadow-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm transition-shadow" defaultValue="admin@cvplatform.com" />
           </div>
         </div>

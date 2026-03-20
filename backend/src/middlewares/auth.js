@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+const db  = require('../db');
 
 const authenticateToken = (req, res, next) => {
   try {
@@ -17,10 +18,14 @@ const authenticateToken = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     req.user = {
-      id: decoded.id,
+      id:    decoded.id,
       email: decoded.email,
-      role: decoded.role || 'ADMIN', // fallback for tokens issued before role was added
+      role:  decoded.role || 'ADMIN',
     };
+
+    // Fire-and-forget: update last_seen without blocking the request
+    db.query('UPDATE users SET last_seen = NOW() WHERE id = $1', [decoded.id]).catch(() => {});
+
     next();
   } catch (err) {
     return res.status(403).json({ error: 'Invalid or expired token' });

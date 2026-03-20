@@ -1,9 +1,11 @@
 'use client'
 
 import { useState } from 'react';
+import { useTranslation } from '../../lib/i18n';
 import Link from 'next/link';
 
 export default function ForgotPasswordPage() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -20,7 +22,7 @@ export default function ForgotPasswordPage() {
         body: JSON.stringify({ email }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Error al procesar la solicitud.');
+      if (!res.ok) throw new Error(data.error || t('auth.forgotPassword.loading'));
       setSent(true);
     } catch (err) {
       setError(err.message);
@@ -33,39 +35,34 @@ export default function ForgotPasswordPage() {
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-10">
 
-        {/* Back link */}
         <Link href="/login" className="inline-flex items-center gap-1 text-sm text-gray-400 hover:text-gray-600 mb-6 transition">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
           </svg>
-          Volver al login
+          {t('auth.forgotPassword.backToLogin')}
         </Link>
 
         {sent ? (
-          /* ── Success state ── */
           <div className="text-center space-y-4">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
             </div>
-            <h2 className="text-xl font-bold text-gray-900">Revisa tu correo</h2>
+            <h2 className="text-xl font-bold text-gray-900">{t('auth.forgotPassword.emailSent')}</h2>
             <p className="text-sm text-gray-500">
-              Si <strong>{email}</strong> tiene una cuenta, recibirás un enlace para restablecer tu contraseña en los próximos minutos.
+              {t('auth.forgotPassword.emailSentText')}
             </p>
-            <p className="text-xs text-gray-400">El enlace expira en 1 hora. Revisa también la carpeta de spam.</p>
+            <p className="text-xs text-gray-400">{t('auth.forgotPassword.linkExpiry')}</p>
             <Link href="/login" className="block mt-4 text-sm text-primary-600 hover:underline font-medium">
-              Volver al inicio de sesión
+              {t('auth.forgotPassword.backToLogin')}
             </Link>
           </div>
         ) : (
-          /* ── Form state ── */
           <>
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900">¿Olvidaste tu contraseña?</h2>
-              <p className="text-sm text-gray-500 mt-2">
-                Escribe tu email y te enviaremos un enlace para crear una nueva contraseña.
-              </p>
+              <h2 className="text-2xl font-bold text-gray-900">{t('auth.forgotPassword.title')}</h2>
+              <p className="text-sm text-gray-500 mt-2">{t('auth.forgotPassword.subtitle')}</p>
             </div>
 
             {error && (
@@ -76,13 +73,13 @@ export default function ForgotPasswordPage() {
 
             <form onSubmit={handleSubmit} className="space-y-5">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('auth.forgotPassword.emailLabel')}</label>
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="tu@email.com"
+                  placeholder={t('auth.forgotPassword.emailPlaceholder')}
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition text-sm"
                 />
               </div>
@@ -91,7 +88,7 @@ export default function ForgotPasswordPage() {
                 disabled={loading}
                 className="w-full py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition disabled:opacity-60 text-sm"
               >
-                {loading ? 'Enviando...' : 'Enviar enlace de recuperación'}
+                {loading ? t('auth.forgotPassword.loading') : t('auth.forgotPassword.submitBtn')}
               </button>
             </form>
           </>

@@ -120,7 +120,16 @@
     "view": "Ansehen",
     "understood": "Verstanden",
     "copy": "Kopieren",
-    "copied": "Kopiert!"
+    "copied": "Kopiert!",
+    "loading": "Laden...",
+    "error": "Etwas ist schiefgelaufen",
+    "back": "Zurück",
+    "send": "Senden",
+    "settings": "Einstellungen",
+    "analytics": "Analysen",
+    "notifications": "Benachrichtigungen",
+    "save": "Speichern",
+    "login": "Anmelden"
   },
   "dashboard": {
     "title": "Übersicht",
@@ -140,7 +149,8 @@
     "topbar": {
       "logout": "Abmelden",
       "redirecting": "Weiterleitung zu Ihrem Kundenportal...",
-      "activePackages": "aktive Pakete"
+      "activePackages": "aktive Pakete",
+      "welcome": "Willkommen"
     }
   },
   "packages": {
@@ -234,12 +244,26 @@
       "currentRole": "Aktuelle Rolle",
       "registered": "Registriert",
       "changeRole": "Rolle ändern",
+      "status": "Status",
       "empty": "Keine Benutzer registriert."
     },
     "actions": {
       "promoteToAdmin": "Zu ADMIN befördern",
       "changeToClient": "Zu CLIENT wechseln",
       "changing": "Wird geändert..."
+    },
+    "createBtn": "Benutzer erstellen",
+    "createTitle": "Neuen Benutzer erstellen",
+    "creating": "Wird erstellt...",
+    "createSuccess": "Benutzer erfolgreich erstellt",
+    "online": "Online",
+    "never": "Noch nie",
+    "form": {
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "benutzer@unternehmen.com",
+      "passwordLabel": "Passwort",
+      "passwordPlaceholder": "Mindestens 6 Zeichen",
+      "roleLabel": "Rolle"
     },
     "footer": "Ein Benutzer mit CLIENT-Rolle hat nur Zugang zum Tracking-Portal. Ein ADMIN hat vollen Zugang zum Verwaltungspanel.",
     "roleUpdated": "Rolle aktualisiert zu"
@@ -272,5 +296,157 @@
       "messagePlaceholder": "Nachricht schreiben...",
       "send": "Senden"
     }
+  },
+  "auth": {
+    "register": {
+      "title": "Konto erstellen",
+      "haveAccount": "Haben Sie bereits ein Konto?",
+      "signIn": "Anmelden",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "name@unternehmen.com",
+      "passwordLabel": "Passwort",
+      "confirmPasswordLabel": "Passwort bestätigen",
+      "submitBtn": "Konto erstellen",
+      "loading": "Konto wird erstellt...",
+      "passwordsMismatch": "Passwörter stimmen nicht überein",
+      "passwordMinLength": "Das Passwort muss mindestens 6 Zeichen haben"
+    },
+    "login": {
+      "demoUnavailable": "Demo-Konto nicht verfügbar. Bitte kontaktiere den Administrator.",
+      "subtitle": "bei Ihrem Konto",
+      "createAccount": "Konto erstellen",
+      "emailPhoneLabel": "E-Mail oder Telefon",
+      "forgotPassword": "Passwort vergessen?",
+      "loading": "Anmelden…",
+      "demoLabel": "oder die Live-Demo ausprobieren",
+      "demoLoading": "Demo wird geladen…",
+      "demoBtn": "Schnell-Demo-Login — Admin"
+    },
+    "forgotPassword": {
+      "title": "Passwort vergessen?",
+      "subtitle": "Gib deine E-Mail ein und wir senden dir einen Zurücksetzen-Link.",
+      "emailLabel": "E-Mail",
+      "emailPlaceholder": "du@email.com",
+      "submitBtn": "Zurücksetzen-Link senden",
+      "loading": "Senden...",
+      "backToLogin": "Zurück zum Login",
+      "emailSent": "Posteingang prüfen",
+      "emailSentText": "Wenn diese Adresse ein Konto hat, erhältst du bald einen Link.",
+      "linkExpiry": "Der Link läuft in 1 Stunde ab. Prüfe auch deinen Spam-Ordner."
+    },
+    "resetPassword": {
+      "title": "Neues Passwort",
+      "subtitle": "Wähle ein sicheres Passwort für dein Konto.",
+      "newPasswordLabel": "Neues Passwort",
+      "newPasswordPlaceholder": "Mindestens 6 Zeichen",
+      "confirmPasswordLabel": "Passwort bestätigen",
+      "submitBtn": "Neues Passwort setzen",
+      "loading": "Speichern...",
+      "success": "Passwort aktualisiert!",
+      "successText": "Dein Passwort wurde erfolgreich zurückgesetzt.",
+      "redirecting": "Weiterleitung zum Login in wenigen Sekunden...",
+      "goToLogin": "Jetzt zum Login",
+      "rememberPassword": "Passwort noch parat?",
+      "signIn": "Anmelden",
+      "invalidLink": "Ungültiger Link. Bitte fordere einen neuen an.",
+      "passwordsMismatch": "Passwörter stimmen nicht überein.",
+      "passwordMinLength": "Das Passwort muss mindestens 6 Zeichen haben.",
+      "requestNewLink": "Neuen Link anfordern"
+    }
+  },
+  "settings": {
+    "profileTitle": "Profileinstellungen",
+    "profileSubtitle": "Aktualisiere deine Kontoinformationen und Einstellungen.",
+    "companyNameLabel": "Unternehmensname",
+    "adminEmailLabel": "Admin-E-Mail",
+    "changePassword": "Passwort ändern",
+    "currentPasswordLabel": "Aktuelles Passwort",
+    "newPasswordLabel": "Neues Passwort",
+    "newPasswordPlaceholder": "Mindestens 6 Zeichen",
+    "confirmPasswordLabel": "Neues Passwort bestätigen",
+    "updatePasswordBtn": "Passwort aktualisieren",
+    "passwordsMismatch": "Passwörter stimmen nicht überein.",
+    "passwordUpdated": "Passwort erfolgreich aktualisiert."
+  },
+  "analytics": {
+    "months": ["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"],
+    "packagesReceived": "Empfangene Pakete",
+    "packagesPickedUp": "Abgeholte Pakete"
+  },
+  "notifications": {
+    "empty": "Keine Benachrichtigungen gefunden",
+    "sentTo": "gesendet an",
+    "package": "Paket"
+  },
+  "clientsDetail": {
+    "allClients": "Alle Kunden",
+    "totalPackages": "Gesamtpakete",
+    "totalSpent": "Gesamt ausgegeben",
+    "activePackages": "Aktive Pakete",
+    "packageHistory": "Paketverlauf",
+    "noPackages": "Noch keine Pakete für diesen Kunden.",
+    "tracking": "Tracking",
+    "status": "Status",
+    "weight": "Gewicht",
+    "cost": "Kosten",
+    "date": "Datum",
+    "goBack": "Zurück"
+  },
+  "packagesDetail": {
+    "notFound": "Paket nicht gefunden.",
+    "clientLabel": "Kunde",
+    "updateProof": "Beweis aktualisieren",
+    "proofOfDelivery": "Liefernachweis",
+    "proofRecorded": "Liefernachweis gespeichert",
+    "comments": "Kommentare",
+    "message": "Nachricht",
+    "messages": "Nachrichten",
+    "noComments": "Noch keine Kommentare.",
+    "internalNote": "Interne Notiz",
+    "internalNoteOnly": "Interne Notiz (nur Mitarbeiter)",
+    "internalPlaceholder": "Interne Notiz...",
+    "messagePlaceholder": "Nachricht an den Kunden...",
+    "send": "Senden",
+    "back": "Pakete"
+  },
+  "chat": {
+    "title": "Team-Chat",
+    "noContacts": "Keine Teammitglieder verfügbar.",
+    "noMessages": "Noch keine Nachrichten. Starten Sie das Gespräch!",
+    "online": "Online",
+    "offline": "Offline",
+    "placeholder": "Nachricht schreiben..."
+  },
+  "export": {
+    "pdf": "PDF exportieren",
+    "excel": "Excel exportieren",
+    "generating": "Wird generiert...",
+    "reportTitle": "Paketbericht",
+    "client": "Kunde",
+    "date": "Datum",
+    "totalPackages": "Pakete gesamt",
+    "totalSpent": "Gesamtausgaben",
+    "generatedOn": "Erstellt am",
+    "sheetName": "Pakete"
+  },
+  "trustBar": {
+    "label": "Vertraut von globalen Logistikpartnern"
+  },
+  "howItWorks": {
+    "label": "Prozess",
+    "title": "Drei einfache Schritte",
+    "subtitle": "Vom Kauf bis zur Lieferung – vollständig transparent und automatisiert.",
+    "step1": { "title": "Bestellung aufgeben", "desc": "Kaufen Sie in jedem Online-Shop weltweit und nutzen Sie Ihre persönliche Adresse." },
+    "step2": { "title": "Wir empfangen & verfolgen", "desc": "Ihr Paket kommt in unserem Lager an. Wir registrieren es und aktualisieren den Status in Echtzeit." },
+    "step3": { "title": "Lieferung zu Ihnen", "desc": "Abholung im Shop oder Lieferung nach Hause. Sie werden bei jedem Schritt benachrichtigt." }
+  },
+  "testimonials": {
+    "label": "Referenzen",
+    "title": "Was unsere Kunden sagen",
+    "items": [
+      { "text": "CV Platform hat unsere Importverwaltung revolutioniert. Das Tracking-System spart uns wöchentlich Stunden an manueller Nachverfolgung.", "name": "Andreas Müller", "company": "Müller Handel AG, Zürich" },
+      { "text": "Perfekt für unser Firmenkonto. Das Kundenportal ist intuitiv und mein Team hat es an einem einzigen Tag übernommen.", "name": "Sophie Bernhard", "company": "Bernhard & Partner, Basel" },
+      { "text": "Ausgezeichneter Kundenservice und volle Transparenz über jede Sendung. Ich würde nicht auf eine andere Plattform wechseln.", "name": "Carlos Reyes", "company": "Reyes Import S.A." }
+    ]
   }
 }

@@ -1,10 +1,12 @@
 'use client'
 import { useState } from 'react';
+import { useTranslation } from '../../lib/i18n';
 import { register } from '../../lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
 export default function RegisterPage() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -17,11 +19,11 @@ export default function RegisterPage() {
     setError('');
 
     if (password !== confirm) {
-      setError('Passwords do not match');
+      setError(t('auth.register.passwordsMismatch'));
       return;
     }
     if (password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError(t('auth.register.passwordMinLength'));
       return;
     }
 
@@ -41,12 +43,12 @@ export default function RegisterPage() {
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-2xl shadow-xl border border-gray-100">
         <div>
           <h2 className="mt-6 text-center text-3xl font-bold text-gray-900 tracking-tight">
-            Create your account
+            {t('auth.register.title')}
           </h2>
           <p className="mt-2 text-center text-sm text-gray-600">
-            Already have an account?{' '}
+            {t('auth.register.haveAccount')}{' '}
             <Link href="/login" className="text-primary-600 hover:text-primary-700 font-medium">
-              Sign in
+              {t('auth.register.signIn')}
             </Link>
           </p>
         </div>
@@ -59,18 +61,18 @@ export default function RegisterPage() {
           )}
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('auth.register.emailLabel')}</label>
               <input
                 type="email"
                 required
                 className="appearance-none block w-full px-4 py-3 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition duration-200"
-                placeholder="name@company.com"
+                placeholder={t('auth.register.emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('auth.register.passwordLabel')}</label>
               <input
                 type="password"
                 required
@@ -81,7 +83,7 @@ export default function RegisterPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+              <label className="block text-sm font-medium text-gray-700 mb-1">{t('auth.register.confirmPasswordLabel')}</label>
               <input
                 type="password"
                 required
@@ -98,7 +100,7 @@ export default function RegisterPage() {
             disabled={loading}
             className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            {loading ? 'Creating account...' : 'Create account'}
+            {loading ? t('auth.register.loading') : t('auth.register.submitBtn')}
           </button>
         </form>
       </div>

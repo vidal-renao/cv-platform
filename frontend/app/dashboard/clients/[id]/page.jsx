@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { fetchWithAuth } from '../../../../lib/api';
+import { useTranslation } from '../../../../lib/i18n';
 
 const STATUS_STYLES = {
   PICKED_UP:        'bg-green-50 text-green-700 border-green-200',
@@ -22,6 +23,7 @@ function StatCard({ label, value }) {
 }
 
 export default function ClientProfilePage() {
+  const { t } = useTranslation();
   const { id } = useParams();
   const router = useRouter();
   const [profile, setProfile] = useState(null);
@@ -51,7 +53,9 @@ export default function ClientProfilePage() {
     return (
       <div className="text-center py-16 text-red-500">
         <p className="font-medium">{error}</p>
-        <button onClick={() => router.back()} className="mt-4 text-sm text-gray-500 hover:underline">Go back</button>
+        <button onClick={() => router.back()} className="mt-4 text-sm text-gray-500 hover:underline">
+          {t('clientsDetail.goBack')}
+        </button>
       </div>
     );
   }
@@ -61,13 +65,12 @@ export default function ClientProfilePage() {
   return (
     <div className="space-y-8 animate-fade-in-up">
 
-      {/* Back + Header */}
       <div>
         <Link href="/dashboard/clients" className="text-sm text-gray-400 hover:text-gray-600 flex items-center gap-1 mb-4">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
           </svg>
-          All Clients
+          {t('clientsDetail.allClients')}
         </Link>
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-2xl font-bold">
@@ -80,32 +83,30 @@ export default function ClientProfilePage() {
         </div>
       </div>
 
-      {/* Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard label="Total Packages" value={total_packages} />
-        <StatCard label="Total Spent" value={`$${Number(total_spent).toFixed(2)}`} />
+        <StatCard label={t('clientsDetail.totalPackages')} value={total_packages} />
+        <StatCard label={t('clientsDetail.totalSpent')} value={`$${Number(total_spent).toFixed(2)}`} />
         <StatCard
-          label="Active Packages"
+          label={t('clientsDetail.activePackages')}
           value={packages?.filter(p => p.status !== 'PICKED_UP').length ?? 0}
         />
       </div>
 
-      {/* Package history */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-100">
-          <h2 className="font-semibold text-gray-900">Package History</h2>
+          <h2 className="font-semibold text-gray-900">{t('clientsDetail.packageHistory')}</h2>
         </div>
         {!packages || packages.length === 0 ? (
-          <p className="px-6 py-10 text-center text-gray-400">No packages yet for this client.</p>
+          <p className="px-6 py-10 text-center text-gray-400">{t('clientsDetail.noPackages')}</p>
         ) : (
           <table className="min-w-full divide-y divide-gray-100">
             <thead className="bg-gray-50/50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Tracking</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Status</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Weight</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Cost</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Date</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{t('clientsDetail.tracking')}</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{t('clientsDetail.status')}</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{t('clientsDetail.weight')}</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{t('clientsDetail.cost')}</th>
+                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{t('clientsDetail.date')}</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-100">
@@ -118,7 +119,7 @@ export default function ClientProfilePage() {
                   </td>
                   <td className="px-6 py-4">
                     <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full border ${STATUS_STYLES[pkg.status] || STATUS_FALLBACK}`}>
-                      {pkg.status?.replace(/_/g, ' ')}
+                      {t(`packages.status.${pkg.status}`) !== `packages.status.${pkg.status}` ? t(`packages.status.${pkg.status}`) : pkg.status?.replace(/_/g, ' ')}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">{pkg.weight ? `${pkg.weight} kg` : '—'}</td>
@@ -126,9 +127,7 @@ export default function ClientProfilePage() {
                     {pkg.cost ? `$${Number(pkg.cost).toFixed(2)}` : '—'}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-400">
-                    {new Date(pkg.created_at).toLocaleDateString('es-MX', {
-                      year: 'numeric', month: 'short', day: 'numeric'
-                    })}
+                    {new Date(pkg.created_at).toLocaleDateString()}
                   </td>
                 </tr>
               ))}

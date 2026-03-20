@@ -120,7 +120,16 @@
     "view": "Ver",
     "understood": "Entendido",
     "copy": "Copiar",
-    "copied": "Copiado!"
+    "copied": "Copiado!",
+    "loading": "Carregando...",
+    "error": "Algo correu mal",
+    "back": "Voltar",
+    "send": "Enviar",
+    "settings": "Configurações",
+    "analytics": "Análises",
+    "notifications": "Notificações",
+    "save": "Salvar",
+    "login": "Entrar"
   },
   "dashboard": {
     "title": "Painel de Controle",
@@ -140,7 +149,8 @@
     "topbar": {
       "logout": "Sair",
       "redirecting": "Redirecionando para o seu portal do cliente...",
-      "activePackages": "pacotes ativos"
+      "activePackages": "pacotes ativos",
+      "welcome": "Bem-vindo"
     }
   },
   "packages": {
@@ -234,12 +244,26 @@
       "currentRole": "Função atual",
       "registered": "Registrado",
       "changeRole": "Alterar função",
+      "status": "Estado",
       "empty": "Nenhum usuário registrado."
     },
     "actions": {
       "promoteToAdmin": "Promover a ADMIN",
       "changeToClient": "Mudar para CLIENT",
       "changing": "Alterando..."
+    },
+    "createBtn": "Criar utilizador",
+    "createTitle": "Criar novo utilizador",
+    "creating": "A criar...",
+    "createSuccess": "Utilizador criado com sucesso",
+    "online": "Online",
+    "never": "Nunca",
+    "form": {
+      "emailLabel": "E-mail",
+      "emailPlaceholder": "utilizador@empresa.com",
+      "passwordLabel": "Palavra-passe",
+      "passwordPlaceholder": "Mínimo 6 caracteres",
+      "roleLabel": "Função"
     },
     "footer": "Um usuário com função CLIENT só acessa o portal de rastreamento. Um ADMIN tem acesso total ao painel de gestão.",
     "roleUpdated": "Função atualizada para"
@@ -272,5 +296,157 @@
       "messagePlaceholder": "Digite uma mensagem...",
       "send": "Enviar"
     }
+  },
+  "auth": {
+    "register": {
+      "title": "Criar conta",
+      "haveAccount": "Já tem conta?",
+      "signIn": "Entrar",
+      "emailLabel": "Email",
+      "emailPlaceholder": "nome@empresa.com",
+      "passwordLabel": "Senha",
+      "confirmPasswordLabel": "Confirmar senha",
+      "submitBtn": "Criar conta",
+      "loading": "Criando conta...",
+      "passwordsMismatch": "As senhas não coincidem",
+      "passwordMinLength": "A senha deve ter pelo menos 6 caracteres"
+    },
+    "login": {
+      "demoUnavailable": "Conta demo não disponível. Contacte o administrador.",
+      "subtitle": "à sua conta",
+      "createAccount": "Criar conta",
+      "emailPhoneLabel": "Email ou Telefone",
+      "forgotPassword": "Esqueceu a senha?",
+      "loading": "Entrando…",
+      "demoLabel": "ou experimente a demo ao vivo",
+      "demoLoading": "Entrando na demo…",
+      "demoBtn": "Login Demo Rápido — Admin"
+    },
+    "forgotPassword": {
+      "title": "Esqueceu a senha?",
+      "subtitle": "Insira o seu email e enviaremos um link de recuperação.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "voce@email.com",
+      "submitBtn": "Enviar link de recuperação",
+      "loading": "Enviando...",
+      "backToLogin": "Voltar ao login",
+      "emailSent": "Verifique a sua caixa de entrada",
+      "emailSentText": "Se esse endereço tiver conta, receberá um link em breve.",
+      "linkExpiry": "O link expira em 1 hora. Verifique também o spam."
+    },
+    "resetPassword": {
+      "title": "Nova senha",
+      "subtitle": "Escolha uma senha segura para a sua conta.",
+      "newPasswordLabel": "Nova senha",
+      "newPasswordPlaceholder": "Mínimo 6 caracteres",
+      "confirmPasswordLabel": "Confirmar senha",
+      "submitBtn": "Definir nova senha",
+      "loading": "Salvando...",
+      "success": "Senha atualizada!",
+      "successText": "A sua senha foi redefinida com sucesso.",
+      "redirecting": "Redirecionando para o login em alguns segundos...",
+      "goToLogin": "Ir ao login agora",
+      "rememberPassword": "Lembra da sua senha?",
+      "signIn": "Entrar",
+      "invalidLink": "Link inválido. Por favor solicite um novo.",
+      "passwordsMismatch": "As senhas não coincidem.",
+      "passwordMinLength": "A senha deve ter pelo menos 6 caracteres.",
+      "requestNewLink": "Solicitar um novo link"
+    }
+  },
+  "settings": {
+    "profileTitle": "Configurações de perfil",
+    "profileSubtitle": "Atualize as informações da sua conta e preferências.",
+    "companyNameLabel": "Nome da empresa",
+    "adminEmailLabel": "Email do administrador",
+    "changePassword": "Alterar senha",
+    "currentPasswordLabel": "Senha atual",
+    "newPasswordLabel": "Nova senha",
+    "newPasswordPlaceholder": "Mínimo 6 caracteres",
+    "confirmPasswordLabel": "Confirmar nova senha",
+    "updatePasswordBtn": "Atualizar senha",
+    "passwordsMismatch": "As senhas não coincidem.",
+    "passwordUpdated": "Senha atualizada com sucesso."
+  },
+  "analytics": {
+    "months": ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"],
+    "packagesReceived": "Pacotes recebidos",
+    "packagesPickedUp": "Pacotes retirados"
+  },
+  "notifications": {
+    "empty": "Nenhuma notificação encontrada",
+    "sentTo": "enviado para",
+    "package": "Pacote"
+  },
+  "clientsDetail": {
+    "allClients": "Todos os clientes",
+    "totalPackages": "Total de pacotes",
+    "totalSpent": "Total gasto",
+    "activePackages": "Pacotes ativos",
+    "packageHistory": "Histórico de pacotes",
+    "noPackages": "Nenhum pacote para este cliente ainda.",
+    "tracking": "Rastreamento",
+    "status": "Estado",
+    "weight": "Peso",
+    "cost": "Custo",
+    "date": "Data",
+    "goBack": "Voltar"
+  },
+  "packagesDetail": {
+    "notFound": "Pacote não encontrado.",
+    "clientLabel": "Cliente",
+    "updateProof": "Atualizar prova",
+    "proofOfDelivery": "Prova de entrega",
+    "proofRecorded": "Prova de entrega registada",
+    "comments": "Comentários",
+    "message": "mensagem",
+    "messages": "mensagens",
+    "noComments": "Ainda não há comentários.",
+    "internalNote": "Nota interna",
+    "internalNoteOnly": "Nota interna (apenas staff)",
+    "internalPlaceholder": "Nota interna...",
+    "messagePlaceholder": "Escreva uma mensagem ao cliente...",
+    "send": "Enviar",
+    "back": "Pacotes"
+  },
+  "chat": {
+    "title": "Chat da equipa",
+    "noContacts": "Nenhum membro da equipa disponível.",
+    "noMessages": "Ainda sem mensagens. Inicie a conversa!",
+    "online": "Online",
+    "offline": "Offline",
+    "placeholder": "Escreva uma mensagem..."
+  },
+  "export": {
+    "pdf": "Exportar PDF",
+    "excel": "Exportar Excel",
+    "generating": "A gerar...",
+    "reportTitle": "Relatório de pacotes",
+    "client": "Cliente",
+    "date": "Data",
+    "totalPackages": "Total de pacotes",
+    "totalSpent": "Total gasto",
+    "generatedOn": "Gerado em",
+    "sheetName": "Pacotes"
+  },
+  "trustBar": {
+    "label": "Confiado por parceiros logísticos globais"
+  },
+  "howItWorks": {
+    "label": "Processo",
+    "title": "Três passos simples",
+    "subtitle": "Da compra à entrega — totalmente transparente e automatizado.",
+    "step1": { "title": "Faça o seu pedido", "desc": "Compre em qualquer loja online mundial e use o seu endereço atribuído." },
+    "step2": { "title": "Recebemos e rastreamos", "desc": "O seu pacote chega ao nosso armazém. Registamos e atualizamos o estado em tempo real." },
+    "step3": { "title": "Entregue para si", "desc": "Levante na loja ou solicite entrega ao domicílio. Será notificado em cada passo." }
+  },
+  "testimonials": {
+    "label": "Testemunhos",
+    "title": "O que dizem os nossos clientes",
+    "items": [
+      { "text": "O CV Platform transformou a forma como gerimos as importações. O sistema de rastreamento poupa-nos horas de acompanhamento manual por semana.", "name": "Andreas Müller", "company": "Müller Handel AG, Zurique" },
+      { "text": "Perfeito para a nossa conta empresarial. O portal é intuitivo e a minha equipa adotou-o num único dia.", "name": "Sophie Bernhard", "company": "Bernhard & Partner, Basileia" },
+      { "text": "Atendimento ao cliente excecional e total visibilidade sobre cada envio. Não trocaria esta plataforma por nenhuma outra.", "name": "Carlos Reyes", "company": "Reyes Import S.A." }
+    ]
   }
 }

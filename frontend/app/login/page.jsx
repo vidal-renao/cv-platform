@@ -5,15 +5,22 @@ import { login } from '../../lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
+const DEMO_EMAIL = 'admin@demo.ch';
+const DEMO_PASSWORD = 'demo1234';
+
 export default function LoginPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [demoLoading, setDemoLoading] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
+    setError('');
     try {
       const data = await login(email, password);
       if (data.user?.role === 'CLIENT') {
@@ -23,6 +30,25 @@ export default function LoginPage() {
       }
     } catch (err) {
       setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    setDemoLoading(true);
+    setError('');
+    try {
+      const data = await login(DEMO_EMAIL, DEMO_PASSWORD);
+      if (data.user?.role === 'CLIENT') {
+        router.push('/client/dashboard');
+      } else {
+        router.push('/dashboard');
+      }
+    } catch {
+      setError('Demo account not available. Contact the administrator.');
+    } finally {
+      setDemoLoading(false);
     }
   };
 
@@ -40,8 +66,13 @@ export default function LoginPage() {
             </Link>
           </p>
         </div>
+
         <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-          {error && <div className="text-red-600 text-sm p-3 bg-red-50 rounded-lg border border-red-100 text-center">{error}</div>}
+          {error && (
+            <div className="text-red-600 text-sm p-3 bg-red-50 rounded-lg border border-red-100 text-center">
+              {error}
+            </div>
+          )}
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Email o Teléfono</label>
@@ -77,12 +108,48 @@ export default function LoginPage() {
           <div>
             <button
               type="submit"
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors"
+              disabled={loading}
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 transition-colors disabled:opacity-60"
             >
-              {t('common.login')}
+              {loading ? 'Signing in…' : t('common.login')}
             </button>
           </div>
         </form>
+
+        {/* Quick Demo Login */}
+        <div className="relative">
+          <div className="absolute inset-0 flex items-center">
+            <div className="w-full border-t border-gray-200" />
+          </div>
+          <div className="relative flex justify-center text-xs">
+            <span className="bg-white px-3 text-gray-400 font-medium tracking-wide uppercase">
+              or try the live demo
+            </span>
+          </div>
+        </div>
+
+        <div className="space-y-3">
+          <button
+            type="button"
+            onClick={handleDemoLogin}
+            disabled={demoLoading}
+            className="w-full flex items-center justify-center gap-2.5 py-3 px-4 rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 hover:bg-gray-100 hover:border-gray-300 transition-all text-sm font-semibold text-gray-700 disabled:opacity-60 group"
+          >
+            <span className="text-base group-hover:scale-110 transition-transform">
+              {demoLoading ? '⏳' : '⚡'}
+            </span>
+            {demoLoading ? 'Entering demo…' : 'Quick Demo Login — Admin'}
+          </button>
+          <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
+            <span className="flex items-center gap-1.5">
+              <span className="font-mono bg-gray-100 px-1.5 py-0.5 rounded text-gray-500">{DEMO_EMAIL}</span>
+            </span>
+            <span className="text-gray-300">·</span>
+            <span className="flex items-center gap-1.5">
+              <span className="font-mono bg-gray-100 px-1.5 py-0.5 rounded text-gray-500">{DEMO_PASSWORD}</span>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
   );

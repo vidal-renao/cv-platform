@@ -120,7 +120,16 @@
     "view": "View",
     "understood": "Got it",
     "copy": "Copy",
-    "copied": "Copied!"
+    "copied": "Copied!",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "back": "Back",
+    "send": "Send",
+    "settings": "Settings",
+    "analytics": "Analytics",
+    "notifications": "Notifications",
+    "save": "Save",
+    "login": "Sign In"
   },
   "dashboard": {
     "title": "Dashboard",
@@ -140,7 +149,8 @@
     "topbar": {
       "logout": "Logout",
       "redirecting": "Redirecting to your client portal...",
-      "activePackages": "active packages"
+      "activePackages": "active packages",
+      "welcome": "Welcome"
     }
   },
   "packages": {
@@ -234,12 +244,26 @@
       "currentRole": "Current role",
       "registered": "Registered",
       "changeRole": "Change role",
+      "status": "Status",
       "empty": "No users registered."
     },
     "actions": {
       "promoteToAdmin": "Promote to ADMIN",
       "changeToClient": "Change to CLIENT",
       "changing": "Changing..."
+    },
+    "createBtn": "Create User",
+    "createTitle": "Create New User",
+    "creating": "Creating...",
+    "createSuccess": "User created successfully",
+    "online": "Online",
+    "never": "Never",
+    "form": {
+      "emailLabel": "Email",
+      "emailPlaceholder": "user@company.com",
+      "passwordLabel": "Password",
+      "passwordPlaceholder": "Minimum 6 characters",
+      "roleLabel": "Role"
     },
     "footer": "A CLIENT role user only accesses the tracking portal. An ADMIN has full access to the management panel.",
     "roleUpdated": "Role updated to"
@@ -272,5 +296,157 @@
       "messagePlaceholder": "Type a message...",
       "send": "Send"
     }
+  },
+  "auth": {
+    "register": {
+      "title": "Create your account",
+      "haveAccount": "Already have an account?",
+      "signIn": "Sign in",
+      "emailLabel": "Email",
+      "emailPlaceholder": "name@company.com",
+      "passwordLabel": "Password",
+      "confirmPasswordLabel": "Confirm Password",
+      "submitBtn": "Create account",
+      "loading": "Creating account...",
+      "passwordsMismatch": "Passwords do not match",
+      "passwordMinLength": "Password must be at least 6 characters"
+    },
+    "login": {
+      "demoUnavailable": "Demo account not available. Contact the administrator.",
+      "subtitle": "to your account",
+      "createAccount": "Create account",
+      "emailPhoneLabel": "Email or Phone",
+      "forgotPassword": "Forgot your password?",
+      "loading": "Signing in…",
+      "demoLabel": "or try the live demo",
+      "demoLoading": "Entering demo…",
+      "demoBtn": "Quick Demo Login — Admin"
+    },
+    "forgotPassword": {
+      "title": "Forgot your password?",
+      "subtitle": "Enter your email and we'll send you a reset link.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "you@email.com",
+      "submitBtn": "Send reset link",
+      "loading": "Sending...",
+      "backToLogin": "Back to login",
+      "emailSent": "Check your inbox",
+      "emailSentText": "If that address has an account, you'll receive a reset link shortly.",
+      "linkExpiry": "The link expires in 1 hour. Also check your spam folder."
+    },
+    "resetPassword": {
+      "title": "New password",
+      "subtitle": "Choose a secure password for your account.",
+      "newPasswordLabel": "New password",
+      "newPasswordPlaceholder": "Minimum 6 characters",
+      "confirmPasswordLabel": "Confirm password",
+      "submitBtn": "Set new password",
+      "loading": "Saving...",
+      "success": "Password updated!",
+      "successText": "Your password has been reset successfully.",
+      "redirecting": "Redirecting to login in a few seconds...",
+      "goToLogin": "Go to login now",
+      "rememberPassword": "Remember your password?",
+      "signIn": "Sign in",
+      "invalidLink": "Invalid link. Please request a new one.",
+      "passwordsMismatch": "Passwords do not match.",
+      "passwordMinLength": "Password must be at least 6 characters.",
+      "requestNewLink": "Request a new link"
+    }
+  },
+  "settings": {
+    "profileTitle": "Profile Settings",
+    "profileSubtitle": "Update your account information and preferences.",
+    "companyNameLabel": "Company Name",
+    "adminEmailLabel": "Admin Email",
+    "changePassword": "Change Password",
+    "currentPasswordLabel": "Current password",
+    "newPasswordLabel": "New password",
+    "newPasswordPlaceholder": "Minimum 6 characters",
+    "confirmPasswordLabel": "Confirm new password",
+    "updatePasswordBtn": "Update password",
+    "passwordsMismatch": "Passwords do not match.",
+    "passwordUpdated": "Password updated successfully."
+  },
+  "analytics": {
+    "months": ["January","February","March","April","May","June","July","August","September","October","November","December"],
+    "packagesReceived": "Packages Received",
+    "packagesPickedUp": "Packages Picked Up"
+  },
+  "notifications": {
+    "empty": "No notifications found",
+    "sentTo": "sent to",
+    "package": "Package"
+  },
+  "clientsDetail": {
+    "allClients": "All Clients",
+    "totalPackages": "Total Packages",
+    "totalSpent": "Total Spent",
+    "activePackages": "Active Packages",
+    "packageHistory": "Package History",
+    "noPackages": "No packages yet for this client.",
+    "tracking": "Tracking",
+    "status": "Status",
+    "weight": "Weight",
+    "cost": "Cost",
+    "date": "Date",
+    "goBack": "Go back"
+  },
+  "packagesDetail": {
+    "notFound": "Package not found.",
+    "clientLabel": "Client",
+    "updateProof": "Update Proof",
+    "proofOfDelivery": "Proof of Delivery",
+    "proofRecorded": "Proof of delivery recorded",
+    "comments": "Comments",
+    "message": "message",
+    "messages": "messages",
+    "noComments": "No comments yet.",
+    "internalNote": "Internal note",
+    "internalNoteOnly": "Internal note (staff only)",
+    "internalPlaceholder": "Internal note...",
+    "messagePlaceholder": "Write a message to the client...",
+    "send": "Send",
+    "back": "Packages"
+  },
+  "chat": {
+    "title": "Team Chat",
+    "noContacts": "No team members available.",
+    "noMessages": "No messages yet. Start the conversation!",
+    "online": "Online",
+    "offline": "Offline",
+    "placeholder": "Write a message..."
+  },
+  "export": {
+    "pdf": "Export PDF",
+    "excel": "Export Excel",
+    "generating": "Generating...",
+    "reportTitle": "Package Report",
+    "client": "Client",
+    "date": "Date",
+    "totalPackages": "Total Packages",
+    "totalSpent": "Total Spent",
+    "generatedOn": "Generated on",
+    "sheetName": "Packages"
+  },
+  "trustBar": {
+    "label": "Trusted by global logistics partners"
+  },
+  "howItWorks": {
+    "label": "Process",
+    "title": "Three simple steps",
+    "subtitle": "From purchase to delivery — fully transparent, fully automated.",
+    "step1": { "title": "Place Your Order", "desc": "Buy from any online store worldwide and use your assigned address." },
+    "step2": { "title": "We Receive & Track", "desc": "Your package arrives at our warehouse. We register it and update the status in real time." },
+    "step3": { "title": "Delivered to You", "desc": "Pick up in store or request home delivery. You'll be notified at every step." }
+  },
+  "testimonials": {
+    "label": "Testimonials",
+    "title": "What our clients say",
+    "items": [
+      { "text": "CV Platform transformed how we manage imports. The tracking system saves us hours of manual follow-up every week.", "name": "Andreas Müller", "company": "Müller Handel AG, Zürich" },
+      { "text": "Perfect for our corporate account. The client portal is intuitive and my team adopted it in a single day.", "name": "Sophie Bernhard", "company": "Bernhard & Partner, Basel" },
+      { "text": "Exceptional customer service and total visibility over every shipment. I would not switch to any other platform.", "name": "Carlos Reyes", "company": "Reyes Import S.A." }
+    ]
   }
 }

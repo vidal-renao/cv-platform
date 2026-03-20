@@ -2,9 +2,11 @@
 
 import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { useTranslation } from '../../lib/i18n';
 import Link from 'next/link';
 
 function ResetPasswordForm() {
+  const { t } = useTranslation();
   const searchParams = useSearchParams();
   const router = useRouter();
   const token = searchParams.get('token');
@@ -15,18 +17,18 @@ function ResetPasswordForm() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (!token) setError('Enlace inválido. Por favor solicita uno nuevo.');
-  }, [token]);
+    if (!token) setError(t('auth.resetPassword.invalidLink'));
+  }, [token, t]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
     if (form.newPassword !== form.confirm) {
-      return setError('Las contraseñas no coinciden.');
+      return setError(t('auth.resetPassword.passwordsMismatch'));
     }
     if (form.newPassword.length < 6) {
-      return setError('La contraseña debe tener al menos 6 caracteres.');
+      return setError(t('auth.resetPassword.passwordMinLength'));
     }
 
     setLoading(true);
@@ -37,9 +39,8 @@ function ResetPasswordForm() {
         body: JSON.stringify({ token, newPassword: form.newPassword }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error || 'Error al restablecer la contraseña.');
+      if (!res.ok) throw new Error(data.error || t('auth.resetPassword.loading'));
       setDone(true);
-      // Auto-redirect to login after 3s
       setTimeout(() => router.push('/login'), 3000);
     } catch (err) {
       setError(err.message);
@@ -53,26 +54,24 @@ function ResetPasswordForm() {
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl border border-gray-100 p-10">
 
         {done ? (
-          /* ── Success state ── */
           <div className="text-center space-y-4">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto">
               <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h2 className="text-xl font-bold text-gray-900">¡Contraseña actualizada!</h2>
-            <p className="text-sm text-gray-500">Tu contraseña se ha restablecido correctamente.</p>
-            <p className="text-xs text-gray-400">Redirigiendo al login en unos segundos...</p>
+            <h2 className="text-xl font-bold text-gray-900">{t('auth.resetPassword.success')}</h2>
+            <p className="text-sm text-gray-500">{t('auth.resetPassword.successText')}</p>
+            <p className="text-xs text-gray-400">{t('auth.resetPassword.redirecting')}</p>
             <Link href="/login" className="block mt-2 text-sm text-primary-600 hover:underline font-medium">
-              Ir al login ahora
+              {t('auth.resetPassword.goToLogin')}
             </Link>
           </div>
         ) : (
-          /* ── Form state ── */
           <>
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900">Nueva contraseña</h2>
-              <p className="text-sm text-gray-500 mt-2">Elige una contraseña segura para tu cuenta.</p>
+              <h2 className="text-2xl font-bold text-gray-900">{t('auth.resetPassword.title')}</h2>
+              <p className="text-sm text-gray-500 mt-2">{t('auth.resetPassword.subtitle')}</p>
             </div>
 
             {error && (
@@ -81,7 +80,7 @@ function ResetPasswordForm() {
                 {!token && (
                   <div className="mt-2">
                     <Link href="/forgot-password" className="text-red-700 underline font-medium">
-                      Solicitar un nuevo enlace
+                      {t('auth.resetPassword.requestNewLink')}
                     </Link>
                   </div>
                 )}
@@ -90,8 +89,8 @@ function ResetPasswordForm() {
 
             <form onSubmit={handleSubmit} className="space-y-5">
               {[
-                { key: 'newPassword', label: 'Nueva contraseña', placeholder: 'Mínimo 6 caracteres' },
-                { key: 'confirm',     label: 'Confirmar contraseña', placeholder: '••••••••' },
+                { key: 'newPassword', label: t('auth.resetPassword.newPasswordLabel'), placeholder: t('auth.resetPassword.newPasswordPlaceholder') },
+                { key: 'confirm',     label: t('auth.resetPassword.confirmPasswordLabel'), placeholder: '••••••••' },
               ].map(({ key, label, placeholder }) => (
                 <div key={key}>
                   <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
@@ -111,14 +110,14 @@ function ResetPasswordForm() {
                 disabled={loading || !token}
                 className="w-full py-3 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition disabled:opacity-60 text-sm"
               >
-                {loading ? 'Guardando...' : 'Establecer nueva contraseña'}
+                {loading ? t('auth.resetPassword.loading') : t('auth.resetPassword.submitBtn')}
               </button>
             </form>
 
             <p className="mt-6 text-center text-xs text-gray-400">
-              ¿Recuerdas tu contraseña?{' '}
+              {t('auth.resetPassword.rememberPassword')}{' '}
               <Link href="/login" className="text-primary-600 hover:underline font-medium">
-                Inicia sesión
+                {t('auth.resetPassword.signIn')}
               </Link>
             </p>
           </>

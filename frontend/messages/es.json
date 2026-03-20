@@ -120,7 +120,16 @@
     "view": "Ver",
     "understood": "Entendido",
     "copy": "Copiar",
-    "copied": "¡Copiado!"
+    "copied": "¡Copiado!",
+    "loading": "Cargando...",
+    "error": "Algo salió mal",
+    "back": "Volver",
+    "send": "Enviar",
+    "settings": "Configuración",
+    "analytics": "Analíticas",
+    "notifications": "Notificaciones",
+    "save": "Guardar",
+    "login": "Iniciar Sesión"
   },
   "dashboard": {
     "title": "Panel de Control",
@@ -140,7 +149,8 @@
     "topbar": {
       "logout": "Salir",
       "redirecting": "Redirigiendo a tu portal de cliente...",
-      "activePackages": "paquetes activos"
+      "activePackages": "paquetes activos",
+      "welcome": "Bienvenido"
     }
   },
   "packages": {
@@ -234,12 +244,26 @@
       "currentRole": "Rol actual",
       "registered": "Registrado",
       "changeRole": "Cambiar rol",
+      "status": "Estado",
       "empty": "No hay usuarios registrados."
     },
     "actions": {
       "promoteToAdmin": "Promover a ADMIN",
       "changeToClient": "Cambiar a CLIENT",
       "changing": "Cambiando..."
+    },
+    "createBtn": "Crear usuario",
+    "createTitle": "Crear nuevo usuario",
+    "creating": "Creando...",
+    "createSuccess": "Usuario creado con éxito",
+    "online": "En línea",
+    "never": "Nunca",
+    "form": {
+      "emailLabel": "Email",
+      "emailPlaceholder": "usuario@empresa.com",
+      "passwordLabel": "Contraseña",
+      "passwordPlaceholder": "Mínimo 6 caracteres",
+      "roleLabel": "Rol"
     },
     "footer": "Un usuario con rol CLIENT solo accede al portal de seguimiento. Un ADMIN tiene acceso total al panel de gestión.",
     "roleUpdated": "Rol actualizado a"
@@ -272,5 +296,157 @@
       "messagePlaceholder": "Escribe un mensaje...",
       "send": "Enviar"
     }
+  },
+  "auth": {
+    "register": {
+      "title": "Crea tu cuenta",
+      "haveAccount": "¿Ya tienes cuenta?",
+      "signIn": "Iniciar sesión",
+      "emailLabel": "Email",
+      "emailPlaceholder": "nombre@empresa.com",
+      "passwordLabel": "Contraseña",
+      "confirmPasswordLabel": "Confirmar contraseña",
+      "submitBtn": "Crear cuenta",
+      "loading": "Creando cuenta...",
+      "passwordsMismatch": "Las contraseñas no coinciden",
+      "passwordMinLength": "La contraseña debe tener al menos 6 caracteres"
+    },
+    "login": {
+      "demoUnavailable": "Cuenta demo no disponible. Contacta al administrador.",
+      "subtitle": "a tu cuenta",
+      "createAccount": "Crear cuenta",
+      "emailPhoneLabel": "Email o Teléfono",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "loading": "Iniciando sesión…",
+      "demoLabel": "o prueba la demo en vivo",
+      "demoLoading": "Entrando a la demo…",
+      "demoBtn": "Acceso Rápido Demo — Admin"
+    },
+    "forgotPassword": {
+      "title": "¿Olvidaste tu contraseña?",
+      "subtitle": "Escribe tu email y te enviamos un enlace de recuperación.",
+      "emailLabel": "Email",
+      "emailPlaceholder": "tu@email.com",
+      "submitBtn": "Enviar enlace de recuperación",
+      "loading": "Enviando...",
+      "backToLogin": "Volver al inicio de sesión",
+      "emailSent": "Revisa tu correo",
+      "emailSentText": "Si esa dirección tiene una cuenta, recibirás un enlace en minutos.",
+      "linkExpiry": "El enlace expira en 1 hora. Revisa también la carpeta de spam."
+    },
+    "resetPassword": {
+      "title": "Nueva contraseña",
+      "subtitle": "Elige una contraseña segura para tu cuenta.",
+      "newPasswordLabel": "Nueva contraseña",
+      "newPasswordPlaceholder": "Mínimo 6 caracteres",
+      "confirmPasswordLabel": "Confirmar contraseña",
+      "submitBtn": "Establecer nueva contraseña",
+      "loading": "Guardando...",
+      "success": "¡Contraseña actualizada!",
+      "successText": "Tu contraseña se ha restablecido correctamente.",
+      "redirecting": "Redirigiendo al login en unos segundos...",
+      "goToLogin": "Ir al login ahora",
+      "rememberPassword": "¿Recuerdas tu contraseña?",
+      "signIn": "Inicia sesión",
+      "invalidLink": "Enlace inválido. Por favor solicita uno nuevo.",
+      "passwordsMismatch": "Las contraseñas no coinciden.",
+      "passwordMinLength": "La contraseña debe tener al menos 6 caracteres.",
+      "requestNewLink": "Solicitar un nuevo enlace"
+    }
+  },
+  "settings": {
+    "profileTitle": "Configuración de Perfil",
+    "profileSubtitle": "Actualiza la información de tu cuenta y preferencias.",
+    "companyNameLabel": "Nombre de la empresa",
+    "adminEmailLabel": "Email del administrador",
+    "changePassword": "Cambiar Contraseña",
+    "currentPasswordLabel": "Contraseña actual",
+    "newPasswordLabel": "Nueva contraseña",
+    "newPasswordPlaceholder": "Mínimo 6 caracteres",
+    "confirmPasswordLabel": "Confirmar nueva contraseña",
+    "updatePasswordBtn": "Actualizar contraseña",
+    "passwordsMismatch": "Las contraseñas no coinciden.",
+    "passwordUpdated": "Contraseña actualizada correctamente."
+  },
+  "analytics": {
+    "months": ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"],
+    "packagesReceived": "Paquetes Recibidos",
+    "packagesPickedUp": "Paquetes Retirados"
+  },
+  "notifications": {
+    "empty": "No hay notificaciones",
+    "sentTo": "enviado a",
+    "package": "Paquete"
+  },
+  "clientsDetail": {
+    "allClients": "Todos los Clientes",
+    "totalPackages": "Total de Paquetes",
+    "totalSpent": "Total Gastado",
+    "activePackages": "Paquetes Activos",
+    "packageHistory": "Historial de Paquetes",
+    "noPackages": "Este cliente aún no tiene paquetes.",
+    "tracking": "Tracking",
+    "status": "Estado",
+    "weight": "Peso",
+    "cost": "Costo",
+    "date": "Fecha",
+    "goBack": "Volver"
+  },
+  "packagesDetail": {
+    "notFound": "Paquete no encontrado.",
+    "clientLabel": "Cliente",
+    "updateProof": "Actualizar Prueba",
+    "proofOfDelivery": "Prueba de Entrega",
+    "proofRecorded": "Prueba de entrega registrada",
+    "comments": "Comentarios",
+    "message": "mensaje",
+    "messages": "mensajes",
+    "noComments": "Aún no hay comentarios.",
+    "internalNote": "Nota interna",
+    "internalNoteOnly": "Nota interna (solo empleados)",
+    "internalPlaceholder": "Nota interna...",
+    "messagePlaceholder": "Escribe un mensaje al cliente...",
+    "send": "Enviar",
+    "back": "Paquetes"
+  },
+  "chat": {
+    "title": "Chat del equipo",
+    "noContacts": "No hay miembros del equipo disponibles.",
+    "noMessages": "Aún no hay mensajes. ¡Inicia la conversación!",
+    "online": "En línea",
+    "offline": "Desconectado",
+    "placeholder": "Escribe un mensaje..."
+  },
+  "export": {
+    "pdf": "Exportar PDF",
+    "excel": "Exportar Excel",
+    "generating": "Generando...",
+    "reportTitle": "Reporte de Paquetes",
+    "client": "Cliente",
+    "date": "Fecha",
+    "totalPackages": "Total de Paquetes",
+    "totalSpent": "Total Gastado",
+    "generatedOn": "Generado el",
+    "sheetName": "Paquetes"
+  },
+  "trustBar": {
+    "label": "Con la confianza de socios logísticos globales"
+  },
+  "howItWorks": {
+    "label": "Proceso",
+    "title": "Tres simples pasos",
+    "subtitle": "Desde la compra hasta la entrega — totalmente transparente y automatizado.",
+    "step1": { "title": "Realiza tu pedido", "desc": "Compra en cualquier tienda en línea del mundo y usa tu dirección asignada." },
+    "step2": { "title": "Recibimos y rastreamos", "desc": "Tu paquete llega a nuestro almacén. Lo registramos y actualizamos el estado en tiempo real." },
+    "step3": { "title": "Te lo entregamos", "desc": "Retira en tienda o solicita entrega a domicilio. Te notificamos en cada paso." }
+  },
+  "testimonials": {
+    "label": "Testimonios",
+    "title": "Lo que dicen nuestros clientes",
+    "items": [
+      { "text": "CV Platform transformó la forma en que gestionamos las importaciones. El sistema de rastreo nos ahorra horas de seguimiento manual cada semana.", "name": "Andreas Müller", "company": "Müller Handel AG, Zúrich" },
+      { "text": "Perfecto para nuestra cuenta corporativa. El portal es intuitivo y mi equipo lo adoptó en un solo día.", "name": "Sophie Bernhard", "company": "Bernhard & Partner, Basilea" },
+      { "text": "Servicio al cliente excepcional y visibilidad total sobre cada envío. No cambiaría esta plataforma por ninguna otra.", "name": "Carlos Reyes", "company": "Reyes Import S.A." }
+    ]
   }
 }

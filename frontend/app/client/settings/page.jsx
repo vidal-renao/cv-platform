@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from '../../../lib/i18n';
 import { fetchWithAuth } from '../../../lib/api';
 
 export default function ClientSettings() {
+  const { t } = useTranslation();
   const router = useRouter();
   const [form, setForm] = useState({ currentPassword: '', newPassword: '', confirm: '' });
   const [error, setError] = useState('');
@@ -15,7 +17,7 @@ export default function ClientSettings() {
     e.preventDefault();
     setError(''); setSuccess('');
     if (form.newPassword !== form.confirm) {
-      return setError('Las contraseñas no coinciden.');
+      return setError(t('settings.passwordsMismatch'));
     }
     setSaving(true);
     try {
@@ -23,7 +25,7 @@ export default function ClientSettings() {
         method: 'POST',
         body: JSON.stringify({ currentPassword: form.currentPassword, newPassword: form.newPassword }),
       });
-      setSuccess('Contraseña actualizada correctamente.');
+      setSuccess(t('settings.passwordUpdated'));
       setForm({ currentPassword: '', newPassword: '', confirm: '' });
     } catch (err) {
       setError(err.message);
@@ -36,10 +38,10 @@ export default function ClientSettings() {
     <div className="space-y-6">
       <button onClick={() => router.back()} className="text-sm text-gray-400 hover:text-gray-600 flex items-center gap-1">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
-        Volver
+        {t('common.back')}
       </button>
 
-      <h1 className="text-xl font-bold text-gray-900">Cambiar Contraseña</h1>
+      <h1 className="text-xl font-bold text-gray-900">{t('settings.changePassword')}</h1>
 
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 max-w-md">
         {error && <div className="mb-4 text-sm text-red-600 bg-red-50 border border-red-100 p-3 rounded-lg">{error}</div>}
@@ -47,9 +49,9 @@ export default function ClientSettings() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {[
-            { key: 'currentPassword', label: 'Contraseña actual', placeholder: '••••••••' },
-            { key: 'newPassword', label: 'Nueva contraseña', placeholder: 'Mínimo 6 caracteres' },
-            { key: 'confirm', label: 'Confirmar nueva contraseña', placeholder: '••••••••' },
+            { key: 'currentPassword', label: t('settings.currentPasswordLabel'), placeholder: '••••••••' },
+            { key: 'newPassword',     label: t('settings.newPasswordLabel'),     placeholder: t('settings.newPasswordPlaceholder') },
+            { key: 'confirm',         label: t('settings.confirmPasswordLabel'), placeholder: '••••••••' },
           ].map(({ key, label, placeholder }) => (
             <div key={key}>
               <label className="block text-sm font-medium text-gray-700 mb-1">{label}</label>
@@ -69,7 +71,7 @@ export default function ClientSettings() {
             disabled={saving}
             className="w-full py-2.5 bg-blue-600 text-white font-medium text-sm rounded-lg hover:bg-blue-700 transition disabled:opacity-60"
           >
-            {saving ? 'Guardando...' : 'Actualizar contraseña'}
+            {saving ? t('common.saving') : t('settings.updatePasswordBtn')}
           </button>
         </form>
       </div>

@@ -210,6 +210,114 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ── TRUST BAR ───────────────────────────────────────── */}
+      <section className="bg-white border-y border-gray-100 px-6 py-10">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">
+            {t('trustBar.label')}
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-10">
+            {[
+              { name: 'DHL', icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' },
+              { name: 'FedEx', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
+              { name: 'Amazon', icon: 'M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z' },
+              { name: 'UPS', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
+              { name: 'Maersk', icon: 'M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9' },
+              { name: 'Panalpina', icon: 'M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z' },
+            ].map(({ name, icon }) => (
+              <div key={name} className="flex items-center gap-2 text-slate-400 hover:text-slate-600 transition group">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={icon} />
+                </svg>
+                <span className="text-sm font-bold tracking-tight">{name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── HOW IT WORKS ────────────────────────────────────── */}
+      <section className="bg-slate-50 px-6 py-24 scroll-mt-16">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <span className="text-xs font-bold text-blue-600 uppercase tracking-widest">{t('howItWorks.label')}</span>
+            <h2 className="text-4xl font-extrabold text-slate-900 mt-2 mb-4">{t('howItWorks.title')}</h2>
+            <p className="text-slate-500 max-w-lg mx-auto">{t('howItWorks.subtitle')}</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {[
+              {
+                step: '01',
+                icon: 'M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z',
+                titleKey: 'howItWorks.step1.title',
+                descKey:  'howItWorks.step1.desc',
+              },
+              {
+                step: '02',
+                icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4',
+                titleKey: 'howItWorks.step2.title',
+                descKey:  'howItWorks.step2.desc',
+              },
+              {
+                step: '03',
+                icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
+                titleKey: 'howItWorks.step3.title',
+                descKey:  'howItWorks.step3.desc',
+              },
+            ].map(({ step, icon, titleKey, descKey }, i) => (
+              <div key={step} className="relative flex flex-col items-center text-center p-8 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition group">
+                {/* Connector line */}
+                {i < 2 && (
+                  <div className="hidden md:block absolute top-12 -right-4 w-8 h-0.5 bg-blue-100 z-10" />
+                )}
+                <div className="w-14 h-14 rounded-2xl bg-blue-600 flex items-center justify-center mb-5 group-hover:scale-105 transition-transform shadow-lg shadow-blue-600/20">
+                  <svg className="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d={icon} />
+                  </svg>
+                </div>
+                <span className="text-xs font-black text-blue-400 tracking-widest mb-2">{step}</span>
+                <h3 className="font-bold text-slate-900 text-lg mb-2">{t(titleKey)}</h3>
+                <p className="text-sm text-slate-500 leading-relaxed">{t(descKey)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ────────────────────────────────────── */}
+      <section className="bg-white px-6 py-24">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-14">
+            <span className="text-xs font-bold text-blue-600 uppercase tracking-widest">{t('testimonials.label')}</span>
+            <h2 className="text-4xl font-extrabold text-slate-900 mt-2">{t('testimonials.title')}</h2>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[0, 1, 2].map(i => (
+              <div key={i} className="bg-slate-50 rounded-2xl p-7 border border-gray-100 flex flex-col gap-4">
+                {/* Stars */}
+                <div className="flex gap-0.5">
+                  {[...Array(5)].map((_, s) => (
+                    <svg key={s} className="w-4 h-4 text-amber-400" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
+                </div>
+                <p className="text-slate-600 text-sm leading-relaxed italic">&ldquo;{t(`testimonials.items.${i}.text`)}&rdquo;</p>
+                <div className="flex items-center gap-3 mt-auto pt-2 border-t border-gray-100">
+                  <div className="w-9 h-9 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold flex-shrink-0">
+                    {t(`testimonials.items.${i}.name`).charAt(0)}
+                  </div>
+                  <div>
+                    <p className="text-sm font-semibold text-slate-900">{t(`testimonials.items.${i}.name`)}</p>
+                    <p className="text-xs text-slate-400">{t(`testimonials.items.${i}.company`)}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ── QUIÉNES SOMOS ───────────────────────────────────── */}
       <section id="nosotros" className="bg-slate-50 px-6 py-24 scroll-mt-16">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">

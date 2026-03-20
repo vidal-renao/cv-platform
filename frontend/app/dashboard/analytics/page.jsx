@@ -35,17 +35,18 @@ export default function AnalyticsPage() {
     }
   };
 
+  const months = t('analytics.months');
   const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+    labels: Array.isArray(months) ? months.slice(0, 7) : ['Jan','Feb','Mar','Apr','May','Jun','Jul'],
     datasets: [
       {
-        label: 'Packages Received',
+        label: t('analytics.packagesReceived'),
         data: [65, 59, 80, 81, 56, 55, 40],
         backgroundColor: 'rgba(53, 162, 235, 0.7)',
         borderRadius: 4,
       },
       {
-        label: 'Packages Picked Up',
+        label: t('analytics.packagesPickedUp'),
         data: [28, 48, 40, 19, 86, 27, 90],
         backgroundColor: 'rgba(75, 192, 192, 0.7)',
         borderRadius: 4,

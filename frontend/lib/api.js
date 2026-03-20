@@ -29,6 +29,8 @@ export const login = async (email, password) => {
   if (typeof window !== 'undefined') {
     localStorage.setItem('token', data.token);
     localStorage.setItem('user', JSON.stringify(data.user));
+    // Session cookie for Next.js middleware route protection (Edge-readable)
+    document.cookie = 'auth_session=1; path=/; max-age=86400; samesite=strict';
   }
   return data;
 };
@@ -50,5 +52,7 @@ export const logout = () => {
   if (typeof window !== 'undefined') {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    // Clear session cookie so middleware redirects immediately
+    document.cookie = 'auth_session=; path=/; max-age=0; samesite=strict';
   }
 };
