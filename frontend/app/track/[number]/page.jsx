@@ -5,7 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslation } from '../../../lib/i18n';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
+const API_URL = '/api';
 
 const STATUS_ORDER = { ARRIVED: 0, READY_FOR_PICKUP: 1, PICKED_UP: 2 };
 
