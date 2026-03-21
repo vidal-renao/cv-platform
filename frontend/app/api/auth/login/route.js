@@ -1,20 +1,31 @@
-import { NextResponse } from 'next/server';
+export const runtime = 'nodejs';
+
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { getDb } from '../../../../lib/db';
 
 export async function POST(request) {
+  console.log('[LOGIN] request received');
+
+  // Step 1: Parse body — isolated catch so malformed JSON never goes unhandled
+  let body;
   try {
-    let { email, password } = await request.json();
+    body = await request.json();
+  } catch {
+    return Response.json({ error: 'Invalid JSON body' }, { status: 400 });
+  }
+
+  try {
+    let { email, password } = body ?? {};
 
     if (!email || !password) {
-      return NextResponse.json(
-        { error: 'Email and password are required' },
-        { status: 400 }
-      );
+      return Response.json({ error: 'Email and password are required' }, { status: 400 });
     }
 
-    // Phone number support: no @ means it's a phone → convert to internal email
+    email = String(email).trim();
+    password = String(password);
+
+    // Phone number support: no @ → convert to internal email format
     if (!email.includes('@')) {
       const digits = email.replace(/\D/g, '');
       email = `tel_${digits}@cvplatform.com`;
@@ -22,53 +33,80 @@ export async function POST(request) {
 
     console.log('[LOGIN] email:', email);
 
-    const db = getDb();
-    const result = await db.query(
-      'SELECT * FROM users WHERE LOWER(email) = LOWER($1)',
-      [email.trim()]
-    );
+    // Step 2: DB query
+    let result;
+    try {
+      const db = getDb();
+      result = await db.query(
+        'SELECT * FROM users WHERE LOWER(email) = LOWER($1)',
+        [email]
+      );
+    } catch (dbErr) {
+      console.error('[LOGIN] DB error:', dbErr.message);
+      return Response.json({ error: 'Database error', details: dbErr.message }, { status: 500 });
+    }
 
     console.log('[LOGIN] user found:', result.rows.length > 0);
 
     if (result.rows.length === 0) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+      return Response.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
     const user = result.rows[0];
 
-    // Support both column names for resilience
-    const storedHash = user.password_hash || user.password;
+    // Step 3: Verify password — support both column names
+    const storedHash = user.password_hash || user.password || null;
     if (!storedHash) {
-      console.error('[LOGIN] No password hash found for user:', user.id);
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+      console.error('[LOGIN] No password hash for user id:', user.id);
+      return Response.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
-    const validPassword = await bcrypt.compare(password, storedHash);
+    let validPassword = false;
+    try {
+      validPassword = await bcrypt.compare(password, storedHash);
+    } catch (bcryptErr) {
+      console.error('[LOGIN] bcrypt error:', bcryptErr.message);
+      return Response.json({ error: 'Authentication error' }, { status: 500 });
+    }
+
     if (!validPassword) {
-      return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+      return Response.json({ error: 'Invalid credentials' }, { status: 401 });
     }
 
+    // Step 4: Sign JWT
     const jwtSecret = process.env.JWT_SECRET || 'cvplatform_super_secure_key_2026';
     if (!process.env.JWT_SECRET) {
-      console.warn('[LOGIN] JWT_SECRET not set — using fallback. Set it in Vercel env vars!');
+      console.warn('[LOGIN] JWT_SECRET not set — using fallback. Configure it in Vercel env vars.');
     }
 
     const role = user.role || 'CLIENT';
-    const token = jwt.sign(
-      { id: user.id, email: user.email, role },
-      jwtSecret,
-      { expiresIn: '1d' }
-    );
+    let token;
+    try {
+      token = jwt.sign(
+        { id: user.id, email: user.email, role },
+        jwtSecret,
+        { expiresIn: '1d' }
+      );
+    } catch (jwtErr) {
+      console.error('[LOGIN] JWT sign error:', jwtErr.message);
+      return Response.json({ error: 'Token generation failed' }, { status: 500 });
+    }
 
-    // Fire-and-forget: update last_seen (silently fails if column missing)
-    db.query('UPDATE users SET last_seen = NOW() WHERE id = $1', [user.id]).catch(() => {});
+    // Fire-and-forget last_seen update (never blocks response)
+    try {
+      const db = getDb();
+      db.query('UPDATE users SET last_seen = NOW() WHERE id = $1', [user.id]).catch(() => {});
+    } catch { /* ignore */ }
 
-    return NextResponse.json({
+    console.log('[LOGIN] success for user id:', user.id);
+
+    return Response.json({
       token,
       user: { id: user.id, email: user.email, role },
     });
+
   } catch (err) {
-    console.error('[LOGIN] Error:', err.message, err.stack);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    console.error('[LOGIN] Unexpected error:', err.message, err.stack);
+    return Response.json({ error: 'Internal server error', details: err.message }, { status: 500 });
   }
 }
