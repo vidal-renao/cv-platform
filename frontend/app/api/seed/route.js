@@ -118,22 +118,53 @@ export async function POST(request) {
   }
 }
 
-// ─── GET: list current users ──────────────────────────────────────────────────
+// ─── GET: seed demo users (browser-friendly — same logic as POST) ─────────────
 export async function GET(request) {
   if (!isAuthorized(request)) {
-    return Response.json({ error: 'Unauthorized' }, { status: 401 });
+    return Response.json({ error: 'Unauthorized — add ?key=TU_JWT_SECRET to the URL' }, { status: 401 });
   }
 
   try {
     const db = getDb();
-    const result = await db.query(
-      `SELECT id, email, username, role, created_at, last_seen
-       FROM users
-       ORDER BY created_at ASC
-       LIMIT 100`
-    );
-    return Response.json({ count: result.rows.length, users: result.rows });
+
+    // 1. Ensure all required columns exist
+    const schemaResults = await ensureColumns(db);
+    console.log('[SEED] Schema migrations:', schemaResults);
+
+    // 2. Upsert demo users
+    const seeded = [];
+    for (const u of DEMO_USERS) {
+      try {
+        const hash = await bcrypt.hash(u.password, 10);
+
+        await db.query(
+          `INSERT INTO users (email, password_hash, username, role)
+           VALUES ($1, $2, $3, $4)
+           ON CONFLICT (email) DO UPDATE
+             SET password_hash = EXCLUDED.password_hash,
+                 username      = EXCLUDED.username,
+                 role          = EXCLUDED.role`,
+          [u.email, hash, u.username, u.role]
+        );
+
+        seeded.push({ email: u.email, role: u.role, status: 'ok' });
+        console.log('[SEED] Upserted:', u.email, u.role);
+      } catch (err) {
+        seeded.push({ email: u.email, role: u.role, status: 'error', error: err.message });
+        console.error('[SEED] Failed to upsert', u.email, err.message);
+      }
+    }
+
+    const failed = seeded.filter((s) => s.status === 'error');
+    return Response.json({
+      message: failed.length === 0 ? 'All demo users seeded successfully' : 'Some users failed',
+      users: seeded,
+      schema: schemaResults,
+      credentials: DEMO_USERS.map((u) => ({ email: u.email, password: u.password, role: u.role })),
+    }, { status: failed.length === 0 ? 200 : 207 });
+
   } catch (err) {
-    return Response.json({ error: err.message }, { status: 500 });
+    console.error('[SEED] Fatal error:', err.message);
+    return Response.json({ error: 'Seed failed', details: err.message }, { status: 500 });
   }
 }
