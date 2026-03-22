@@ -49,16 +49,23 @@ export async function POST(request) {
     console.log('[LOGIN] user found:', result.rows.length > 0);
 
     if (result.rows.length === 0) {
-      return Response.json({ error: 'Invalid credentials' }, { status: 401 });
+      // DEBUG: distinguishable error — remove after diagnosis
+      return Response.json({ error: 'User not found: no account matches this email' }, { status: 401 });
     }
 
     const user = result.rows[0];
 
     // Step 3: Verify password — support both column names
     const storedHash = user.password_hash || user.password || null;
+    // DEBUG: log hash prefix to verify it's a valid bcrypt hash (starts with $2b$ or $2a$)
+    console.log('[LOGIN] hash prefix:', storedHash ? storedHash.slice(0, 7) : 'NULL');
+    console.log('[LOGIN] hash length:', storedHash ? storedHash.length : 0);
+    console.log('[LOGIN] user role in DB:', user.role);
+
     if (!storedHash) {
       console.error('[LOGIN] No password hash for user id:', user.id);
-      return Response.json({ error: 'Invalid credentials' }, { status: 401 });
+      // DEBUG: distinguishable error — remove after diagnosis
+      return Response.json({ error: 'Account has no password hash stored' }, { status: 401 });
     }
 
     let validPassword = false;
@@ -66,11 +73,14 @@ export async function POST(request) {
       validPassword = await bcrypt.compare(password, storedHash);
     } catch (bcryptErr) {
       console.error('[LOGIN] bcrypt error:', bcryptErr.message);
-      return Response.json({ error: 'Authentication error' }, { status: 500 });
+      return Response.json({ error: 'Authentication error: ' + bcryptErr.message }, { status: 500 });
     }
 
+    console.log('[LOGIN] password valid:', validPassword);
+
     if (!validPassword) {
-      return Response.json({ error: 'Invalid credentials' }, { status: 401 });
+      // DEBUG: distinguishable error — remove after diagnosis
+      return Response.json({ error: 'Password mismatch: hash does not match stored value' }, { status: 401 });
     }
 
     // Step 4: Sign JWT
