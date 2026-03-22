@@ -24,7 +24,10 @@ const DEMO_USERS = [
 function isAuthorized(request) {
   const setupKey = process.env.SETUP_KEY || process.env.JWT_SECRET;
   if (!setupKey) return true; // no key configured → allow (dev mode)
-  return request.headers.get('x-setup-key') === setupKey;
+  // Accept key via header OR ?key= query param
+  const headerKey = request.headers.get('x-setup-key');
+  const urlKey = new URL(request.url).searchParams.get('key');
+  return headerKey === setupKey || urlKey === setupKey;
 }
 
 // ─── Ensure schema has required columns ──────────────────────────────────────
