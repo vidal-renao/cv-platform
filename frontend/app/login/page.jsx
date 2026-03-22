@@ -5,8 +5,8 @@ import { login } from '../../lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-const DEMO_EMAIL = 'admin@demo.ch';
-const DEMO_PASSWORD = 'demo1234';
+const DEMO_EMAIL = 'admin@demo.com';
+const DEMO_PASSWORD = '123456';
 
 export default function LoginPage() {
   const { t } = useTranslation();
