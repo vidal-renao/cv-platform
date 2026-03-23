@@ -34,12 +34,13 @@ export default function AdminPackageDetail() {
 
   const loadData = async () => {
     try {
-      const [pkgRes, commentsRes] = await Promise.all([
-        fetchWithAuth(`/packages`).then(list => list.find(p => p.id === id)),
+      const [pkgsResult, commentsResult] = await Promise.allSettled([
+        fetchWithAuth(`/packages`),
         fetchWithAuth(`/packages/${id}/comments`),
       ]);
-      setPkg(pkgRes || null);
-      setComments(commentsRes);
+      const list = pkgsResult.status === 'fulfilled' ? pkgsResult.value : [];
+      setPkg(list.find(p => p.id === id) || null);
+      setComments(commentsResult.status === 'fulfilled' ? commentsResult.value : []);
       fetchWithAuth(`/packages/${id}/proof`).then(setProof).catch(() => setProof(null));
     } catch (err) {
       console.error(err);

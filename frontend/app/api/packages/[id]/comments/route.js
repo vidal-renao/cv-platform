@@ -19,6 +19,18 @@ export async function GET(request, { params }) {
 
   try {
     const db = getDb();
+    await db.query(`
+      CREATE TABLE IF NOT EXISTS package_comments (
+        id           UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+        package_id   TEXT        NOT NULL,
+        author_id    TEXT,
+        author_email VARCHAR(255),
+        author_role  VARCHAR(50),
+        comment      TEXT        NOT NULL,
+        is_internal  BOOLEAN     DEFAULT FALSE,
+        created_at   TIMESTAMPTZ DEFAULT NOW()
+      )
+    `);
     const result = await db.query(
       `SELECT * FROM package_comments WHERE package_id = $1 ORDER BY created_at ASC`,
       [params.id]
