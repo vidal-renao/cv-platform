@@ -354,7 +354,7 @@ export default function ClientsPage() {
 
       <div className="flex items-center justify-between">
 
-        <h1 className="text-3xl font-bold">
+        <h1 className="text-2xl md:text-3xl font-bold">
           {t('clients.title')}
         </h1>
 
@@ -375,7 +375,7 @@ export default function ClientsPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="grid grid-cols-2 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4"
         >
 
           <Input
@@ -449,7 +449,7 @@ export default function ClientsPage() {
             {t('clients.table.title')}
           </h2>
 
-          <div className="w-64">
+          <div className="w-full max-w-xs">
 
             <Input
               placeholder={t('clients.table.searchPlaceholder')}

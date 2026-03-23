@@ -142,9 +142,9 @@ export default function ClientDashboard() {
     <div className="space-y-8">
 
       {/* Welcome */}
-      <div className="flex items-start justify-between">
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">
+          <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
             {t('clientPortal.welcome')}{clientInfo?.name ? `, ${clientInfo.name}` : ''}
           </h1>
           <p className="text-gray-500 text-sm mt-1">{t('clientPortal.subtitle')}</p>
@@ -192,7 +192,7 @@ export default function ClientDashboard() {
       </div>
 
       {/* Stats */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
           <p className="text-xs font-semibold text-gray-400 uppercase">{t('clientPortal.stats.total')}</p>
           <p className="text-3xl font-black text-gray-900 mt-1">{packages.length}</p>

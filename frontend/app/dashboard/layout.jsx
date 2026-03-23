@@ -167,7 +167,7 @@ function ChatPanel({ onClose }) {
   const online = (c) => c.is_online || (c.last_seen && Date.now() - new Date(c.last_seen).getTime() < THRESHOLD);
 
   return (
-    <div className="fixed inset-y-0 right-0 w-80 bg-white border-l border-gray-200 shadow-2xl z-50 flex flex-col" style={{ top: '64px' }}>
+    <div className="fixed inset-y-0 right-0 w-full sm:w-80 bg-white border-l border-gray-200 shadow-2xl z-50 flex flex-col" style={{ top: '64px' }}>
       {/* Header */}
       <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-slate-900">
         <div className="flex items-center gap-2">
@@ -309,6 +309,10 @@ export default function DashboardLayout({ children }) {
   const [redirecting, setRedirecting] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [unread, setUnread] = useState(0);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Close mobile sidebar on route change
+  useEffect(() => { setSidebarOpen(false); }, [pathname]);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -355,8 +359,21 @@ export default function DashboardLayout({ children }) {
   return (
     <div className="flex flex-1 bg-gray-50 min-h-[calc(100vh-64px)]">
 
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 z-30 bg-black/50 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
       {/* SIDEBAR */}
-      <aside className="w-64 bg-slate-900 p-6 flex-shrink-0 flex flex-col">
+      <aside className={`
+        fixed top-16 bottom-0 left-0 z-40 w-64 bg-slate-900 p-6 flex flex-col overflow-y-auto
+        transform transition-transform duration-300 ease-in-out
+        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        md:relative md:top-auto md:bottom-auto md:z-auto md:translate-x-0 md:flex-shrink-0
+      `}>
         <h2 className="text-xl font-bold mb-6 text-white tracking-tight">CV Platform</h2>
         <nav className="space-y-0.5 flex-1">
           {NAV_LINK_DEFS
@@ -404,9 +421,21 @@ export default function DashboardLayout({ children }) {
       <div className="flex-1 flex flex-col min-w-0">
 
         {/* TOP BAR */}
-        <header className="bg-white border-b border-gray-100 px-8 py-3 flex items-center justify-between sticky top-16 z-40">
-          <div className="flex items-center gap-4">
-            <GlobalSearch />
+        <header className="bg-white border-b border-gray-100 px-4 sm:px-8 py-3 flex items-center justify-between sticky top-16 z-40">
+          <div className="flex items-center gap-3">
+            {/* Hamburger — mobile only */}
+            <button
+              className="md:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition"
+              onClick={() => setSidebarOpen(o => !o)}
+              aria-label="Toggle menu"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+            <div className="hidden sm:block">
+              <GlobalSearch />
+            </div>
             {user && (
               <p className="hidden lg:block text-sm text-gray-500">
                 {t('dashboard.topbar.welcome')}, <span className="font-semibold text-gray-800 capitalize">{displayName}</span>
@@ -454,7 +483,7 @@ export default function DashboardLayout({ children }) {
           </div>
         </header>
 
-        <main className="flex-1 p-8">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8">
           {children}
         </main>
       </div>

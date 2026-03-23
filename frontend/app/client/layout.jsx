@@ -87,7 +87,7 @@ export default function ClientLayout({ children }) {
       {/* Floating feedback widget */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
         {feedbackOpen && (
-          <div className="w-[300px] bg-white border border-slate-200 rounded-2xl shadow-xl flex flex-col overflow-hidden">
+          <div className="w-72 max-w-[calc(100vw-3rem)] bg-white border border-slate-200 rounded-2xl shadow-xl flex flex-col overflow-hidden">
             <div className="px-4 py-3 bg-blue-600 text-white text-sm font-semibold flex items-center justify-between">
               <span>Enviar feedback</span>
               <button

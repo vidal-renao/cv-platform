@@ -43,7 +43,7 @@ export default function ClientProfilePage() {
     return (
       <div className="space-y-6 animate-pulse">
         <div className="h-8 bg-gray-200 rounded w-48" />
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {[0,1,2].map(i => <div key={i} className="h-28 bg-gray-200 rounded-2xl" />)}
         </div>
         <div className="h-64 bg-gray-200 rounded-xl" />
@@ -101,7 +101,8 @@ export default function ClientProfilePage() {
         {!packages || packages.length === 0 ? (
           <p className="px-6 py-10 text-center text-gray-400">{t('clientsDetail.noPackages')}</p>
         ) : (
-          <table className="min-w-full divide-y divide-gray-100">
+          <div className="overflow-x-auto">
+          <table className="min-w-full min-w-[500px] divide-y divide-gray-100">
             <thead className="bg-gray-50/50">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{t('clientsDetail.tracking')}</th>
@@ -135,6 +136,7 @@ export default function ClientProfilePage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>

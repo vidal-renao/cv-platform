@@ -21,7 +21,7 @@ export default function DashboardPage() {
     return (
       <div className="space-y-8 animate-pulse">
         <div className="h-8 bg-gray-200 rounded w-48" />
-        <div className="grid grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[0,1,2].map(i => <div key={i} className="h-28 bg-gray-200 rounded-2xl" />)}
         </div>
         <div className="h-64 bg-gray-200 rounded-xl" />
@@ -32,7 +32,7 @@ export default function DashboardPage() {
   return (
     <div className="space-y-8 animate-fade-in-up">
 
-      <h1 className="text-3xl font-bold text-gray-900">{t('dashboard.title')}</h1>
+      <h1 className="text-2xl md:text-3xl font-bold text-gray-900">{t('dashboard.title')}</h1>
 
       {/* KPI Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
