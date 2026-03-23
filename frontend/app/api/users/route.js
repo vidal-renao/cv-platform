@@ -27,7 +27,7 @@ export async function GET(request) {
     const db = getDb();
     const result = await db.query(
       `SELECT id, email, username, role, created_at, last_seen
-       FROM users ORDER BY created_at ASC`
+       FROM users WHERE role != 'CLIENT' ORDER BY created_at ASC`
     );
     return Response.json(result.rows);
   } catch (err) {
@@ -69,9 +69,9 @@ export async function POST(request) {
     const hash = await bcrypt.hash(password, 10);
     const result = await db.query(
       `INSERT INTO users (email, password_hash, password, role)
-       VALUES ($1, $2, $2, $3)
+       VALUES ($1, $2, $3, $4)
        RETURNING id, email, role, created_at`,
-      [email.trim().toLowerCase(), hash, role]
+      [email.trim().toLowerCase(), hash, hash, role]
     );
     return Response.json(result.rows[0], { status: 201 });
   } catch (err) {

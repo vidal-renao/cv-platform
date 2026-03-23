@@ -23,7 +23,7 @@ function SkeletonRow() {
   );
 }
 
-const ROLE_OPTIONS = ['ADMIN', 'STAFF', 'CLIENT'];
+const ROLE_OPTIONS = ['ADMIN', 'STAFF'];
 
 export default function UsersPage() {
   const { t } = useTranslation();
@@ -35,7 +35,7 @@ export default function UsersPage() {
 
   // Create user modal state
   const [showCreate, setShowCreate] = useState(false);
-  const [form, setForm] = useState({ email: '', password: '', role: 'STAFF' });
+  const [form, setForm] = useState({ email: '', password: '', role: 'STAFF' }); // CLIENT excluded — managed via /clients
   const [creating, setCreating] = useState(false);
   const [createError, setCreateError] = useState('');
 
@@ -96,7 +96,7 @@ export default function UsersPage() {
 
   // Staff-restricted role options (cannot assign above STAFF)
   const availableRoles = currentUser?.role === 'SUPERADMIN'
-    ? ['SUPERADMIN', 'ADMIN', 'STAFF', 'CLIENT']
+    ? ['SUPERADMIN', 'ADMIN', 'STAFF']
     : ROLE_OPTIONS;
 
   const THRESHOLD = 5 * 60 * 1000;
