@@ -60,6 +60,7 @@ async function ensureColumns(db) {
        password_hash VARCHAR(255) NOT NULL,
        created_at    TIMESTAMPTZ  DEFAULT NOW()
      )`,
+    `ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash VARCHAR(255)`,
     `ALTER TABLE users ADD COLUMN IF NOT EXISTS username  VARCHAR(255)`,
     `ALTER TABLE users ADD COLUMN IF NOT EXISTS role      VARCHAR(50)  DEFAULT 'CLIENT'`,
     `ALTER TABLE users ADD COLUMN IF NOT EXISTS name      VARCHAR(255)`,
