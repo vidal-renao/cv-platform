@@ -14,6 +14,29 @@ function getUser(request) {
   } catch { return null; }
 }
 
+// GET /api/packages/[id]
+export async function GET(request, { params }) {
+  const me = getUser(request);
+  if (!me) return Response.json({ error: 'Unauthorized' }, { status: 401 });
+  if (!['SUPERADMIN', 'ADMIN', 'STAFF'].includes(me.role)) {
+    return Response.json({ error: 'Forbidden' }, { status: 403 });
+  }
+
+  try {
+    const db = getDb();
+    const result = await db.query(`
+      SELECT p.*, c.name AS client_name
+      FROM packages p
+      LEFT JOIN clients c ON c.id::text = p.client_id::text
+      WHERE p.id::text = $1
+    `, [params.id]);
+    if (result.rows.length === 0) return Response.json({ error: 'Not found' }, { status: 404 });
+    return Response.json(result.rows[0]);
+  } catch (err) {
+    return Response.json({ error: err.message }, { status: 500 });
+  }
+}
+
 // PUT /api/packages/[id]
 export async function PUT(request, { params }) {
   const me = getUser(request);

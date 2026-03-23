@@ -46,14 +46,13 @@ export async function POST(request, { params }) {
 
     // Upsert user with CLIENT role
     await db.query(`
-      INSERT INTO users (email, username, password_hash, password, role, name)
-      VALUES ($1, $2, $3, $4, 'CLIENT', $5)
+      INSERT INTO users (email, username, password_hash, password, role)
+      VALUES ($1, $2, $3, $4, 'CLIENT')
       ON CONFLICT (email) DO UPDATE
         SET password_hash = EXCLUDED.password_hash,
             password      = EXCLUDED.password,
-            role          = 'CLIENT',
-            name          = EXCLUDED.name
-    `, [client.email.toLowerCase(), username, hash, hash, client.name]);
+            role          = 'CLIENT'
+    `, [client.email.toLowerCase(), username, hash, hash]);
 
     // Status stays 'pending' — client activates automatically on first login
 
