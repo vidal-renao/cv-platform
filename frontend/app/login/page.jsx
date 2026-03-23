@@ -5,8 +5,11 @@ import { login } from '../../lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-const DEMO_EMAIL = 'admin@demo.com';
-const DEMO_PASSWORD = '123456';
+const DEMO_ACCOUNTS = [
+  { label: 'Admin',  email: 'admin@demo.com',  password: '123456', role: 'ADMIN'  },
+  { label: 'Staff',  email: 'staff@demo.com',  password: '123456', role: 'STAFF'  },
+  { label: 'Client', email: 'client@demo.com', password: '123456', role: 'CLIENT' },
+];
 
 export default function LoginPage() {
   const { t } = useTranslation();
@@ -15,7 +18,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [demoLoading, setDemoLoading] = useState(false);
+  const [demoLoading, setDemoLoading] = useState(null); // stores which demo is loading
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -35,11 +38,11 @@ export default function LoginPage() {
     }
   };
 
-  const handleDemoLogin = async () => {
-    setDemoLoading(true);
+  const handleDemoLogin = async (account) => {
+    setDemoLoading(account.role);
     setError('');
     try {
-      const data = await login(DEMO_EMAIL, DEMO_PASSWORD);
+      const data = await login(account.email, account.password);
       if (data.user?.role === 'CLIENT') {
         router.push('/client/dashboard');
       } else {
@@ -48,7 +51,7 @@ export default function LoginPage() {
     } catch {
       setError('Demo account not available. Contact the administrator.');
     } finally {
-      setDemoLoading(false);
+      setDemoLoading(null);
     }
   };
 
@@ -128,27 +131,27 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <div className="space-y-3">
-          <button
-            type="button"
-            onClick={handleDemoLogin}
-            disabled={demoLoading}
-            className="w-full flex items-center justify-center gap-2.5 py-3 px-4 rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 hover:bg-gray-100 hover:border-gray-300 transition-all text-sm font-semibold text-gray-700 disabled:opacity-60 group"
-          >
-            <span className="text-base group-hover:scale-110 transition-transform">
-              {demoLoading ? '⏳' : '⚡'}
-            </span>
-            {demoLoading ? 'Entering demo…' : 'Quick Demo Login — Admin'}
-          </button>
-          <div className="flex items-center justify-center gap-4 text-xs text-gray-400">
-            <span className="flex items-center gap-1.5">
-              <span className="font-mono bg-gray-100 px-1.5 py-0.5 rounded text-gray-500">{DEMO_EMAIL}</span>
-            </span>
-            <span className="text-gray-300">·</span>
-            <span className="flex items-center gap-1.5">
-              <span className="font-mono bg-gray-100 px-1.5 py-0.5 rounded text-gray-500">{DEMO_PASSWORD}</span>
-            </span>
-          </div>
+        <div className="space-y-2">
+          {DEMO_ACCOUNTS.map((account) => (
+            <button
+              key={account.role}
+              type="button"
+              onClick={() => handleDemoLogin(account)}
+              disabled={demoLoading !== null}
+              className="w-full flex items-center justify-between gap-2.5 py-2.5 px-4 rounded-lg border-2 border-dashed border-gray-200 bg-gray-50 hover:bg-gray-100 hover:border-gray-300 transition-all text-sm font-semibold text-gray-700 disabled:opacity-60 group"
+            >
+              <span className="flex items-center gap-2">
+                <span className="text-base group-hover:scale-110 transition-transform">
+                  {demoLoading === account.role ? '⏳' : '⚡'}
+                </span>
+                {demoLoading === account.role ? 'Entering demo…' : `Demo — ${account.label}`}
+              </span>
+              <span className="font-mono text-xs text-gray-400 bg-gray-100 px-1.5 py-0.5 rounded">
+                {account.email}
+              </span>
+            </button>
+          ))}
+          <p className="text-center text-xs text-gray-400">Password: <span className="font-mono bg-gray-100 px-1.5 py-0.5 rounded text-gray-500">123456</span></p>
         </div>
       </div>
     </div>
