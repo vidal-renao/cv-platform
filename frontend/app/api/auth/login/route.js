@@ -23,7 +23,7 @@ export async function POST(request) {
     }
 
     email = String(email).trim();
-    password = String(password);
+    password = String(password).trim();
 
     // Phone number support: no @ → convert to internal email format
     if (!email.includes('@')) {

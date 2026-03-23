@@ -116,8 +116,14 @@ export async function POST(request) {
           [u.email, hash, u.username, u.role]
         );
 
+        // Force UPDATE as a safety net — guarantees the hash is always fresh
+        await db.query(
+          `UPDATE users SET password_hash = $1 WHERE LOWER(email) = LOWER($2)`,
+          [hash, u.email]
+        );
+
         seeded.push({ email: u.email, role: u.role, status: 'ok' });
-        console.log('[SEED] Upserted:', u.email, u.role);
+        console.log('[SEED] Upserted + force-updated hash for:', u.email, u.role);
       } catch (err) {
         seeded.push({ email: u.email, role: u.role, status: 'error', error: err.message });
         console.error('[SEED] Failed to upsert', u.email, err.message);
@@ -156,7 +162,9 @@ export async function GET(request) {
     for (const u of DEMO_USERS) {
       try {
         const hash = await bcrypt.hash(u.password, 10);
+        console.log('[SEED] hash prefix for', u.email, ':', hash.slice(0, 7));
 
+        // UPSERT: insert or overwrite
         await db.query(
           `INSERT INTO users (email, password_hash, username, role)
            VALUES ($1, $2, $3, $4)
@@ -167,8 +175,14 @@ export async function GET(request) {
           [u.email, hash, u.username, u.role]
         );
 
+        // Force UPDATE as a safety net — guarantees the hash is always fresh
+        await db.query(
+          `UPDATE users SET password_hash = $1 WHERE LOWER(email) = LOWER($2)`,
+          [hash, u.email]
+        );
+
         seeded.push({ email: u.email, role: u.role, status: 'ok' });
-        console.log('[SEED] Upserted:', u.email, u.role);
+        console.log('[SEED] Upserted + force-updated hash for:', u.email, u.role);
       } catch (err) {
         seeded.push({ email: u.email, role: u.role, status: 'error', error: err.message });
         console.error('[SEED] Failed to upsert', u.email, err.message);
