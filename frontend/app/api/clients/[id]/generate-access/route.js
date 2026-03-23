@@ -3,6 +3,7 @@ export const runtime = 'nodejs';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { getDb } from '../../../../../lib/db';
+import { sendAccessEmail, sendAccessWhatsApp } from '../../../../../lib/notifications';
 
 function getUser(request) {
   const auth = request.headers.get('authorization') || '';
@@ -54,13 +55,20 @@ export async function POST(request, { params }) {
             role          = 'CLIENT'
     `, [client.email.toLowerCase(), username, hash, hash]);
 
-    // Status stays 'pending' — client activates automatically on first login
+    // Send notifications in parallel (fire-and-forget style — don't block response)
+    const [emailResult, waResult] = await Promise.allSettled([
+      sendAccessEmail({ to: client.email, clientName: client.name, tempPassword }),
+      sendAccessWhatsApp({ phone: client.phone, clientName: client.name, email: client.email, tempPassword }),
+    ]);
+
+    const emailOk = emailResult.status === 'fulfilled' && emailResult.value?.ok;
+    const waOk    = waResult.status   === 'fulfilled' && waResult.value?.ok;
 
     return Response.json({
       email: client.email,
       tempPassword,
       phone: client.phone,
-      notifications: { email: false, whatsapp: false },
+      notifications: { email: emailOk, whatsapp: waOk },
     });
   } catch (err) {
     return Response.json({ error: err.message }, { status: 500 });
