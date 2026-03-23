@@ -37,8 +37,8 @@ export async function GET() {
   }
 }
 
-// PUT /api/settings — ADMIN / SUPERADMIN only
-export async function PUT(request) {
+// POST /api/settings — ADMIN / SUPERADMIN only
+export async function POST(request) {
   const me = getUser(request);
   if (!me) return Response.json({ error: 'Unauthorized' }, { status: 401 });
   if (!['SUPERADMIN', 'ADMIN'].includes(me.role)) {

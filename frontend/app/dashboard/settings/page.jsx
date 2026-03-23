@@ -43,7 +43,7 @@ export default function SettingsPage() {
     try {
       const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
       const res = await fetch('/api/settings', {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           ...(token && { Authorization: `Bearer ${token}` }),
