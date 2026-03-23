@@ -29,7 +29,7 @@ export default function LoginPage() {
       if (data.user?.role === 'CLIENT') {
         router.push('/client/dashboard');
       } else {
-        router.push('/dashboard');
+        router.push('/dashboard'); // SUPERADMIN, ADMIN, STAFF all go to /dashboard
       }
     } catch (err) {
       setError(err.message);
@@ -46,7 +46,7 @@ export default function LoginPage() {
       if (data.user?.role === 'CLIENT') {
         router.push('/client/dashboard');
       } else {
-        router.push('/dashboard');
+        router.push('/dashboard'); // SUPERADMIN, ADMIN, STAFF all go to /dashboard
       }
     } catch {
       setError('Demo account not available. Contact the administrator.');

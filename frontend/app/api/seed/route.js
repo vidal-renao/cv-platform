@@ -14,11 +14,16 @@ export const runtime = 'nodejs';
 import bcrypt from 'bcryptjs';
 import { getDb } from '../../../lib/db';
 
+// Super admin — seeded once, change password after first login
+const SUPER_ADMIN = { username: 'vidal', email: 'vidal-31@hotmail.com', password: 'Admin2026!', role: 'SUPERADMIN' };
+
 const DEMO_USERS = [
   { username: 'admin',  email: 'admin@demo.com',  password: '123456', role: 'ADMIN'  },
   { username: 'staff',  email: 'staff@demo.com',  password: '123456', role: 'STAFF'  },
   { username: 'client', email: 'client@demo.com', password: '123456', role: 'CLIENT' },
 ];
+
+const ALL_USERS = [SUPER_ADMIN, ...DEMO_USERS];
 
 // ─── Emergency fallback key (use only if JWT_SECRET is not loading in Vercel) ──
 const EMERGENCY_KEY = 'seed-vidal-2026';
@@ -103,7 +108,7 @@ export async function POST(request) {
 
     // 2. Upsert demo users
     const seeded = [];
-    for (const u of DEMO_USERS) {
+    for (const u of ALL_USERS) {
       try {
         const hash = await bcrypt.hash(u.password, 10);
 
@@ -139,7 +144,7 @@ export async function POST(request) {
       message: failed.length === 0 ? 'All demo users seeded successfully' : 'Some users failed',
       users: seeded,
       schema: schemaResults,
-      credentials: DEMO_USERS.map((u) => ({ email: u.email, password: u.password, role: u.role })),
+      credentials: ALL_USERS.map((u) => ({ email: u.email, password: u.password, role: u.role })),
     }, { status: failed.length === 0 ? 200 : 207 });
 
   } catch (err) {
@@ -163,7 +168,7 @@ export async function GET(request) {
 
     // 2. Upsert demo users
     const seeded = [];
-    for (const u of DEMO_USERS) {
+    for (const u of ALL_USERS) {
       try {
         const hash = await bcrypt.hash(u.password, 10);
         console.log('[SEED] hash prefix for', u.email, ':', hash.slice(0, 7));
@@ -198,7 +203,7 @@ export async function GET(request) {
       message: failed.length === 0 ? 'All demo users seeded successfully' : 'Some users failed',
       users: seeded,
       schema: schemaResults,
-      credentials: DEMO_USERS.map((u) => ({ email: u.email, password: u.password, role: u.role })),
+      credentials: ALL_USERS.map((u) => ({ email: u.email, password: u.password, role: u.role })),
     }, { status: failed.length === 0 ? 200 : 207 });
 
   } catch (err) {
