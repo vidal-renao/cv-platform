@@ -84,8 +84,8 @@ export default function ClientProfilePage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <StatCard label={t('clientsDetail.totalPackages')} value={total_packages} />
-        <StatCard label={t('clientsDetail.totalSpent')} value={`$${Number(total_spent).toFixed(2)}`} />
+        <StatCard label={t('clientsDetail.totalPackages')} value={total_packages ?? 0} />
+        <StatCard label={t('clientsDetail.totalSpent')} value={`$${(parseFloat(total_spent) || 0).toFixed(2)}`} />
         <StatCard
           label={t('clientsDetail.activePackages')}
           value={packages?.filter(p => p.status !== 'PICKED_UP').length ?? 0}

@@ -55,6 +55,9 @@ export async function POST(request, { params }) {
             name          = EXCLUDED.name
     `, [client.email.toLowerCase(), username, hash, hash, client.name]);
 
+    // Mark client as active — credentials have been generated
+    await db.query(`UPDATE clients SET status = 'active' WHERE id = $1`, [params.id]);
+
     return Response.json({
       email: client.email,
       tempPassword,

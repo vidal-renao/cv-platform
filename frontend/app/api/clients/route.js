@@ -25,7 +25,7 @@ async function ensureClientsTable(db) {
       phone      VARCHAR(50),
       email      VARCHAR(255),
       address    TEXT,
-      status     VARCHAR(50)  DEFAULT 'active',
+      status     VARCHAR(50)  DEFAULT 'pending',
       created_at TIMESTAMPTZ  DEFAULT NOW()
     )
   `);
@@ -34,6 +34,10 @@ async function ensureClientsTable(db) {
     await db.query(`ALTER TABLE clients ALTER COLUMN user_id TYPE TEXT USING user_id::TEXT`);
     await db.query(`ALTER TABLE clients ALTER COLUMN user_id DROP NOT NULL`);
   } catch { /* already TEXT or no column — ignore */ }
+  // Ensure status column default is 'pending'
+  try {
+    await db.query(`ALTER TABLE clients ALTER COLUMN status SET DEFAULT 'pending'`);
+  } catch { /* ignore */ }
 }
 
 // GET /api/clients — list all clients (ADMIN/SUPERADMIN/STAFF)

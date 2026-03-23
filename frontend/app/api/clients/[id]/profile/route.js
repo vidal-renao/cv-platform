@@ -36,17 +36,21 @@ export async function GET(request, { params }) {
 
     // Fetch packages if table exists
     let packages = [];
+    let total_packages = 0;
+    let total_spent = 0;
     try {
       const pkgRes = await db.query(
         `SELECT * FROM packages WHERE client_id = $1 ORDER BY created_at DESC`,
         [params.id]
       );
       packages = pkgRes.rows;
+      total_packages = packages.length;
+      total_spent = packages.reduce((sum, p) => sum + (parseFloat(p.cost) || 0), 0);
     } catch {
       // packages table may not exist yet
     }
 
-    return Response.json({ ...client, packages });
+    return Response.json({ ...client, packages, total_packages, total_spent });
   } catch (err) {
     return Response.json({ error: err.message }, { status: 500 });
   }
