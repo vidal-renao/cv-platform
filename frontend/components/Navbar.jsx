@@ -106,6 +106,16 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [menuOpen]);
+
+  // Close menu on route change
+  useEffect(() => { setMenuOpen(false); }, [pathname]);
+
   if (!mounted || hidden) return null;
 
   const handleLogout = () => {
@@ -227,6 +237,9 @@ export default function Navbar() {
           {isLanding && (
             <button
               onClick={() => setMenuOpen(v => !v)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-menu"
+              aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
               className={`md:hidden p-2 rounded-lg transition ${
                 scrolled || !isLanding ? 'text-gray-600 hover:bg-gray-100' : 'text-slate-300 hover:bg-white/10'
               }`}
@@ -243,18 +256,26 @@ export default function Navbar() {
       </div>
 
       {/* Mobile menu */}
-      {isLanding && menuOpen && (
-        <div className="md:hidden bg-slate-900 border-t border-slate-700 px-6 py-4 space-y-1">
-          {NAV_LINKS.map(({ label, href }) => (
-            <Link
-              key={href}
-              href={href}
-              onClick={() => setMenuOpen(false)}
-              className="block px-3 py-2.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition"
-            >
-              {label}
-            </Link>
-          ))}
+      {isLanding && (
+        <div
+          id="mobile-menu"
+          className={`md:hidden overflow-hidden transition-all duration-200 ease-in-out ${
+            menuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
+          } bg-slate-900 border-t border-slate-700`}
+          aria-hidden={!menuOpen}
+        >
+          <div className="px-6 py-4 space-y-1">
+            {NAV_LINKS.map(({ label, href }) => (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                className="block px-3 py-2.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition"
+              >
+                {label}
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </nav>

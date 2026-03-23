@@ -5,8 +5,28 @@
 @layer base {
   html {
     scroll-behavior: smooth;
+    /* Prevent layout shift from scrollbar appearing/disappearing */
+    scrollbar-gutter: stable;
+    /* Improve text rendering across browsers */
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
   }
   body {
     @apply bg-gray-50 text-gray-900 antialiased font-sans;
+    /* Prevent horizontal scroll on mobile */
+    overflow-x: hidden;
+  }
+  /* Improve focus visibility for accessibility */
+  :focus-visible {
+    @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+  }
+  /* Better tap target on touch devices */
+  button, a {
+    -webkit-tap-highlight-color: transparent;
+  }
+  /* Smooth image rendering */
+  img {
+    @apply max-w-full;
+    image-rendering: -webkit-optimize-contrast;
   }
 }
