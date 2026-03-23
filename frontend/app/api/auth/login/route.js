@@ -99,10 +99,16 @@ export async function POST(request) {
       return Response.json({ error: 'Token generation failed' }, { status: 500 });
     }
 
-    // Fire-and-forget last_seen update (never blocks response)
+    // Fire-and-forget: update last_seen + activate client on first login
     try {
       const db = getDb();
-      db.query('UPDATE users SET last_seen = NOW() WHERE id = $1', [user.id]).catch(() => {});
+      db.query('UPDATE users SET last_seen = NOW() WHERE id::text = $1::text', [user.id]).catch(() => {});
+      if (role === 'CLIENT') {
+        db.query(
+          `UPDATE clients SET status = 'active' WHERE LOWER(email) = LOWER($1) AND status = 'pending'`,
+          [user.email]
+        ).catch(() => {});
+      }
     } catch { /* ignore */ }
 
     console.log('[LOGIN] success for user id:', user.id);
