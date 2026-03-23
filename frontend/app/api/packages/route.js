@@ -29,10 +29,14 @@ async function ensureTables(db) {
       created_at      TIMESTAMPTZ  DEFAULT NOW()
     )
   `);
-  // Relax columns if created with UUID type
+  // Drop FK constraints so we can alter column types (integer id vs UUID)
+  try { await db.query(`ALTER TABLE packages DROP CONSTRAINT IF EXISTS packages_user_id_fkey`); } catch {}
+  try { await db.query(`ALTER TABLE packages DROP CONSTRAINT IF EXISTS packages_client_id_fkey`); } catch {}
+  // Relax NOT NULL and types
+  try { await db.query(`ALTER TABLE packages ALTER COLUMN user_id DROP NOT NULL`); } catch {}
+  try { await db.query(`ALTER TABLE packages ALTER COLUMN client_id DROP NOT NULL`); } catch {}
   try { await db.query(`ALTER TABLE packages ALTER COLUMN user_id TYPE TEXT USING user_id::TEXT`); } catch {}
   try { await db.query(`ALTER TABLE packages ALTER COLUMN client_id TYPE TEXT USING client_id::TEXT`); } catch {}
-  try { await db.query(`ALTER TABLE packages ALTER COLUMN user_id DROP NOT NULL`); } catch {}
   try { await db.query(`ALTER TABLE packages ADD COLUMN IF NOT EXISTS weight NUMERIC(10,2)`); } catch {}
   try { await db.query(`ALTER TABLE packages ADD COLUMN IF NOT EXISTS cost NUMERIC(10,2)`); } catch {}
 
@@ -107,10 +111,10 @@ export async function POST(request) {
     const db = getDb();
     await ensureTables(db);
     const result = await db.query(`
-      INSERT INTO packages (user_id, client_id, tracking_number, description, weight, cost, status)
-      VALUES ($1, $2, $3, $4, $5, $6, 'ARRIVED')
+      INSERT INTO packages (client_id, tracking_number, description, weight, cost, status)
+      VALUES ($1, $2, $3, $4, $5, 'ARRIVED')
       RETURNING *
-    `, [String(me.id), String(client_id), tracking_number.trim(), description?.trim() || null, weightNum, cost]);
+    `, [String(client_id), tracking_number.trim(), description?.trim() || null, weightNum, cost]);
 
     // Fetch client name for response
     const clientRes = await db.query(`SELECT name FROM clients WHERE id::text = $1`, [String(client_id)]);
