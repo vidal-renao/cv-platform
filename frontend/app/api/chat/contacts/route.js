@@ -24,54 +24,35 @@ export async function GET(request) {
 
     const db = getDb();
 
+    let roleFilter;
+    if (meRole === 'CLIENT') {
+      roleFilter = "AND u.role IN ('SUPERADMIN','ADMIN')";
+    } else if (meRole === 'STAFF') {
+      roleFilter = "AND u.role IN ('SUPERADMIN','ADMIN','STAFF')";
+    } else {
+      roleFilter = "AND u.role != 'CLIENT'";
+    }
+
     let usersResult;
     try {
-      if (meRole === 'CLIENT') {
-        usersResult = await db.query(
-          "SELECT id, email, username, role, last_seen FROM users WHERE role IN ('SUPERADMIN','ADMIN') AND id != $1 ORDER BY username ASC",
-          [meId]
-        );
-      } else if (meRole === 'STAFF') {
-        usersResult = await db.query(
-          "SELECT id, email, username, role, last_seen FROM users WHERE role IN ('SUPERADMIN','ADMIN','STAFF') AND id != $1 ORDER BY username ASC",
-          [meId]
-        );
-      } else {
-        // ADMIN or SUPERADMIN: all users except self
-        usersResult = await db.query(
-          'SELECT id, email, username, role, last_seen FROM users WHERE id != $1 ORDER BY username ASC',
-          [meId]
-        );
-      }
+      usersResult = await db.query(
+        `SELECT u.id, u.email, u.username, u.role, u.last_seen,
+           COALESCE(
+             (SELECT COUNT(*) FROM chat_messages cm
+              WHERE cm.sender_id = u.id AND cm.recipient_id = $1 AND cm.is_read = false),
+             0
+           )::int AS unread
+         FROM users u
+         WHERE u.id::text != $1::text ${roleFilter}
+         ORDER BY u.username ASC`,
+        [meId]
+      );
     } catch (dbErr) {
       console.error('[CHAT/CONTACTS] DB error:', dbErr.message);
       return Response.json({ error: 'Database error', details: dbErr.message }, { status: 500 });
     }
 
-    const contacts = [];
-    for (const user of usersResult.rows) {
-      let unreadCount = 0;
-      try {
-        const unreadResult = await db.query(
-          'SELECT COUNT(*) AS cnt FROM chat_messages WHERE sender_id = $1 AND recipient_id = $2 AND is_read = false',
-          [user.id, meId]
-        );
-        unreadCount = parseInt(unreadResult.rows[0]?.cnt || '0', 10);
-      } catch {
-        unreadCount = 0;
-      }
-
-      contacts.push({
-        id: user.id,
-        email: user.email,
-        username: user.username,
-        role: user.role,
-        last_seen: user.last_seen,
-        unread: unreadCount,
-      });
-    }
-
-    return Response.json(contacts);
+    return Response.json(usersResult.rows);
   } catch (err) {
     console.error('[CHAT/CONTACTS] Unexpected error:', err.message);
     return Response.json({ error: 'Internal server error', details: err.message }, { status: 500 });

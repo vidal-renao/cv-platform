@@ -48,7 +48,7 @@ export async function POST(request) {
     // Get recipient role
     let recipient;
     try {
-      const result = await db.query('SELECT id, role FROM users WHERE id = $1', [recipientId]);
+      const result = await db.query('SELECT id, role FROM users WHERE id::text = $1::text', [recipientId]);
       recipient = result.rows[0];
     } catch (dbErr) {
       console.error('[CHAT/MESSAGES] DB error fetching recipient:', dbErr.message);

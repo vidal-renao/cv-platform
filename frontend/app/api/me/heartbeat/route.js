@@ -24,7 +24,7 @@ export async function POST(request) {
     const db = getDb();
 
     try {
-      await db.query('UPDATE users SET last_seen = NOW() WHERE id = $1', [meId]);
+      await db.query('UPDATE users SET last_seen = NOW() WHERE id::text = $1::text', [meId]);
     } catch (dbErr) {
       console.error('[HEARTBEAT] DB error:', dbErr.message);
       return Response.json({ error: 'Database error', details: dbErr.message }, { status: 500 });

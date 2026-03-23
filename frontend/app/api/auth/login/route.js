@@ -49,8 +49,7 @@ export async function POST(request) {
     console.log('[LOGIN] user found:', result.rows.length > 0);
 
     if (result.rows.length === 0) {
-      // DEBUG: distinguishable error — remove after diagnosis
-      return Response.json({ error: 'User not found: no account matches this email' }, { status: 401 });
+      return Response.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
     const user = result.rows[0];
@@ -64,8 +63,7 @@ export async function POST(request) {
 
     if (!storedHash) {
       console.error('[LOGIN] No password hash for user id:', user.id);
-      // DEBUG: distinguishable error — remove after diagnosis
-      return Response.json({ error: 'Account has no password hash stored' }, { status: 401 });
+      return Response.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
     let validPassword = false;
@@ -79,8 +77,7 @@ export async function POST(request) {
     console.log('[LOGIN] password valid:', validPassword);
 
     if (!validPassword) {
-      // DEBUG: distinguishable error — remove after diagnosis
-      return Response.json({ error: 'Password mismatch: hash does not match stored value' }, { status: 401 });
+      return Response.json({ error: 'Invalid email or password' }, { status: 401 });
     }
 
     // Step 4: Sign JWT

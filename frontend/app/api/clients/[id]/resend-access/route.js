@@ -49,6 +49,7 @@ export async function POST(request, { params }) {
 
     return Response.json({
       email: client.email,
+      tempPassword,
       phone: client.phone,
       notifications: { email: false, whatsapp: false },
     });

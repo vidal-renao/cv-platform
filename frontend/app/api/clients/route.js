@@ -20,7 +20,7 @@ async function ensureClientsTable(db) {
   await db.query(`
     CREATE TABLE IF NOT EXISTS clients (
       id         UUID         PRIMARY KEY DEFAULT gen_random_uuid(),
-      user_id    UUID         NOT NULL,
+      user_id    TEXT,
       name       VARCHAR(255) NOT NULL,
       phone      VARCHAR(50),
       email      VARCHAR(255),
@@ -29,6 +29,11 @@ async function ensureClientsTable(db) {
       created_at TIMESTAMPTZ  DEFAULT NOW()
     )
   `);
+  // If table was already created with UUID type, relax it to TEXT so integer IDs work
+  try {
+    await db.query(`ALTER TABLE clients ALTER COLUMN user_id TYPE TEXT USING user_id::TEXT`);
+    await db.query(`ALTER TABLE clients ALTER COLUMN user_id DROP NOT NULL`);
+  } catch { /* already TEXT or no column — ignore */ }
 }
 
 // GET /api/clients — list all clients (ADMIN/SUPERADMIN/STAFF)

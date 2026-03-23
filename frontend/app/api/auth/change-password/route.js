@@ -15,7 +15,7 @@ export async function POST(request) {
     const token = authHeader.slice(7);
     let decoded;
     try {
-      decoded = jwt.verify(token, process.env.JWT_SECRET);
+      decoded = jwt.verify(token, process.env.JWT_SECRET || 'cvplatform_super_secure_key_2026');
     } catch {
       return NextResponse.json({ error: 'Invalid or expired token' }, { status: 401 });
     }
@@ -37,7 +37,7 @@ export async function POST(request) {
 
     const db = getDb();
     const result = await db.query(
-      'SELECT password_hash FROM users WHERE id = $1',
+      'SELECT password_hash FROM users WHERE id::text = $1::text',
       [decoded.id]
     );
 
@@ -51,7 +51,7 @@ export async function POST(request) {
     }
 
     const newHash = await bcrypt.hash(newPassword, 10);
-    await db.query('UPDATE users SET password_hash = $1 WHERE id = $2', [newHash, decoded.id]);
+    await db.query('UPDATE users SET password_hash = $1, password = $1 WHERE id::text = $2::text', [newHash, decoded.id]);
 
     return NextResponse.json({ message: 'Password updated successfully' });
   } catch (err) {

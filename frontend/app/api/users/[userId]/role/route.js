@@ -37,14 +37,14 @@ export async function PATCH(request, { params }) {
   }
 
   const { userId } = params;
-  if (userId === me.id) {
+  if (String(userId) === String(me.id)) {
     return Response.json({ error: 'Cannot change your own role' }, { status: 400 });
   }
 
   try {
     const db = getDb();
     const result = await db.query(
-      `UPDATE users SET role = $1 WHERE id = $2 RETURNING id, email, role`,
+      `UPDATE users SET role = $1 WHERE id::text = $2::text RETURNING id, email, role`,
       [role, userId]
     );
     if (result.rows.length === 0) {
