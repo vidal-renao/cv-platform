@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { fetchWithAuth } from '../../../../lib/api';
 import { useTranslation } from '../../../../lib/i18n';
+import { useCurrency } from '../../../../lib/currency';
 
 const STATUS_STYLES = {
   PICKED_UP:        'bg-green-50 text-green-700 border-green-200',
@@ -16,6 +17,7 @@ export default function ClientPackageDetail() {
   const { id } = useParams();
   const router = useRouter();
   const { t } = useTranslation();
+  const { symbol: currencySymbol } = useCurrency();
   const [pkg, setPkg] = useState(null);
   const [comments, setComments] = useState([]);
   const [proof, setProof] = useState(null);
@@ -103,7 +105,7 @@ export default function ClientPackageDetail() {
           </span>
         </div>
         {pkg.weight && <p className="text-sm text-gray-600">{t('clientPortal.packageDetail.weight')} <span className="font-medium">{pkg.weight} kg</span></p>}
-        {pkg.cost && <p className="text-sm text-gray-600">{t('clientPortal.packageDetail.cost')} <span className="font-medium text-green-600">${Number(pkg.cost).toFixed(2)}</span></p>}
+        {pkg.cost && <p className="text-sm text-gray-600">{t('clientPortal.packageDetail.cost')} <span className="font-medium text-green-600">{currencySymbol}{Number(pkg.cost).toFixed(2)}</span></p>}
         {pkg.description && <p className="text-sm text-gray-500">{pkg.description}</p>}
       </div>
 

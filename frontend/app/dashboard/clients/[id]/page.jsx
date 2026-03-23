@@ -5,6 +5,7 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { fetchWithAuth } from '../../../../lib/api';
 import { useTranslation } from '../../../../lib/i18n';
+import { useCurrency } from '../../../../lib/currency';
 
 const STATUS_STYLES = {
   PICKED_UP:        'bg-green-50 text-green-700 border-green-200',
@@ -24,6 +25,7 @@ function StatCard({ label, value }) {
 
 export default function ClientProfilePage() {
   const { t } = useTranslation();
+  const { symbol: currencySymbol } = useCurrency();
   const { id } = useParams();
   const router = useRouter();
   const [profile, setProfile] = useState(null);
@@ -124,7 +126,7 @@ export default function ClientProfilePage() {
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-500">{pkg.weight ? `${pkg.weight} kg` : '—'}</td>
                   <td className="px-6 py-4 text-sm text-gray-700 font-medium">
-                    {pkg.cost ? `$${Number(pkg.cost).toFixed(2)}` : '—'}
+                    {pkg.cost ? `${currencySymbol}${Number(pkg.cost).toFixed(2)}` : '—'}
                   </td>
                   <td className="px-6 py-4 text-sm text-gray-400">
                     {new Date(pkg.created_at).toLocaleDateString()}

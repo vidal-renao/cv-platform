@@ -144,6 +144,7 @@
       "clients": "Clients",
       "packages": "Packages",
       "users": "Users",
+      "settings": "Settings",
       "viewSite": "View website"
     },
     "topbar": {

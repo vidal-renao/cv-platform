@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslation } from '../../../lib/i18n';
 import { fetchWithAuth } from '../../../lib/api';
+import { useCurrency } from '../../../lib/currency';
 
 const STATUS_STYLES = {
   PICKED_UP:        'bg-green-50 text-green-700 border-green-200',
@@ -163,6 +164,7 @@ function PackageModal({ onClose, onSaved, editPackage }) {
 
 export default function PackagesPage() {
   const { t } = useTranslation();
+  const { symbol: currencySymbol } = useCurrency();
   const router = useRouter();
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -269,7 +271,7 @@ export default function PackagesPage() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {pkg.weight ? `${pkg.weight} kg` : '—'}
-                    {pkg.cost ? <span className="ml-2 font-medium text-gray-700">${Number(pkg.cost).toFixed(2)}</span> : ''}
+                    {pkg.cost ? <span className="ml-2 font-medium text-gray-700">{currencySymbol}{Number(pkg.cost).toFixed(2)}</span> : ''}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-3">
                     <button

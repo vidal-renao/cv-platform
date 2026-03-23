@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { fetchWithAuth } from '../../../lib/api';
 import { useTranslation } from '../../../lib/i18n';
+import { useCurrency } from '../../../lib/currency';
 
 const STATUS_STYLES = {
   PICKED_UP:        'bg-green-50 text-green-700 border-green-200',
@@ -15,6 +16,7 @@ const STATUS_FALLBACK = 'bg-gray-50 text-gray-600 border-gray-200';
 export default function ClientDashboard() {
   const router = useRouter();
   const { t } = useTranslation();
+  const { symbol: currencySymbol } = useCurrency();
   const [packages, setPackages] = useState([]);
   const [loading, setLoading] = useState(true);
   const [clientInfo, setClientInfo] = useState(null);
@@ -92,7 +94,7 @@ export default function ClientDashboard() {
         doc.text(pkg.tracking_number ?? '—', cols[0], y);
         doc.text(pkg.status?.replace(/_/g, ' ') ?? '—', cols[1], y);
         doc.text(pkg.weight ? `${pkg.weight} kg` : '—', cols[2], y);
-        doc.text(pkg.cost ? `$${Number(pkg.cost).toFixed(2)}` : '—', cols[3], y);
+        doc.text(pkg.cost ? `${currencySymbol}${Number(pkg.cost).toFixed(2)}` : '—', cols[3], y);
         doc.text(new Date(pkg.created_at).toLocaleDateString(), cols[4], y);
         y += 8;
       });
@@ -203,7 +205,7 @@ export default function ClientDashboard() {
         </div>
         <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5">
           <p className="text-xs font-semibold text-gray-400 uppercase">{t('clientPortal.stats.total')}</p>
-          <p className="text-3xl font-black text-green-600 mt-1">${totalSpent.toFixed(2)}</p>
+          <p className="text-3xl font-black text-green-600 mt-1">{currencySymbol}{totalSpent.toFixed(2)}</p>
           <p className="text-xs text-gray-400 mt-1">{t('clientPortal.stats.spent')}</p>
         </div>
       </div>
@@ -242,7 +244,7 @@ export default function ClientDashboard() {
                       year: 'numeric', month: 'short', day: 'numeric'
                     })}
                     {pkg.weight ? ` · ${pkg.weight} kg` : ''}
-                    {pkg.cost ? ` · $${Number(pkg.cost).toFixed(2)}` : ''}
+                    {pkg.cost ? ` · ${currencySymbol}${Number(pkg.cost).toFixed(2)}` : ''}
                   </p>
                 </div>
                 <div className="flex items-center gap-3">

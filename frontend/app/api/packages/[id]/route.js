@@ -3,7 +3,12 @@ export const runtime = 'nodejs';
 import jwt from 'jsonwebtoken';
 import { getDb } from '../../../../lib/db';
 
-const COST_PER_KG = 5.00;
+async function getCostPerKg(db) {
+  try {
+    const r = await db.query(`SELECT cost_per_kg FROM app_settings WHERE id = 1`);
+    return parseFloat(r.rows[0]?.cost_per_kg) || 5.00;
+  } catch { return 5.00; }
+}
 
 function getUser(request) {
   const auth = request.headers.get('authorization') || '';
@@ -52,10 +57,11 @@ export async function PUT(request, { params }) {
 
   const { tracking_number, client_id, description, weight } = body ?? {};
   const weightNum = weight != null && weight !== '' ? parseFloat(weight) : null;
-  const cost = weightNum != null ? parseFloat((weightNum * COST_PER_KG).toFixed(2)) : null;
 
   try {
     const db = getDb();
+    const costPerKg = await getCostPerKg(db);
+    const cost = weightNum != null ? parseFloat((weightNum * costPerKg).toFixed(2)) : null;
     const result = await db.query(`
       UPDATE packages
       SET tracking_number = COALESCE($1, tracking_number),

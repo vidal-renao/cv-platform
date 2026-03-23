@@ -6,6 +6,7 @@ import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { fetchWithAuth } from '../../../../lib/api';
 import { useTranslation } from '../../../../lib/i18n';
+import { useCurrency } from '../../../../lib/currency';
 
 const DeliveryProofModal = dynamic(() => import('../../../../components/DeliveryProofModal'), { ssr: false });
 
@@ -19,6 +20,7 @@ const VALID_STATUSES = ['ARRIVED', 'READY_FOR_PICKUP', 'PICKED_UP'];
 
 export default function AdminPackageDetail() {
   const { t } = useTranslation();
+  const { symbol: currencySymbol } = useCurrency();
   const { id } = useParams();
   const router = useRouter();
   const [pkg, setPkg] = useState(null);
@@ -140,7 +142,7 @@ export default function AdminPackageDetail() {
             <p className="text-sm text-gray-400 mt-1">
               {t('packagesDetail.clientLabel')}: <span className="text-gray-600 font-medium">{pkg.client_name || '—'}</span>
               {pkg.weight ? ` · ${pkg.weight} kg` : ''}
-              {pkg.cost ? ` · $${Number(pkg.cost).toFixed(2)}` : ''}
+              {pkg.cost ? ` · ${currencySymbol}${Number(pkg.cost).toFixed(2)}` : ''}
             </p>
             {pkg.description && <p className="text-sm text-gray-500 mt-2">{pkg.description}</p>}
           </div>
