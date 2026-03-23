@@ -52,23 +52,24 @@ export async function PUT(request) {
 
   const { currency_symbol, currency_code, cost_per_kg } = body ?? {};
 
+  const sym  = currency_symbol?.trim() || '$';
+  const code = currency_code?.trim()   || 'USD';
+  const rate = cost_per_kg != null ? parseFloat(cost_per_kg) : 5.00;
+
   try {
     const db = getDb();
     await ensureSettings(db);
-    await db.query(`
-      UPDATE app_settings
-      SET currency_symbol = COALESCE($1, currency_symbol),
-          currency_code   = COALESCE($2, currency_code),
-          cost_per_kg     = COALESCE($3, cost_per_kg),
-          updated_at      = NOW()
-      WHERE id = 1
-    `, [
-      currency_symbol?.trim() || null,
-      currency_code?.trim()   || null,
-      cost_per_kg != null ? parseFloat(cost_per_kg) : null,
-    ]);
-    const result = await db.query(`SELECT currency_symbol, currency_code, cost_per_kg FROM app_settings WHERE id = 1`);
-    return Response.json(result.rows[0]);
+    const result = await db.query(`
+      INSERT INTO app_settings (id, currency_symbol, currency_code, cost_per_kg, updated_at)
+      VALUES (1, $1, $2, $3, NOW())
+      ON CONFLICT (id) DO UPDATE
+        SET currency_symbol = EXCLUDED.currency_symbol,
+            currency_code   = EXCLUDED.currency_code,
+            cost_per_kg     = EXCLUDED.cost_per_kg,
+            updated_at      = NOW()
+      RETURNING currency_symbol, currency_code, cost_per_kg
+    `, [sym, code, rate]);
+    return Response.json(result.rows[0] ?? { currency_symbol: sym, currency_code: code, cost_per_kg: rate });
   } catch (err) {
     return Response.json({ error: err.message }, { status: 500 });
   }
