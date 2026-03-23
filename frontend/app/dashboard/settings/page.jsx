@@ -41,14 +41,26 @@ export default function SettingsPage() {
     setSaved(false);
     const selected = CURRENCIES.find(c => c.code === currencyCode) || CURRENCIES[0];
     try {
-      await fetchWithAuth('/settings', {
+      const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+      const res = await fetch('/api/settings', {
         method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(token && { Authorization: `Bearer ${token}` }),
+        },
         body: JSON.stringify({
           currency_code:   selected.code,
           currency_symbol: selected.symbol,
           cost_per_kg:     parseFloat(costPerKg) || 5.00,
         }),
       });
+      if (!res.ok) {
+        const text = await res.text();
+        let msg = `HTTP ${res.status}`;
+        try { msg = JSON.parse(text).error || msg; } catch { msg = text.slice(0, 150) || msg; }
+        setError(msg);
+        return;
+      }
       clearCurrencyCache();
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);
@@ -66,13 +78,13 @@ export default function SettingsPage() {
       {/* Currency & pricing */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 space-y-8">
         <div>
-          <h3 className="text-lg font-bold text-gray-900">Moneda y tarifas</h3>
-          <p className="mt-1 text-sm text-gray-500">Configura la moneda que se muestra en toda la plataforma y el precio por kg.</p>
+          <h3 className="text-lg font-bold text-gray-900">{t('settings.currencyTitle')}</h3>
+          <p className="mt-1 text-sm text-gray-500">{t('settings.currencySubtitle')}</p>
         </div>
 
         <div className="space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Moneda</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('settings.currencyLabel')}</label>
             <select
               value={currencyCode}
               onChange={e => setCurrencyCode(e.target.value)}
@@ -88,7 +100,7 @@ export default function SettingsPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Precio por kg</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('settings.costPerKgLabel')}</label>
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-medium">
                 {CURRENCIES.find(c => c.code === currencyCode)?.symbol}
@@ -102,12 +114,12 @@ export default function SettingsPage() {
                 className="block w-full border border-gray-300 rounded-lg shadow-sm py-2.5 pl-8 pr-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm"
               />
             </div>
-            <p className="mt-1 text-xs text-gray-400">Se usa para calcular el costo automáticamente al registrar un paquete con peso.</p>
+            <p className="mt-1 text-xs text-gray-400">{t('settings.costPerKgHint')}</p>
           </div>
         </div>
 
         {error && <p className="text-sm text-red-600">{error}</p>}
-        {saved  && <p className="text-sm text-green-600">Configuración guardada correctamente.</p>}
+        {saved  && <p className="text-sm text-green-600">{t('settings.savedOk')}</p>}
 
         <div className="pt-6 border-t border-gray-100 flex justify-end space-x-3">
           <button

@@ -356,6 +356,12 @@
     }
   },
   "settings": {
+    "currencyTitle": "Currency & pricing",
+    "currencySubtitle": "Set the currency displayed across the platform and the price per kg.",
+    "currencyLabel": "Currency",
+    "costPerKgLabel": "Price per kg",
+    "costPerKgHint": "Used to automatically calculate cost when a package weight is entered.",
+    "savedOk": "Settings saved successfully.",
     "profileTitle": "Profile Settings",
     "profileSubtitle": "Update your account information and preferences.",
     "companyNameLabel": "Company Name",

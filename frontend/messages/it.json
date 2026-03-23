@@ -356,6 +356,12 @@
     }
   },
   "settings": {
+    "currencyTitle": "Valuta e tariffe",
+    "currencySubtitle": "Imposta la valuta visualizzata su tutta la piattaforma e il prezzo per kg.",
+    "currencyLabel": "Valuta",
+    "costPerKgLabel": "Prezzo per kg",
+    "costPerKgHint": "Usato per calcolare automaticamente il costo quando si registra un pacco con peso.",
+    "savedOk": "Impostazioni salvate con successo.",
     "profileTitle": "Impostazioni profilo",
     "profileSubtitle": "Aggiorna le informazioni del tuo account e le preferenze.",
     "companyNameLabel": "Nome azienda",

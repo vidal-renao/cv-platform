@@ -356,6 +356,12 @@
     }
   },
   "settings": {
+    "currencyTitle": "Devise et tarifs",
+    "currencySubtitle": "Définissez la devise affichée sur toute la plateforme et le prix au kg.",
+    "currencyLabel": "Devise",
+    "costPerKgLabel": "Prix par kg",
+    "costPerKgHint": "Utilisé pour calculer automatiquement le coût lors de l'enregistrement d'un colis avec un poids.",
+    "savedOk": "Paramètres enregistrés avec succès.",
     "profileTitle": "Paramètres du profil",
     "profileSubtitle": "Mettez à jour les informations de votre compte et vos préférences.",
     "companyNameLabel": "Nom de l'entreprise",

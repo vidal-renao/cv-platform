@@ -356,6 +356,12 @@
     }
   },
   "settings": {
+    "currencyTitle": "Moneda y tarifas",
+    "currencySubtitle": "Configura la moneda que se muestra en toda la plataforma y el precio por kg.",
+    "currencyLabel": "Moneda",
+    "costPerKgLabel": "Precio por kg",
+    "costPerKgHint": "Se usa para calcular el costo automáticamente al registrar un paquete con peso.",
+    "savedOk": "Configuración guardada correctamente.",
     "profileTitle": "Configuración de Perfil",
     "profileSubtitle": "Actualiza la información de tu cuenta y preferencias.",
     "companyNameLabel": "Nombre de la empresa",

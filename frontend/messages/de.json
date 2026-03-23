@@ -356,6 +356,12 @@
     }
   },
   "settings": {
+    "currencyTitle": "Währung & Preise",
+    "currencySubtitle": "Lege die Währung für die gesamte Plattform und den Preis pro kg fest.",
+    "currencyLabel": "Währung",
+    "costPerKgLabel": "Preis pro kg",
+    "costPerKgHint": "Wird verwendet, um den Preis automatisch zu berechnen, wenn ein Paketgewicht angegeben wird.",
+    "savedOk": "Einstellungen erfolgreich gespeichert.",
     "profileTitle": "Profileinstellungen",
     "profileSubtitle": "Aktualisiere deine Kontoinformationen und Einstellungen.",
     "companyNameLabel": "Unternehmensname",
