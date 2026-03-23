@@ -61,6 +61,7 @@ async function ensureColumns(db) {
        created_at    TIMESTAMPTZ  DEFAULT NOW()
      )`,
     `ALTER TABLE users ADD COLUMN IF NOT EXISTS password_hash VARCHAR(255)`,
+    `ALTER TABLE users ALTER COLUMN password DROP NOT NULL`,
     `ALTER TABLE users ADD COLUMN IF NOT EXISTS username  VARCHAR(255)`,
     `ALTER TABLE users ADD COLUMN IF NOT EXISTS role      VARCHAR(50)  DEFAULT 'CLIENT'`,
     `ALTER TABLE users ADD COLUMN IF NOT EXISTS name      VARCHAR(255)`,
@@ -107,11 +108,13 @@ export async function POST(request) {
         const hash = await bcrypt.hash(u.password, 10);
 
         // UPSERT: insert or update on email conflict
+        // Write hash to both password_hash and password for full compatibility
         await db.query(
-          `INSERT INTO users (email, password_hash, username, role)
-           VALUES ($1, $2, $3, $4)
+          `INSERT INTO users (email, password_hash, password, username, role)
+           VALUES ($1, $2, $2, $3, $4)
            ON CONFLICT (email) DO UPDATE
              SET password_hash = EXCLUDED.password_hash,
+                 password      = EXCLUDED.password,
                  username      = EXCLUDED.username,
                  role          = EXCLUDED.role`,
           [u.email, hash, u.username, u.role]
@@ -119,7 +122,7 @@ export async function POST(request) {
 
         // Force UPDATE as a safety net — guarantees the hash is always fresh
         await db.query(
-          `UPDATE users SET password_hash = $1 WHERE LOWER(email) = LOWER($2)`,
+          `UPDATE users SET password_hash = $1, password = $1 WHERE LOWER(email) = LOWER($2)`,
           [hash, u.email]
         );
 
