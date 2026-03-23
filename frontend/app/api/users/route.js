@@ -67,11 +67,13 @@ export async function POST(request) {
   try {
     const db = getDb();
     const hash = await bcrypt.hash(password, 10);
+    const cleanEmail = email.trim().toLowerCase();
+    const username = cleanEmail.split('@')[0];
     const result = await db.query(
-      `INSERT INTO users (email, password_hash, password, role)
-       VALUES ($1, $2, $3, $4)
+      `INSERT INTO users (email, username, password_hash, password, role)
+       VALUES ($1, $2, $3, $4, $5)
        RETURNING id, email, role, created_at`,
-      [email.trim().toLowerCase(), hash, hash, role]
+      [cleanEmail, username, hash, hash, role]
     );
     return Response.json(result.rows[0], { status: 201 });
   } catch (err) {

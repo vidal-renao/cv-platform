@@ -96,7 +96,7 @@ export default function UsersPage() {
 
   // Staff-restricted role options (cannot assign above STAFF)
   const availableRoles = currentUser?.role === 'SUPERADMIN'
-    ? ['SUPERADMIN', 'ADMIN', 'STAFF']
+    ? ['SUPERADMIN', 'ADMIN', 'STAFF', 'CLIENT']
     : ROLE_OPTIONS;
 
   const THRESHOLD = 5 * 60 * 1000;
