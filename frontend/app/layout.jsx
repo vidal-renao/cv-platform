@@ -30,6 +30,9 @@ export const metadata = {
   authors: [{ name: 'CV Platform' }],
   creator: 'CV Platform',
   publisher: 'CV Platform',
+  verification: {
+    google: 'UdD4G_Ehlprx75eLVin75rXJvSr2z53DBtHueMBLhCw',
+  },
   robots: {
     index: true,
     follow: true,
