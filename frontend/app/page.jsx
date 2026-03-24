@@ -165,7 +165,7 @@ export default function Home() {
           {STATS_KEYS.map(({ value, key }) => (
             <div key={key}>
               <p className="text-3xl sm:text-4xl font-extrabold">{value}</p>
-              <p className="text-blue-200 text-sm mt-1">{t(`stats.${key}`)}</p>
+              <p className="text-white/80 text-sm mt-1">{t(`stats.${key}`)}</p>
             </div>
           ))}
         </div>
@@ -213,7 +213,7 @@ export default function Home() {
       {/* ── TRUST BAR ───────────────────────────────────────── */}
       <section className="bg-white border-y border-gray-100 px-6 py-10">
         <div className="max-w-5xl mx-auto">
-          <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-widest mb-8">
+          <p className="text-center text-xs font-bold text-gray-600 uppercase tracking-widest mb-8">
             {t('trustBar.label')}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-10">
@@ -309,7 +309,7 @@ export default function Home() {
                   </div>
                   <div>
                     <p className="text-sm font-semibold text-slate-900">{t(`testimonials.items.${i}.name`)}</p>
-                    <p className="text-xs text-slate-400">{t(`testimonials.items.${i}.company`)}</p>
+                    <p className="text-xs text-slate-500">{t(`testimonials.items.${i}.company`)}</p>
                   </div>
                 </div>
               </div>
@@ -466,8 +466,9 @@ export default function Home() {
                   )}
 
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('contact.nameLabel')}</label>
+                    <label htmlFor="contact-name" className="block text-sm font-medium text-slate-700 mb-1.5">{t('contact.nameLabel')}</label>
                     <input
+                      id="contact-name"
                       type="text"
                       required
                       value={contactForm.name}
@@ -477,8 +478,9 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('contact.emailFieldLabel')}</label>
+                    <label htmlFor="contact-email" className="block text-sm font-medium text-slate-700 mb-1.5">{t('contact.emailFieldLabel')}</label>
                     <input
+                      id="contact-email"
                       type="email"
                       required
                       value={contactForm.email}
@@ -488,8 +490,9 @@ export default function Home() {
                     />
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1.5">{t('contact.messageLabel')}</label>
+                    <label htmlFor="contact-message" className="block text-sm font-medium text-slate-700 mb-1.5">{t('contact.messageLabel')}</label>
                     <textarea
+                      id="contact-message"
                       required
                       rows={5}
                       value={contactForm.message}
@@ -548,6 +551,7 @@ export default function Home() {
                     href={href}
                     target="_blank"
                     rel="noopener noreferrer"
+                    aria-label={name}
                     title={name}
                     className="w-9 h-9 bg-slate-800 hover:bg-blue-600 rounded-lg flex items-center justify-center transition"
                   >

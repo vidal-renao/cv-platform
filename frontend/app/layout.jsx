@@ -3,7 +3,7 @@ import { I18nProvider } from '../lib/i18n';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://cvplatform.com';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://dnamar.ch';
 
 export const metadata = {
   metadataBase: new URL(SITE_URL),
@@ -77,6 +77,9 @@ export const metadata = {
       { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
     ],
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+  },
+  alternates: {
+    canonical: SITE_URL,
   },
   manifest: '/manifest.json',
   themeColor: [
