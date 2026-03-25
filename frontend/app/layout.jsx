@@ -2,6 +2,7 @@ import './globals.css';
 import { I18nProvider } from '../lib/i18n';
 import Navbar from '../components/Navbar';
 import WhatsAppButton from '../components/WhatsAppButton';
+import ServiceWorkerRegistration from '../components/ServiceWorkerRegistration';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://dnamar.ch';
 
@@ -86,6 +87,11 @@ export const metadata = {
     { media: '(prefers-color-scheme: light)', color: '#2563eb' },
     { media: '(prefers-color-scheme: dark)', color: '#1e3a5f' },
   ],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: 'CV Platform',
+  },
 };
 
 const jsonLd = {
@@ -128,6 +134,7 @@ export default function RootLayout({ children }) {
           {children}
           <WhatsAppButton />
         </I18nProvider>
+        <ServiceWorkerRegistration />
       </body>
     </html>
   );
