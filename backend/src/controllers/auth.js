@@ -1,10 +1,12 @@
 const crypto = require('crypto');
 const db = require('../db');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { Resend } = require('resend');
+const { getResendClient } = require('../services/emailClient');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function hashPublicToken(token) {
+  return crypto.createHash('sha256').update(token, 'utf8').digest('hex');
+}
 
 // REGISTER
 // Auto-assigns CLIENT role if the email/phone matches an existing client record
@@ -143,19 +145,27 @@ const forgotPassword = async (req, res, next) => {
 
     const user = result.rows[0];
     const token = crypto.randomBytes(32).toString('hex');
+    const tokenHash = hashPublicToken(token);
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
     // Invalidate any previous tokens for this user
     await db.query('DELETE FROM password_resets WHERE user_id = $1', [user.id]);
 
     await db.query(
-      'INSERT INTO password_resets (user_id, token, expires_at) VALUES ($1, $2, $3)',
-      [user.id, token, expiresAt]
+      `INSERT INTO password_resets (user_id, token, expires_at, purpose)
+       VALUES ($1, $2, $3, 'password_reset')`,
+      [user.id, tokenHash, expiresAt]
     );
 
     const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
 
     try {
+      const resend = getResendClient();
+      if (!resend) {
+        console.warn('[Auth] RESEND_API_KEY missing; password reset email skipped.');
+        return res.json({ message: 'Si ese email existe, recibirÃ¡s un enlace de recuperaciÃ³n.' });
+      }
+
       await resend.emails.send({
         from: process.env.RESEND_FROM_EMAIL || 'noreply@example.com',
         to: user.email,
@@ -197,11 +207,12 @@ const resetPassword = async (req, res, next) => {
       return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres.' });
     }
 
+    const tokenHash = hashPublicToken(token);
     const result = await db.query(
       `SELECT pr.user_id, pr.expires_at, pr.used_at
        FROM password_resets pr
        WHERE pr.token = $1`,
-      [token]
+      [tokenHash]
     );
 
     if (result.rows.length === 0) {
@@ -222,7 +233,7 @@ const resetPassword = async (req, res, next) => {
     await db.query('UPDATE users SET password_hash = $1 WHERE id = $2', [newHash, reset.user_id]);
 
     // Mark token as used (single-use enforcement)
-    await db.query('UPDATE password_resets SET used_at = NOW() WHERE token = $1', [token]);
+    await db.query('UPDATE password_resets SET used_at = NOW() WHERE token = $1', [tokenHash]);
 
     res.json({ message: 'Contraseña actualizada correctamente.' });
   } catch (err) {

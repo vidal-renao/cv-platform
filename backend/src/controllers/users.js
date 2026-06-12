@@ -1,5 +1,5 @@
 const db     = require('../db');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 // Roles a SUPERADMIN may assign; ADMIN (legacy) may not promote to SUPERADMIN
 const ALL_ROLES       = ['SUPERADMIN', 'ADMIN', 'STAFF', 'CLIENT'];

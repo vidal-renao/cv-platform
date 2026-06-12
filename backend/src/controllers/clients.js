@@ -1,11 +1,15 @@
 const crypto = require('crypto');
 const db = require('../db');
-const bcrypt = require('bcrypt');
-const { Resend } = require('resend');
+const bcrypt = require('bcryptjs');
 const twilio = require('twilio');
+const { getResendClient } = require('../services/emailClient');
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-const twilioClient = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+function getTwilioClient() {
+  if (!process.env.TWILIO_ACCOUNT_SID || !process.env.TWILIO_AUTH_TOKEN) {
+    return null;
+  }
+  return twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+}
 
 /**
  * GET ALL CLIENTS
@@ -178,7 +182,9 @@ const getClientProfile = async (req, res, next) => {
 /**
  * GENERATE ACCESS — creates a CLIENT user account and sends welcome notifications
  */
-const TEMP_PASSWORD = process.env.DEFAULT_TEMP_PASSWORD || 'Temporal123!';
+function hashPublicToken(token) {
+  return crypto.createHash('sha256').update(token, 'utf8').digest('hex');
+}
 
 const generateAccess = async (req, res, next) => {
   try {
@@ -208,13 +214,23 @@ const generateAccess = async (req, res, next) => {
       return res.status(400).json({ error: 'Este cliente ya tiene una cuenta activa.' });
     }
 
-    const passwordHash = await bcrypt.hash(TEMP_PASSWORD, 10);
-    await db.query(
-      `INSERT INTO users (email, password_hash, role) VALUES ($1, $2, 'CLIENT')`,
+    const unreachablePassword = crypto.randomBytes(48).toString('base64url');
+    const passwordHash = await bcrypt.hash(unreachablePassword, 10);
+    const createdUser = await db.query(
+      `INSERT INTO users (email, password_hash, role) VALUES ($1, $2, 'CLIENT') RETURNING id`,
       [client.email, passwordHash]
     );
 
-    const loginUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/login`;
+    const token = crypto.randomBytes(32).toString('hex');
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    await db.query('DELETE FROM password_resets WHERE user_id = $1', [createdUser.rows[0].id]);
+    await db.query(
+      `INSERT INTO password_resets (user_id, token, expires_at, purpose, created_by_user_id)
+       VALUES ($1, $2, $3, 'client_access', $4)`,
+      [createdUser.rows[0].id, hashPublicToken(token), expiresAt, userId]
+    );
+
+    const accessUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
     const notifications = { whatsapp: false, email: false };
 
     // ── WhatsApp via Twilio ──────────────────────────────────────────────
@@ -223,6 +239,8 @@ const generateAccess = async (req, res, next) => {
       const rawPhone = client.phone.replace(/[\s\-().]/g, '');
       const toPhone = rawPhone.startsWith('+') ? rawPhone : `+${rawPhone}`;
       try {
+        const twilioClient = getTwilioClient();
+        if (!twilioClient) throw new Error('Twilio credentials are not configured');
         await twilioClient.messages.create({
           from: process.env.TWILIO_WHATSAPP_FROM || 'whatsapp:+14155238886',
           to: `whatsapp:${toPhone}`,
@@ -230,9 +248,8 @@ const generateAccess = async (req, res, next) => {
             `¡Hola ${client.name}! 👋\n\n` +
             `Tu acceso a *CV Platform* ha sido creado.\n\n` +
             `📧 *Usuario:* ${client.email}\n` +
-            `🔑 *Contraseña temporal:* ${TEMP_PASSWORD}\n\n` +
-            `👉 Ingresa aquí: ${loginUrl}\n\n` +
-            `Te recomendamos cambiar tu contraseña después del primer inicio de sesión.`,
+            `Enlace seguro: ${accessUrl}\n\n` +
+            `El enlace expira automaticamente.`,
         });
         notifications.whatsapp = true;
         console.log(`[Access] WhatsApp sent → ${toPhone}`);
@@ -244,6 +261,8 @@ const generateAccess = async (req, res, next) => {
     // ── Welcome email via Resend ─────────────────────────────────────────
     if (process.env.RESEND_API_KEY) {
       try {
+        const resend = getResendClient();
+        if (!resend) throw new Error('RESEND_API_KEY is not configured');
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL || 'noreply@example.com',
           to: client.email,
@@ -260,11 +279,11 @@ const generateAccess = async (req, res, next) => {
                 <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:20px 24px;margin-bottom:24px">
                   <p style="margin:0 0 8px;font-size:14px;color:#64748b">Usuario (email)</p>
                   <p style="margin:0 0 16px;font-size:18px;font-weight:700">${client.email}</p>
-                  <p style="margin:0 0 8px;font-size:14px;color:#64748b">Contraseña temporal</p>
-                  <p style="margin:0;font-size:18px;font-weight:700;letter-spacing:1px">${TEMP_PASSWORD}</p>
+                  <p style="margin:0 0 8px;font-size:14px;color:#64748b">Enlace seguro</p>
+                  <p style="margin:0;font-size:14px;font-weight:700;word-break:break-all">${accessUrl}</p>
                 </div>
 
-                <a href="${loginUrl}"
+                <a href="${accessUrl}"
                    style="display:inline-block;background:#2563eb;color:white;text-decoration:none;padding:14px 28px;border-radius:8px;font-weight:600;font-size:15px">
                   Iniciar sesión →
                 </a>
@@ -287,7 +306,7 @@ const generateAccess = async (req, res, next) => {
 
     res.json({
       message: 'Acceso generado correctamente.',
-      tempPassword: TEMP_PASSWORD,
+      accessUrl,
       email: client.email,
       phone: client.phone || null,
       notifications,
@@ -339,8 +358,9 @@ const resendAccess = async (req, res, next) => {
 
     await db.query('DELETE FROM password_resets WHERE user_id = $1', [user.id]);
     await db.query(
-      'INSERT INTO password_resets (user_id, token, expires_at) VALUES ($1, $2, $3)',
-      [user.id, token, expiresAt]
+      `INSERT INTO password_resets (user_id, token, expires_at, purpose, created_by_user_id)
+       VALUES ($1, $2, $3, 'client_access_resend', $4)`,
+      [user.id, hashPublicToken(token), expiresAt, userId]
     );
 
     const resetUrl = `${process.env.FRONTEND_URL || 'http://localhost:3000'}/reset-password?token=${token}`;
@@ -351,6 +371,8 @@ const resendAccess = async (req, res, next) => {
       const rawPhone = client.phone.replace(/[\s\-().]/g, '');
       const toPhone = rawPhone.startsWith('+') ? rawPhone : `+${rawPhone}`;
       try {
+        const twilioClient = getTwilioClient();
+        if (!twilioClient) throw new Error('Twilio credentials are not configured');
         await twilioClient.messages.create({
           from: process.env.TWILIO_WHATSAPP_FROM || 'whatsapp:+14155238886',
           to: `whatsapp:${toPhone}`,
@@ -371,6 +393,8 @@ const resendAccess = async (req, res, next) => {
     // ── Email via Resend ─────────────────────────────────────────────────
     if (process.env.RESEND_API_KEY) {
       try {
+        const resend = getResendClient();
+        if (!resend) throw new Error('RESEND_API_KEY is not configured');
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL || 'noreply@example.com',
           to: resolvedEmail,

@@ -83,15 +83,18 @@ export const metadata = {
     canonical: SITE_URL,
   },
   manifest: '/manifest.json',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#2563eb' },
-    { media: '(prefers-color-scheme: dark)', color: '#1e3a5f' },
-  ],
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
     title: 'CV Platform',
   },
+};
+
+export const viewport = {
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#2563eb' },
+    { media: '(prefers-color-scheme: dark)', color: '#1e3a5f' },
+  ],
 };
 
 const jsonLd = {

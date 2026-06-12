@@ -1,6 +1,4 @@
-const { Resend } = require('resend');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const { getResendClient } = require('../services/emailClient');
 
 /**
  * POST /api/contact  — public, no auth
@@ -17,6 +15,11 @@ const sendContact = async (req, res, next) => {
     const toEmail = process.env.ADMIN_EMAIL || process.env.RESEND_FROM_EMAIL;
     if (!toEmail) {
       return res.status(500).json({ error: 'Configuración de email no disponible.' });
+    }
+
+    const resend = getResendClient();
+    if (!resend) {
+      return res.status(503).json({ error: 'Servicio de email no configurado.' });
     }
 
     await resend.emails.send({

@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -34,7 +35,7 @@ export default function AdminPackageDetail() {
   const [changingStatus, setChangingStatus] = useState(false);
   const commentEndRef = useRef(null);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       const [pkgResult, commentsResult] = await Promise.allSettled([
         fetchWithAuth(`/packages/${id}`),
@@ -48,9 +49,9 @@ export default function AdminPackageDetail() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
-  useEffect(() => { loadData(); }, [id]);
+  useEffect(() => { loadData(); }, [loadData]);
 
   useEffect(() => {
     commentEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -172,8 +173,8 @@ export default function AdminPackageDetail() {
           <div className="mt-4 pt-4 border-t border-gray-100 flex items-center gap-3 flex-wrap">
             <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             <span className="text-sm text-green-700 font-medium">{t('packagesDetail.proofRecorded')}</span>
-            {proof.signature_data && <img src={proof.signature_data} alt="Signature" className="h-12 border border-gray-200 rounded" />}
-            {proof.photo_data && <img src={proof.photo_data} alt="Photo" className="h-12 border border-gray-200 rounded object-cover" />}
+            {proof.signature_data && <Image src={proof.signature_data} alt="Signature" width={96} height={48} unoptimized className="h-12 border border-gray-200 rounded object-contain" />}
+            {proof.photo_data && <Image src={proof.photo_data} alt="Photo" width={96} height={48} unoptimized className="h-12 border border-gray-200 rounded object-cover" />}
             {proof.notes && <span className="text-xs text-gray-400">{proof.notes}</span>}
           </div>
         )}

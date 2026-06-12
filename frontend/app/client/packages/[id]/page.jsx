@@ -1,6 +1,7 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react';
+import { useCallback, useEffect, useState, useRef } from 'react';
+import Image from 'next/image';
 import { useParams, useRouter } from 'next/navigation';
 import { fetchWithAuth } from '../../../../lib/api';
 import { useTranslation } from '../../../../lib/i18n';
@@ -26,7 +27,7 @@ export default function ClientPackageDetail() {
   const [loading, setLoading] = useState(true);
   const commentEndRef = useRef(null);
 
-  const loadData = async () => {
+  const loadData = useCallback(async () => {
     try {
       const [pkgData, commentsData] = await Promise.all([
         fetchWithAuth(`/client/packages/${id}`),
@@ -42,15 +43,15 @@ export default function ClientPackageDetail() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [id]);
 
-  useEffect(() => { loadData(); }, [id]);
+  useEffect(() => { loadData(); }, [loadData]);
 
   // Poll for updates every 30 seconds (proof of delivery, comments)
   useEffect(() => {
     const interval = setInterval(loadData, 30_000);
     return () => clearInterval(interval);
-  }, [id]);
+  }, [loadData]);
 
   useEffect(() => {
     commentEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -124,13 +125,13 @@ export default function ClientPackageDetail() {
             {proof.signature_data && (
               <div>
                 <p className="text-xs text-green-600 mb-1 font-medium">{t('clientPortal.packageDetail.signature')}</p>
-                <img src={proof.signature_data} alt="Firma" className="border border-green-200 rounded-lg max-h-28 bg-white" />
+                <Image src={proof.signature_data} alt="Firma" width={220} height={112} unoptimized className="border border-green-200 rounded-lg max-h-28 bg-white object-contain" />
               </div>
             )}
             {proof.photo_data && (
               <div>
                 <p className="text-xs text-green-600 mb-1 font-medium">{t('clientPortal.packageDetail.photo')}</p>
-                <img src={proof.photo_data} alt="Foto de entrega" className="border border-green-200 rounded-lg max-h-28 object-cover" />
+                <Image src={proof.photo_data} alt="Foto de entrega" width={220} height={112} unoptimized className="border border-green-200 rounded-lg max-h-28 object-cover" />
               </div>
             )}
           </div>

@@ -41,7 +41,7 @@ export default function TrackPage() {
       .then(setPkg)
       .catch((e) => setError(e.message))
       .finally(() => setLoading(false));
-  }, [number]);
+  }, [number, t]);
 
   const handleNewSearch = (e) => {
     e.preventDefault();

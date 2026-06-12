@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { fetchWithAuth } from '../../../lib/api';
+import { fetchWithAuth, getCurrentUser } from '../../../lib/api';
 import { useTranslation } from '../../../lib/i18n';
 
 const ROLE_STYLES = {
@@ -40,8 +40,7 @@ export default function UsersPage() {
   const [createError, setCreateError] = useState('');
 
   useEffect(() => {
-    const stored = localStorage.getItem('user');
-    if (stored) setCurrentUser(JSON.parse(stored));
+    getCurrentUser().then(setCurrentUser).catch(() => {});
     loadUsers();
   }, []);
 

@@ -2,34 +2,27 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { getCurrentUser } from '../../lib/api';
 
 export default function ClientLayout({ children }) {
   const router = useRouter();
   const [user, setUser] = useState(null);
 
-  // Feedback widget state
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [feedbackText, setFeedbackText] = useState('');
   const [feedbackSending, setFeedbackSending] = useState(false);
   const [feedbackSent, setFeedbackSent] = useState(false);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const stored = localStorage.getItem('user');
-
-    if (!token || !stored) {
-      router.replace('/login');
-      return;
-    }
-
-    const parsed = JSON.parse(stored);
-    if (parsed.role !== 'CLIENT') {
-      // ADMIN accidentally landed here → redirect to admin dashboard
-      router.replace('/dashboard');
-      return;
-    }
-
-    setUser(parsed);
+    getCurrentUser()
+      .then((sessionUser) => {
+        if (sessionUser.role !== 'CLIENT') {
+          router.replace('/dashboard');
+          return;
+        }
+        setUser(sessionUser);
+      })
+      .catch(() => router.replace('/login'));
   }, [router]);
 
   async function handleFeedbackSend() {
@@ -37,12 +30,7 @@ export default function ClientLayout({ children }) {
 
     setFeedbackSending(true);
     try {
-      const token = localStorage.getItem('token');
-
-      // Get first ADMIN/SUPERADMIN contact
-      const contactsRes = await fetch('/api/chat/contacts', {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const contactsRes = await fetch('/api/chat/contacts', { credentials: 'same-origin' });
       const contacts = await contactsRes.json();
       const adminContact = Array.isArray(contacts)
         ? contacts.find((c) => c.role === 'SUPERADMIN' || c.role === 'ADMIN')
@@ -56,10 +44,8 @@ export default function ClientLayout({ children }) {
 
       await fetch('/api/chat/messages', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
         body: JSON.stringify({ recipientId: adminContact.id, content: feedbackText.trim() }),
       });
 
@@ -84,7 +70,6 @@ export default function ClientLayout({ children }) {
         {children}
       </main>
 
-      {/* Floating feedback widget */}
       <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-2">
         {feedbackOpen && (
           <div className="w-72 max-w-[calc(100vw-3rem)] bg-white border border-slate-200 rounded-2xl shadow-xl flex flex-col overflow-hidden">

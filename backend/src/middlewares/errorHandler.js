@@ -7,7 +7,9 @@ const PG_NOT_NULL_VIOLATION = '23502';
 
 const errorHandler = (err, req, res, next) => {
   if (isDev) {
-    console.error(`[ERROR] ${req.method} ${req.url}`, err);
+    console.error(`[ERROR] ${req.id || 'no-request-id'} ${req.method} ${req.url}`, err);
+  } else {
+    console.error(`[ERROR] ${req.id || 'no-request-id'} ${req.method} ${req.url}:`, err.message);
   }
 
   // PostgreSQL constraint errors
@@ -24,7 +26,7 @@ const errorHandler = (err, req, res, next) => {
     const internalFields = ['package_id', 'user_id', 'client_id'];
     if (internalFields.includes(err.column)) {
       console.error(`[ErrorHandler] Internal NOT NULL violation on '${err.column}' — this is a server bug, not a client error.`, err);
-      return res.status(500).json({ error: 'Internal server error' });
+      return res.status(500).json({ error: 'Internal server error', requestId: req.id });
     }
     return res.status(400).json({ error: `Field '${err.column}' is required` });
   }
@@ -32,7 +34,7 @@ const errorHandler = (err, req, res, next) => {
   const status = err.status || err.statusCode || 500;
   const message = status < 500 ? err.message : 'Internal server error';
 
-  res.status(status).json({ error: message });
+  res.status(status).json({ error: message, requestId: req.id });
 };
 
 module.exports = { errorHandler };

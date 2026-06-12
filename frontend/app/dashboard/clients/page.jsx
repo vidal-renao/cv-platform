@@ -37,15 +37,15 @@ export default function ClientsPage() {
   const [loading, setLoading] = useState(true);
   const [editingClient, setEditingClient] = useState(null);
   const [search, setSearch] = useState("");
-  const [accessModal, setAccessModal] = useState(null); // { email, tempPassword, phone, notifications }
+  const [accessModal, setAccessModal] = useState(null); // { email, accessUrl, phone, notifications }
   const [generatingId, setGeneratingId] = useState(null);
   const [resendingId, setResendingId] = useState(null);
   const [resendModal, setResendModal] = useState(null); // { email, phone, notifications }
   const [copied, setCopied] = useState(false);
   const [formError, setFormError] = useState('');
 
-  const copyCredentials = async (email, password) => {
-    const text = `Usuario: ${email}\nContraseña: ${password}`;
+  const copyAccessLink = async (email, accessUrl) => {
+    const text = `Usuario: ${email}\nEnlace seguro: ${accessUrl}`;
     await navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
@@ -129,7 +129,7 @@ export default function ClientsPage() {
       const data = await fetchWithAuth(`/clients/${clientId}/generate-access`, { method: 'POST' });
       setAccessModal({
         email: data.email,
-        tempPassword: data.tempPassword,
+        accessUrl: data.accessUrl,
         phone: data.phone,
         notifications: data.notifications,
       });
@@ -145,7 +145,7 @@ export default function ClientsPage() {
     setResendingId(clientId);
     try {
       const data = await fetchWithAuth(`/clients/${clientId}/resend-access`, { method: 'POST' });
-      setResendModal({ email: data.email, tempPassword: data.tempPassword, phone: data.phone, notifications: data.notifications });
+      setResendModal({ email: data.email, accessUrl: data.accessUrl, phone: data.phone, notifications: data.notifications });
     } catch (err) {
       alert(err.message);
     } finally {
@@ -226,14 +226,14 @@ export default function ClientsPage() {
             {/* Credentials box */}
             <div className="bg-gray-50 rounded-lg p-4 space-y-2 text-sm font-mono border border-gray-200">
               <div><span className="text-gray-500">Email:</span> <span className="font-semibold text-gray-900">{accessModal.email}</span></div>
-              <div><span className="text-gray-500">{t('clients.access.passwordLabel')}</span> <span className="font-semibold text-gray-900">{accessModal.tempPassword}</span></div>
+              <div><span className="text-gray-500">Enlace:</span> <span className="font-semibold text-gray-900 break-all">{accessModal.accessUrl}</span></div>
             </div>
             <p className="text-xs text-gray-400 text-center">{t('clients.access.changePasswordNote')}</p>
 
             {/* Action buttons */}
             <div className="grid grid-cols-2 gap-2">
               <button
-                onClick={() => copyCredentials(accessModal.email, accessModal.tempPassword)}
+                onClick={() => copyAccessLink(accessModal.email, accessModal.accessUrl)}
                 className="flex items-center justify-center gap-1.5 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
               >
                 {copied ? (
@@ -251,7 +251,7 @@ export default function ClientsPage() {
 
               {accessModal.phone ? (
                 <a
-                  href={`https://wa.me/${accessModal.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`¡Hola! Tu acceso a CV Platform ha sido creado.\n\n📧 Usuario: ${accessModal.email}\n🔑 Contraseña: ${accessModal.tempPassword}\n\n👉 Ingresa en: ${typeof window !== 'undefined' ? window.location.origin : ''}/login`)}`}
+                  href={`https://wa.me/${accessModal.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hola. Tu acceso a CV Platform ha sido creado.\n\nUsuario: ${accessModal.email}\nEnlace seguro: ${accessModal.accessUrl}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-1.5 py-2.5 bg-green-500 text-white text-sm font-medium rounded-lg hover:bg-green-600 transition"
@@ -301,13 +301,13 @@ export default function ClientsPage() {
 
             <div className="bg-gray-50 rounded-lg p-4 space-y-2 text-sm font-mono border border-gray-200">
               <div><span className="text-gray-500">Email:</span> <span className="font-semibold text-gray-900">{resendModal.email}</span></div>
-              <div><span className="text-gray-500">{t('clients.access.passwordLabel')}</span> <span className="font-semibold text-gray-900">{resendModal.tempPassword}</span></div>
+              <div><span className="text-gray-500">Enlace:</span> <span className="font-semibold text-gray-900 break-all">{resendModal.accessUrl}</span></div>
             </div>
             <p className="text-xs text-gray-400 text-center">{t('clients.access.changePasswordNote')}</p>
 
             <div className="grid grid-cols-2 gap-2">
               <button
-                onClick={() => copyCredentials(resendModal.email, resendModal.tempPassword)}
+                onClick={() => copyAccessLink(resendModal.email, resendModal.accessUrl)}
                 className="flex items-center justify-center gap-1.5 py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
               >
                 {copied ? (
@@ -325,7 +325,7 @@ export default function ClientsPage() {
 
               {resendModal.phone ? (
                 <a
-                  href={`https://wa.me/${resendModal.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`¡Hola! Tu nueva contraseña de acceso a CV Platform:\n\n📧 Usuario: ${resendModal.email}\n🔑 Contraseña: ${resendModal.tempPassword}\n\n👉 Ingresa en: ${typeof window !== 'undefined' ? window.location.origin : ''}/login`)}`}
+                  href={`https://wa.me/${resendModal.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hola. Tu enlace de acceso a CV Platform:\n\nUsuario: ${resendModal.email}\nEnlace seguro: ${resendModal.accessUrl}`)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center justify-center gap-1.5 py-2.5 bg-green-500 text-white text-sm font-medium rounded-lg hover:bg-green-600 transition"

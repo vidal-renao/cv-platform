@@ -1,6 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect, useCallback } from 'react';
+import Image from 'next/image';
 import { fetchWithAuth } from '../lib/api';
 
 // ── Signature Pad ────────────────────────────────────────────────────────────
@@ -127,7 +128,7 @@ function CameraCapture({ onCapture }) {
 
       {photo ? (
         <div className="relative">
-          <img src={photo} alt="Captura" className="w-full rounded-xl border border-gray-200 object-cover max-h-48" />
+          <Image src={photo} alt="Captura" width={640} height={360} unoptimized className="w-full rounded-xl border border-gray-200 object-cover max-h-48" />
           <button type="button" onClick={retake} className="mt-2 text-xs text-gray-400 hover:text-blue-500 transition">Tomar otra foto</button>
         </div>
       ) : active ? (

@@ -112,27 +112,42 @@ export default function ClientDashboard() {
     }
   };
 
-  /* ─── Excel Export ───────────────────────────────────────── */
-  const exportExcel = async () => {
-    setExporting('excel');
-    try {
-      const XLSX = await import('xlsx');
-      const rows = packages.map(pkg => ({
-        [t('clientsDetail.tracking')]: pkg.tracking_number,
-        [t('clientsDetail.status')]:   pkg.status?.replace(/_/g, ' '),
-        [t('clientsDetail.weight')]:   pkg.weight ?? '',
-        [t('clientsDetail.cost')]:     pkg.cost ? Number(pkg.cost).toFixed(2) : '',
-        [t('clientsDetail.date')]:     new Date(pkg.created_at).toLocaleDateString(),
-      }));
+  const csvCell = (value) => {
+    const normalized = value == null ? '' : String(value);
+    return `"${normalized.replace(/"/g, '""')}"`;
+  };
 
-      const ws = XLSX.utils.json_to_sheet(rows);
-      // Column widths
-      ws['!cols'] = [{ wch: 22 }, { wch: 20 }, { wch: 12 }, { wch: 12 }, { wch: 14 }];
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, t('export.sheetName'));
-      XLSX.writeFile(wb, `cv-platform-packages-${Date.now()}.xlsx`);
+  const exportCSV = async () => {
+    setExporting('csv');
+    try {
+      const headers = [
+        t('clientsDetail.tracking'),
+        t('clientsDetail.status'),
+        t('clientsDetail.weight'),
+        t('clientsDetail.cost'),
+        t('clientsDetail.date'),
+      ];
+      const rows = packages.map(pkg => [
+        pkg.tracking_number,
+        pkg.status?.replace(/_/g, ' '),
+        pkg.weight ?? '',
+        pkg.cost ? Number(pkg.cost).toFixed(2) : '',
+        new Date(pkg.created_at).toLocaleDateString(),
+      ]);
+      const csv = [headers, ...rows]
+        .map(row => row.map(csvCell).join(','))
+        .join('\r\n');
+      const blob = new Blob([`\uFEFF${csv}`], { type: 'text/csv;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `cv-platform-packages-${Date.now()}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
     } catch (err) {
-      console.error('Excel export error:', err);
+      console.error('CSV export error:', err);
     } finally {
       setExporting('');
     }
@@ -154,11 +169,11 @@ export default function ClientDashboard() {
         {packages.length > 0 && (
           <div className="flex gap-2 flex-shrink-0">
             <button
-              onClick={exportExcel}
+              onClick={exportCSV}
               disabled={!!exporting}
               className="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg border border-emerald-200 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition disabled:opacity-50"
             >
-              {exporting === 'excel' ? (
+              {exporting === 'csv' ? (
                 <svg className="w-3.5 h-3.5 animate-spin" fill="none" viewBox="0 0 24 24">
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
@@ -168,7 +183,7 @@ export default function ClientDashboard() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               )}
-              {exporting === 'excel' ? t('export.generating') : t('export.excel')}
+              {exporting === 'csv' ? t('export.generating') : 'CSV'}
             </button>
             <button
               onClick={exportPDF}

@@ -41,26 +41,14 @@ export default function SettingsPage() {
     setSaved(false);
     const selected = CURRENCIES.find(c => c.code === currencyCode) || CURRENCIES[0];
     try {
-      const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
-      const res = await fetch('/api/settings', {
+      await fetchWithAuth('/settings', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          ...(token && { Authorization: `Bearer ${token}` }),
-        },
         body: JSON.stringify({
           currency_code:   selected.code,
           currency_symbol: selected.symbol,
           cost_per_kg:     parseFloat(costPerKg) || 5.00,
         }),
       });
-      if (!res.ok) {
-        const text = await res.text();
-        let msg = `HTTP ${res.status}`;
-        try { msg = JSON.parse(text).error || msg; } catch { msg = text.slice(0, 150) || msg; }
-        setError(msg);
-        return;
-      }
       clearCurrencyCache();
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);

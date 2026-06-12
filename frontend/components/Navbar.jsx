@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { logout } from '../lib/api';
+import { getCurrentUser, logout } from '../lib/api';
 import { useTranslation, LANGUAGES } from '../lib/i18n';
 
 const ROLE_STYLES = {
@@ -88,16 +88,7 @@ export default function Navbar() {
 
   useEffect(() => {
     setMounted(true);
-    const stored = localStorage.getItem('user');
-    if (stored) {
-      try { setUser(JSON.parse(stored)); } catch (_) {}
-    }
-    const onStorage = () => {
-      const s = localStorage.getItem('user');
-      setUser(s ? JSON.parse(s) : null);
-    };
-    window.addEventListener('storage', onStorage);
-    return () => window.removeEventListener('storage', onStorage);
+    getCurrentUser().then(setUser).catch(() => setUser(null));
   }, [pathname]);
 
   useEffect(() => {
@@ -118,8 +109,8 @@ export default function Navbar() {
 
   if (!mounted || hidden) return null;
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async () => {
+    await logout();
     setUser(null);
     router.push('/');
   };

@@ -1,7 +1,5 @@
-const { Resend } = require('resend');
 const db = require('../db');
-
-const resend = new Resend(process.env.RESEND_API_KEY);
+const { getResendClient } = require('./emailClient');
 
 // ─── WhatsApp via Twilio (or simulation if credentials missing) ────────────────
 const sendWhatsApp = async (phone, name, tracking_number) => {
@@ -73,18 +71,23 @@ const sendPackageArrival = async (packageData) => {
     let emailStatus = 'failed';
     if (email) {
       try {
-        await resend.emails.send({
-          from: process.env.RESEND_FROM_EMAIL || 'noreply@example.com',
-          to: email,
-          subject: `Tu paquete ${tracking_number} ha llegado`,
-          html: `
-            <p>¡Hola <strong>${name}</strong>!</p>
-            <p>Tu paquete con tracking <strong>${tracking_number}</strong> ya está en nuestra oficina y listo para retirar.</p>
-            <p>Si tienes alguna pregunta, responde a este correo.</p>
-          `,
-        });
-        emailStatus = 'sent';
-        console.log(`[Notifications] Email sent → ${email} (pkg: ${tracking_number})`);
+        const resend = getResendClient();
+        if (!resend) {
+          console.warn('[Notifications] RESEND_API_KEY missing; email skipped.');
+        } else {
+          await resend.emails.send({
+            from: process.env.RESEND_FROM_EMAIL || 'noreply@example.com',
+            to: email,
+            subject: `Tu paquete ${tracking_number} ha llegado`,
+            html: `
+              <p>¡Hola <strong>${name}</strong>!</p>
+              <p>Tu paquete con tracking <strong>${tracking_number}</strong> ya está en nuestra oficina y listo para retirar.</p>
+              <p>Si tienes alguna pregunta, responde a este correo.</p>
+            `,
+          });
+          emailStatus = 'sent';
+          console.log(`[Notifications] Email sent → ${email} (pkg: ${tracking_number})`);
+        }
       } catch (err) {
         console.error(`[Notifications] Email failed for ${email}:`, err.message);
       }

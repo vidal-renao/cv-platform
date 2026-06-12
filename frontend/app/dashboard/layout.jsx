@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Link from "next/link";
-import { fetchWithAuth, logout } from '../../lib/api';
+import { fetchWithAuth, getCurrentUser, logout } from '../../lib/api';
 import { useTranslation } from '../../lib/i18n';
 
 /* ─── Global Search ─────────────────────────────────────────── */
@@ -103,20 +103,17 @@ function GlobalSearch() {
 }
 
 /* ─── Chat Panel ─────────────────────────────────────────────── */
-function ChatPanel({ onClose }) {
+function ChatPanel({ me, onClose }) {
   const { t } = useTranslation();
   const [contacts, setContacts] = useState([]);
   const [selected, setSelected] = useState(null);
   const [messages, setMessages] = useState([]);
   const [draft, setDraft] = useState('');
   const [sending, setSending] = useState(false);
-  const [me, setMe] = useState(null);
   const bottomRef = useRef(null);
   const pollRef = useRef(null);
 
   useEffect(() => {
-    const stored = localStorage.getItem('user');
-    if (stored) setMe(JSON.parse(stored));
     loadContacts();
   }, []);
 
@@ -315,21 +312,26 @@ export default function DashboardLayout({ children }) {
   useEffect(() => { setSidebarOpen(false); }, [pathname]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    const stored = localStorage.getItem('user');
-
-    if (!token) { router.replace('/login'); return; }
-
-    if (stored) {
-      const parsed = JSON.parse(stored);
-      if (parsed.role === 'CLIENT') {
-        setRedirecting(true);
-        router.replace('/client/dashboard');
-        return;
-      }
-      setUser(parsed);
-    }
+    getCurrentUser()
+      .then((sessionUser) => {
+        if (sessionUser.role === 'CLIENT') {
+          setRedirecting(true);
+          router.replace('/client/dashboard');
+          return;
+        }
+        setUser(sessionUser);
+      })
+      .catch(() => {
+        router.replace('/login');
+      });
   }, [router]);
+
+  useEffect(() => {
+    if (user?.role === 'CLIENT') {
+      setRedirecting(true);
+      router.replace('/client/dashboard');
+    }
+  }, [router, user]);
 
   // Poll unread count every 30s
   useEffect(() => {
@@ -341,7 +343,10 @@ export default function DashboardLayout({ children }) {
     return () => clearInterval(iv);
   }, [user]);
 
-  const handleLogout = () => { logout(); router.push('/login'); };
+  const handleLogout = async () => {
+    await logout();
+    router.push('/login');
+  };
 
   const displayName = user?.email?.split('@')[0] ?? '';
 
@@ -490,7 +495,7 @@ export default function DashboardLayout({ children }) {
 
       {/* CHAT PANEL */}
       {chatOpen && user && (
-        <ChatPanel onClose={() => { setChatOpen(false); }} />
+        <ChatPanel me={user} onClose={() => { setChatOpen(false); }} />
       )}
 
     </div>

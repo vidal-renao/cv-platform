@@ -569,7 +569,7 @@ export default function Home() {
               <ul className="space-y-2.5 text-sm text-slate-400">
                 {footerServiceLinks.map((s) => (
                   <li key={s}>
-                    <a href="/#servicios" className="hover:text-white transition">{s}</a>
+                    <Link href="/#servicios" className="hover:text-white transition">{s}</Link>
                   </li>
                 ))}
               </ul>
