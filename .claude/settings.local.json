@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.\\(json|js|ts|xml|txt\\)$\")",
+      "Bash(ls C:/Users/Max/cv-platform/*.png)",
+      "Bash(npm list:*)",
+      "Bash(node scripts/generate-icons.mjs)",
+      "Bash(gh api:*)"
+    ]
+  }
+}
