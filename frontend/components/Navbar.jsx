@@ -35,9 +35,10 @@ function LangDropdown() {
         className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition"
         aria-label="Select language"
       >
-        <span className="w-5 h-5 rounded-full bg-teal-400/10 text-teal-400 flex items-center justify-center text-[10px] font-bold font-mono">
-          {current.countryCode}
-        </span>
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+        </svg>
+        <span className="hidden sm:inline font-mono text-xs tracking-wider">{current.code.toUpperCase()}</span>
         <svg className={`w-3 h-3 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
         </svg>
@@ -55,10 +56,11 @@ function LangDropdown() {
                     : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
-                <span className="w-6 h-6 rounded-full bg-teal-400/10 text-teal-400 flex items-center justify-center text-[10px] font-bold font-mono flex-shrink-0">
-                  {lang.countryCode}
-                </span>
+                <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
                 <span>{lang.label}</span>
+                <span className="ml-auto font-mono text-[10px] text-white/30">{lang.flag}</span>
               </button>
             </li>
           ))}

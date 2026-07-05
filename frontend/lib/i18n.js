@@ -2,12 +2,12 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 
 export const LANGUAGES = [
-  { code: 'es', label: 'Español',    flag: '🇪🇸', countryCode: 'ES' },
-  { code: 'en', label: 'English',    flag: '🇺🇸', countryCode: 'EN' },
-  { code: 'de', label: 'Deutsch',    flag: '🇩🇪', countryCode: 'DE' },
-  { code: 'pt', label: 'Português',  flag: '🇧🇷', countryCode: 'PT' },
-  { code: 'fr', label: 'Français',   flag: '🇫🇷', countryCode: 'FR' },
-  { code: 'it', label: 'Italiano',   flag: '🇮🇹', countryCode: 'IT' },
+  { code: 'es', label: 'Español',    flag: 'ES' },
+  { code: 'en', label: 'English',    flag: 'EN' },
+  { code: 'de', label: 'Deutsch',    flag: 'DE' },
+  { code: 'pt', label: 'Português',  flag: 'PT' },
+  { code: 'fr', label: 'Français',   flag: 'FR' },
+  { code: 'it', label: 'Italiano',   flag: 'IT' },
 ];
 
 const DEFAULT_LOCALE = 'es';
