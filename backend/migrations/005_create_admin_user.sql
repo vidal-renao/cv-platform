@@ -4,14 +4,14 @@
 -- ============================================
 
 -- Credenciales:
---   Username: admin
+--   Username: superadmin
 --   Email:    admin@cvplatform.com
 --   Password: Admin123!
 --   Rol:      ADMIN
 
 INSERT INTO users (username, email, password_hash, role)
 VALUES (
-  'admin',
+  'superadmin',
   'admin@cvplatform.com',
   '$2b$10$ecAvVGfn0FHZ6aIX/m2PoO8rzvYo1d7DXdfYdxndbud4layMLWCOS',
   'ADMIN'
