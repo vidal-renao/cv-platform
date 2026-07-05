@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '../../../../../lib/db';
 import { getUser } from '../../../../../lib/auth';
 import { isInternalUser } from '../../../../../lib/roles';
+import { validate, createCommentSchema } from '../../../../../lib/validations';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -52,17 +53,19 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
-  let body: { comment?: string; is_internal?: boolean };
+  let body;
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const comment = String(body.comment || '').trim();
-  if (!comment) {
-    return NextResponse.json({ error: 'Comment cannot be empty' }, { status: 400 });
+  const validation = validate(createCommentSchema, body);
+  if (!validation.success) {
+    return NextResponse.json({ error: validation.errors[0].message, errors: validation.errors }, { status: 400 });
   }
+
+  const { comment, is_internal } = validation.data;
 
   try {
     if (!(await canAccessPackage(id, user.id, user.role))) {
@@ -74,7 +77,7 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
       `INSERT INTO package_comments (package_id, user_id, comment, is_internal)
        VALUES ($1, $2, $3, $4)
        RETURNING *`,
-      [id, user.id, comment, Boolean(body.is_internal)]
+      [id, user.id, comment, Boolean(is_internal)]
     );
     return NextResponse.json({ ...result.rows[0], author_email: user.email, author_role: user.role }, { status: 201 });
   } catch (err) {

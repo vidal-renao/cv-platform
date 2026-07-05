@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '../../../lib/db';
 import { getUser } from '../../../lib/auth';
 import { isInternalUser } from '../../../lib/roles';
+import { validate, updateSettingsSchema } from '../../../lib/validations';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -31,20 +32,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unauthorized access' }, { status: 403 });
   }
 
-  let body: { currency_code?: string; currency_symbol?: string; cost_per_kg?: number };
+  let body;
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const currencyCode = String(body.currency_code || '').trim().toUpperCase();
-  const currencySymbol = String(body.currency_symbol || '').trim();
-  const costPerKg = Number(body.cost_per_kg);
-
-  if (!currencyCode || !currencySymbol || !Number.isFinite(costPerKg) || costPerKg < 0) {
-    return NextResponse.json({ error: 'Invalid settings payload' }, { status: 422 });
+  const validation = validate(updateSettingsSchema, body);
+  if (!validation.success) {
+    return NextResponse.json({ error: validation.errors[0].message, errors: validation.errors }, { status: 422 });
   }
+
+  const { currency_code, currency_symbol, cost_per_kg } = validation.data;
+  const currencyCode = currency_code.trim().toUpperCase();
+  const currencySymbol = currency_symbol.trim();
 
   try {
     const db = getDb();
@@ -53,7 +55,7 @@ export async function POST(request: Request) {
        SET currency_code = $1, currency_symbol = $2, cost_per_kg = $3
        WHERE id = 1
        RETURNING currency_code, currency_symbol, cost_per_kg`,
-      [currencyCode, currencySymbol, costPerKg]
+      [currencyCode, currencySymbol, cost_per_kg]
     );
 
     if (result.rows.length === 0) {

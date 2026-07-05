@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { getDb } from '../../../lib/db';
 import { getUser, type UserPayload } from '../../../lib/auth';
 import { assignableRolesFor, isAdminUser } from '../../../lib/roles';
+import { validate, createUserSchema } from '../../../lib/validations';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -37,24 +38,22 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unauthorized access' }, { status: 403 });
   }
 
-  let body: { email?: string; password?: string; role?: UserPayload['role'] };
+  let body;
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const email = String(body.email || '').trim().toLowerCase();
-  const password = String(body.password || '');
-  const role = body.role;
+  const validation = validate(createUserSchema, body);
+  if (!validation.success) {
+    return NextResponse.json({ error: validation.errors[0].message, errors: validation.errors }, { status: 400 });
+  }
+
+  const { email: rawEmail, password, role } = validation.data;
+  const email = rawEmail.trim().toLowerCase();
   const allowedRoles = assignableRolesFor(user);
 
-  if (!email || !password || !role) {
-    return NextResponse.json({ error: 'email, password, and role are required' }, { status: 400 });
-  }
-  if (password.length < 6) {
-    return NextResponse.json({ error: 'Password must be at least 6 characters' }, { status: 400 });
-  }
   if (!allowedRoles.includes(role)) {
     return NextResponse.json({ error: `You cannot assign the role: ${role}` }, { status: 403 });
   }

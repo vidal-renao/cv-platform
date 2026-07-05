@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '../../../lib/db';
 import { getUser } from '../../../lib/auth';
 import { isInternalUser } from '../../../lib/roles';
+import { validate, createClientSchema } from '../../../lib/validations';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -65,17 +66,22 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unauthorized access' }, { status: 403 });
   }
 
-  let body: CreateClientRequest;
+  let body;
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const name = normalizeText(body.name) || normalizeText(body.full_name);
-  const email = normalizeText(body.email);
-  const phone = normalizeText(body.phone);
-  const address = normalizeText(body.address);
+  const validation = validate(createClientSchema, body);
+  if (!validation.success) {
+    return NextResponse.json({ error: validation.errors[0].message, errors: validation.errors }, { status: 422 });
+  }
+
+  const name = normalizeText(validation.data.name) || normalizeText(validation.data.full_name);
+  const email = normalizeText(validation.data.email);
+  const phone = normalizeText(validation.data.phone);
+  const address = normalizeText(validation.data.address);
 
   if (!name) {
     return NextResponse.json({ error: 'Missing required field: name' }, { status: 422 });

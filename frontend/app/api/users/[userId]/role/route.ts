@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '../../../../../lib/db';
 import { getUser, type UserPayload } from '../../../../../lib/auth';
 import { assignableRolesFor, isAdminUser } from '../../../../../lib/roles';
+import { validate, updateUserRoleSchema } from '../../../../../lib/validations';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -16,16 +17,21 @@ export async function PATCH(
     return NextResponse.json({ error: 'Unauthorized access' }, { status: 403 });
   }
 
-  let body: { role?: UserPayload['role'] };
+  let body;
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const role = body.role;
+  const validation = validate(updateUserRoleSchema, body);
+  if (!validation.success) {
+    return NextResponse.json({ error: validation.errors[0].message, errors: validation.errors }, { status: 400 });
+  }
+
+  const { role } = validation.data;
   const allowedRoles = assignableRolesFor(user);
-  if (!role || !allowedRoles.includes(role)) {
+  if (!allowedRoles.includes(role)) {
     return NextResponse.json({ error: `Role must be one of: ${allowedRoles.join(', ')}` }, { status: 400 });
   }
   if (userId === user.id) {

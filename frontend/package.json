@@ -21,7 +21,8 @@
     "react-dom": "^18.2.0",
     "recharts": "^3.8.0",
     "resend": "^6.9.4",
-    "twilio": "^5.13.0"
+    "twilio": "^5.13.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",

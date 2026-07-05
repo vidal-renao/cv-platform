@@ -4,6 +4,7 @@ import { getDb } from '../../../../../lib/db';
 import { getUser } from '../../../../../lib/auth';
 import { isInternalUser } from '../../../../../lib/roles';
 import { sendPackageStatusNotification } from '../../../../../lib/notifications';
+import { validate, packageStatusSchema } from '../../../../../lib/validations';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -29,13 +30,12 @@ export async function PATCH(
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
   }
 
-  const { status } = body ?? {};
-  if (!status || !VALID_STATUSES.includes(status as PackageStatus)) {
-    return NextResponse.json(
-      { error: `Invalid status. Must be one of: ${VALID_STATUSES.join(', ')}` },
-      { status: 400 }
-    );
+  const validation = validate(packageStatusSchema, body);
+  if (!validation.success) {
+    return NextResponse.json({ error: validation.errors[0].message, errors: validation.errors }, { status: 400 });
   }
+
+  const { status } = validation.data;
 
   try {
     const db = getDb();

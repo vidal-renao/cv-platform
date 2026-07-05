@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '../../../../lib/db';
 import { getUser } from '../../../../lib/auth';
 import { canAccessTenantResource, isInternalUser } from '../../../../lib/roles';
+import { validate, updateClientSchema } from '../../../../lib/validations';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -53,14 +54,19 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     return NextResponse.json({ error: 'Unauthorized access' }, { status: 403 });
   }
 
-  let body: ClientRequest;
+  let body;
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const name = nullableText(body.name);
+  const validation = validate(updateClientSchema, body);
+  if (!validation.success) {
+    return NextResponse.json({ error: validation.errors[0].message, errors: validation.errors }, { status: 422 });
+  }
+
+  const name = nullableText(validation.data.name);
   if (!name) {
     return NextResponse.json({ error: 'Name is required' }, { status: 422 });
   }
@@ -77,7 +83,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
        SET name = $1, phone = $2, email = $3, address = $4
        WHERE id = $5
        RETURNING *`,
-      [name, nullableText(body.phone), nullableText(body.email), nullableText(body.address), id]
+      [name, nullableText(validation.data.phone), nullableText(validation.data.email), nullableText(validation.data.address), id]
     );
 
     return NextResponse.json(result.rows[0]);

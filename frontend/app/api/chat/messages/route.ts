@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getDb } from '../../../../lib/db';
 import { getUser } from '../../../../lib/auth';
+import { validate, sendMessageSchema } from '../../../../lib/validations';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -11,21 +12,20 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  let body: { recipientId?: string; content?: string };
+  let body;
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
   }
 
-  const recipientId = String(body.recipientId || '').trim();
-  const content = String(body.content || '').trim();
-  if (!recipientId || !content) {
-    return NextResponse.json({ error: 'recipientId and content are required' }, { status: 400 });
+  const validation = validate(sendMessageSchema, body);
+  if (!validation.success) {
+    return NextResponse.json({ error: validation.errors[0].message, errors: validation.errors }, { status: 400 });
   }
-  if (content.length > 2000) {
-    return NextResponse.json({ error: 'Message too long (max 2000 chars)' }, { status: 400 });
-  }
+
+  const { recipientId, content } = validation.data;
+
   if (recipientId === user.id) {
     return NextResponse.json({ error: 'Cannot send a message to yourself' }, { status: 400 });
   }

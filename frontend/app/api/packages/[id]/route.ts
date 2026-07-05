@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getDb } from '../../../../lib/db';
 import { getUser } from '../../../../lib/auth';
 import { isInternalUser } from '../../../../lib/roles';
+import { validate, updatePackageSchema } from '../../../../lib/validations';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -66,14 +67,19 @@ export async function PUT(
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
 
-  let body: UpdatePackageRequest;
+  let body;
   try {
     body = await request.json();
   } catch {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 });
   }
 
-  const { tracking_number, client_id, description, weight } = body ?? {};
+  const validation = validate(updatePackageSchema, body);
+  if (!validation.success) {
+    return NextResponse.json({ error: validation.errors[0].message, errors: validation.errors }, { status: 400 });
+  }
+
+  const { tracking_number, client_id, description, weight } = validation.data;
   const weightNum = weight != null && weight !== '' ? parseFloat(String(weight)) : null;
 
   try {

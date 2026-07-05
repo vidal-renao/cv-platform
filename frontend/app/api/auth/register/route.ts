@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { getDb } from '../../../../lib/db';
+import { validate, registerSchema } from '../../../../lib/validations';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -14,24 +15,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
 
-    let { email, password } = body ?? {};
-
-    if (!email || !password) {
-      return NextResponse.json(
-        { error: 'Email and password are required' },
-        { status: 400 }
-      );
+    const validation = validate(registerSchema, body);
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.errors[0].message, errors: validation.errors }, { status: 400 });
     }
 
-    if (password.length < 6) {
-      return NextResponse.json(
-        { error: 'Password must be at least 6 characters' },
-        { status: 400 }
-      );
-    }
+    let { email, password } = validation.data;
 
-    email = String(email).trim();
-    password = String(password).trim();
+    email = email.trim();
+    password = password.trim();
 
     // Phone number support
     if (!email.includes('@')) {

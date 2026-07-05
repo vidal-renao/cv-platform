@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import { getDb } from '../../../../lib/db';
 import { AUTH_COOKIE_NAME, generateToken, type UserPayload } from '../../../../lib/auth';
+import { validate, loginSchema } from '../../../../lib/validations';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -15,14 +16,15 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Invalid JSON body' }, { status: 400 });
     }
 
-    let { email, password } = body ?? {};
-
-    if (!email || !password) {
-      return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
+    const validation = validate(loginSchema, body);
+    if (!validation.success) {
+      return NextResponse.json({ error: validation.errors[0].message, errors: validation.errors }, { status: 400 });
     }
 
-    email = String(email).trim();
-    password = String(password).trim();
+    let { email, password } = validation.data;
+
+    email = email.trim();
+    password = password.trim();
 
     // Phone number support: no @ -> convert to internal email format
     if (!email.includes('@')) {
