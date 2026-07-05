@@ -32,30 +32,33 @@ function LangDropdown() {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-1.5 text-sm font-medium text-white/50 hover:text-white transition"
+        className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition"
         aria-label="Select language"
       >
-        <span className="text-base leading-none">{current.flag}</span>
-        <span className="hidden sm:inline font-mono text-xs tracking-wider">{current.code.toUpperCase()}</span>
+        <span className="w-5 h-5 rounded-full bg-teal-400/10 text-teal-400 flex items-center justify-center text-[10px] font-bold font-mono">
+          {current.countryCode}
+        </span>
         <svg className={`w-3 h-3 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {open && (
-        <ul className="absolute right-0 mt-2 w-44 rounded-xl border border-white/10 overflow-hidden z-50 glass-card !p-1">
+        <ul className="absolute right-0 mt-2 w-48 rounded-xl border border-white/10 overflow-hidden z-50 glass-card !p-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
           {LANGUAGES.map((lang) => (
             <li key={lang.code}>
               <button
                 onClick={() => { setLocale(lang.code); setOpen(false); }}
-                className={`w-full text-left px-4 py-2.5 text-sm flex items-center gap-3 rounded-lg transition font-body ${
+                className={`w-full text-left px-3 py-2.5 text-sm flex items-center gap-3 rounded-lg transition font-body ${
                   locale === lang.code
                     ? 'font-semibold text-teal-400 bg-teal-400/10'
                     : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
-                <span className="text-base">{lang.flag}</span>
-                {lang.label}
+                <span className="w-6 h-6 rounded-full bg-teal-400/10 text-teal-400 flex items-center justify-center text-[10px] font-bold font-mono flex-shrink-0">
+                  {lang.countryCode}
+                </span>
+                <span>{lang.label}</span>
               </button>
             </li>
           ))}
