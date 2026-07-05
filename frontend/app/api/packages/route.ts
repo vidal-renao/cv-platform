@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import type { Pool } from 'pg';
 import { getDb } from '../../../lib/db';
 import { getUser } from '../../../lib/auth';
 import { isInternalUser } from '../../../lib/roles';
@@ -14,7 +15,7 @@ interface CreatePackageRequest {
   weight?: string | number;
 }
 
-async function getCostPerKg(db: any): Promise<number> {
+async function getCostPerKg(db: Pool): Promise<number> {
   try {
     const r = await db.query(`SELECT cost_per_kg FROM app_settings WHERE id = 1`);
     return parseFloat(r.rows[0]?.cost_per_kg) || 5.00;
