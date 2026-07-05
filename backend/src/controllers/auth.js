@@ -13,12 +13,22 @@ function hashPublicToken(token) {
 // Auto-assigns CLIENT role if the email/phone matches an existing client record
 const register = async (req, res, next) => {
   try {
-    let { email, password } = req.body;
+    let { email, password, username } = req.body;
 
     // If a phone number was entered instead of an email, convert to internal email
     if (email && !email.includes('@')) {
       const digits = email.replace(/\D/g, '');
       email = `tel_${digits}@cvplatform.com`;
+    }
+
+    // Generate username from email if not provided
+    if (!username) {
+      username = email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
+      // Ensure uniqueness
+      const existing = await db.query('SELECT id FROM users WHERE username = $1', [username]);
+      if (existing.rows.length > 0) {
+        username = `${username}${Date.now().toString(36)}`;
+      }
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -45,10 +55,10 @@ const register = async (req, res, next) => {
     }
 
     const result = await db.query(
-      `INSERT INTO users (email, password_hash, role)
-       VALUES ($1, $2, $3)
-       RETURNING id, email, role, created_at`,
-      [email, hashedPassword, role]
+      `INSERT INTO users (username, email, password_hash, role)
+       VALUES ($1, $2, $3, $4)
+       RETURNING id, username, email, role, created_at`,
+      [username, email, hashedPassword, role]
     );
 
     res.status(201).json(result.rows[0]);
@@ -92,7 +102,7 @@ const login = async (req, res, next) => {
 
     res.json({
       token,
-      user: { id: user.id, email: user.email, role: user.role },
+      user: { id: user.id, username: user.username, email: user.email, role: user.role },
     });
   } catch (err) {
     next(err);
