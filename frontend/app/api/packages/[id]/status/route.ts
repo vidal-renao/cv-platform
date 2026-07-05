@@ -90,6 +90,6 @@ export async function PATCH(
     });
   } catch (err: any) {
     console.error('[STATUS] PATCH error:', err.message);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

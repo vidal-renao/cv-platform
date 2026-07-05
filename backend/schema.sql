@@ -37,6 +37,8 @@ CREATE TABLE IF NOT EXISTS packages (
   client_id       UUID         NOT NULL REFERENCES clients(id) ON DELETE CASCADE,
   tracking_number VARCHAR(100) UNIQUE NOT NULL,
   description     TEXT,
+  weight          NUMERIC(10, 2),
+  cost            NUMERIC(10, 2),
   status          VARCHAR(50)  DEFAULT 'ARRIVED',
   created_at      TIMESTAMPTZ  DEFAULT NOW()
 );
@@ -144,6 +146,32 @@ CREATE TABLE IF NOT EXISTS delivery_proofs (
 CREATE INDEX IF NOT EXISTS idx_delivery_proofs_package_id ON delivery_proofs(package_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_delivery_proofs_user_id ON delivery_proofs(user_id);
 CREATE INDEX IF NOT EXISTS idx_delivery_proofs_client_id ON delivery_proofs(client_id);
+
+-- Pricing config (weight-based tiers)
+CREATE TABLE IF NOT EXISTS pricing_config (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  min_weight NUMERIC(10, 2) NOT NULL,
+  max_weight NUMERIC(10, 2) NOT NULL,
+  price      NUMERIC(10, 2) NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  CONSTRAINT pricing_config_valid_range CHECK (min_weight < max_weight)
+);
+
+-- Audit logs (INSERT-only, immutable)
+CREATE TABLE IF NOT EXISTS audit_logs (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id    UUID REFERENCES users(id) ON DELETE SET NULL,
+  action     VARCHAR(100) NOT NULL,
+  table_name VARCHAR(100) NOT NULL,
+  record_id  UUID,
+  old_data   JSONB,
+  new_data   JSONB,
+  ip_address VARCHAR(45),
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_audit_logs_user_id ON audit_logs(user_id);
+CREATE INDEX IF NOT EXISTS idx_audit_logs_table_name ON audit_logs(table_name, created_at);
 
 -- Password reset extensions (from migration 003)
 ALTER TABLE password_resets

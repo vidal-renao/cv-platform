@@ -53,7 +53,7 @@ export async function GET(
     return NextResponse.json(result.rows[0]);
   } catch (err: any) {
     console.error('[PACKAGES] GET details error:', err.message);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }
 
@@ -148,6 +148,6 @@ export async function PUT(
       return NextResponse.json({ error: 'Tracking number already exists' }, { status: 409 });
     }
     console.error('[PACKAGES] PUT details error:', err.message);
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
   }
 }

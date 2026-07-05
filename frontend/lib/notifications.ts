@@ -3,6 +3,16 @@ import twilio from 'twilio';
 
 const PORTAL_URL = process.env.FRONTEND_URL || 'https://cv-platform-theta.vercel.app';
 
+function htmlEscape(str: string | undefined | null): string {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 interface AccessEmailParams {
   to: string;
   clientName?: string;
@@ -22,7 +32,7 @@ export async function sendAccessEmail({ to, clientName, legacyAccessCode }: Acce
       subject: 'Acceso a tu portal de paquetes',
       html: `
         <div style="font-family:sans-serif;max-width:480px;margin:auto;padding:32px;background:#f9fafb;border-radius:12px;">
-          <h2 style="color:#1e293b;margin-bottom:8px;">Bienvenido${clientName ? `, ${clientName}` : ''}</h2>
+          <h2 style="color:#1e293b;margin-bottom:8px;">Bienvenido${clientName ? `, ${htmlEscape(clientName)}` : ''}</h2>
           <p style="color:#475569;">Tu acceso al portal ha sido generado. Usa las siguientes credenciales para iniciar sesión:</p>
           <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:20px;margin:20px 0;">
             <p style="margin:0 0 8px;color:#64748b;font-size:13px;">CORREO</p>
@@ -67,7 +77,7 @@ export async function sendAccessWhatsApp({ phone, clientName, email, legacyAcces
   const to = `whatsapp:+${digits}`;
 
   const body =
-    `Hola${clientName ? ` ${clientName}` : ''}! Tu acceso al portal de paquetes ha sido generado.\n\n` +
+    `Hola${clientName ? ` ${htmlEscape(clientName)}` : ''}! Tu acceso al portal de paquetes ha sido generado.\n\n` +
     `📧 Email: ${email}\n` +
     `Codigo de acceso: *${legacyAccessCode}*\n\n` +
     `Ingresa aquí: ${PORTAL_URL}/login\n\n` +
@@ -102,7 +112,7 @@ export async function sendAccessLinkEmail({ to, clientName, accessUrl }: AccessL
       subject: 'Configura tu acceso a CV Platform',
       html: `
         <div style="font-family:sans-serif;max-width:480px;margin:auto;padding:32px;background:#f9fafb;border-radius:12px;">
-          <h2 style="color:#1e293b;margin-bottom:8px;">Bienvenido${clientName ? `, ${clientName}` : ''}</h2>
+          <h2 style="color:#1e293b;margin-bottom:8px;">Bienvenido${clientName ? `, ${htmlEscape(clientName)}` : ''}</h2>
           <p style="color:#475569;">Usa este enlace seguro para configurar tu contrasena del portal. El enlace expira automaticamente.</p>
           <div style="background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:20px;margin:20px 0;">
             <p style="margin:0 0 8px;color:#64748b;font-size:13px;">CORREO</p>
@@ -147,7 +157,7 @@ export async function sendAccessLinkWhatsApp({ phone, clientName, email, accessU
   const to = `whatsapp:+${digits}`;
 
   const body =
-    `Hola${clientName ? ` ${clientName}` : ''}! Configura tu acceso al portal de paquetes.\n\n` +
+    `Hola${clientName ? ` ${htmlEscape(clientName)}` : ''}! Configura tu acceso al portal de paquetes.\n\n` +
     `Email: ${email}\n` +
     `Enlace seguro: ${accessUrl}\n\n` +
     `_El enlace expira. Si no solicitaste este acceso, ignora este mensaje._`;
@@ -196,8 +206,8 @@ export async function sendPackageStatusNotification({
       subject = `Tu paquete ${trackingNumber} está listo para retirar`;
       bodyHtml = `
         <div style="font-family:sans-serif;max-width:480px;margin:auto;padding:32px;background:#f9fafb;border-radius:12px;color:#1e293b;">
-          <h2 style="margin-bottom:8px;">¡Hola, ${clientName}! 👋</h2>
-          <p>Tu paquete con número de seguimiento <strong>${trackingNumber}</strong> ya está listo para ser retirado en nuestra oficina.</p>
+          <h2 style="margin-bottom:8px;">¡Hola, ${htmlEscape(clientName)}! 👋</h2>
+          <p>Tu paquete con número de seguimiento <strong>${htmlEscape(trackingNumber)}</strong> ya está listo para ser retirado en nuestra oficina.</p>
           <a href="${PORTAL_URL}/track/${trackingNumber}" style="display:inline-block;background:#2563eb;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:16px;">
             Ver estado del envío →
           </a>
@@ -207,8 +217,8 @@ export async function sendPackageStatusNotification({
       subject = `Tu paquete ${trackingNumber} ha llegado a la oficina`;
       bodyHtml = `
         <div style="font-family:sans-serif;max-width:480px;margin:auto;padding:32px;background:#f9fafb;border-radius:12px;color:#1e293b;">
-          <h2 style="margin-bottom:8px;">¡Hola, ${clientName}! 👋</h2>
-          <p>Hemos registrado la llegada de tu paquete con número de seguimiento <strong>${trackingNumber}</strong>. Te enviaremos otra alerta en cuanto esté clasificado y listo para retiro.</p>
+          <h2 style="margin-bottom:8px;">¡Hola, ${htmlEscape(clientName)}! 👋</h2>
+          <p>Hemos registrado la llegada de tu paquete con número de seguimiento <strong>${htmlEscape(trackingNumber)}</strong>. Te enviaremos otra alerta en cuanto esté clasificado y listo para retiro.</p>
           <a href="${PORTAL_URL}/track/${trackingNumber}" style="display:inline-block;background:#2563eb;color:#fff;padding:12px 24px;border-radius:8px;text-decoration:none;font-weight:600;margin-top:16px;">
             Rastrear envío →
           </a>
@@ -218,8 +228,8 @@ export async function sendPackageStatusNotification({
       subject = `Tu paquete ${trackingNumber} ha sido entregado`;
       bodyHtml = `
         <div style="font-family:sans-serif;max-width:480px;margin:auto;padding:32px;background:#f9fafb;border-radius:12px;color:#1e293b;">
-          <h2 style="margin-bottom:8px;">¡Hola, ${clientName}! 👋</h2>
-          <p>El paquete con número de seguimiento <strong>${trackingNumber}</strong> ha sido entregado correctamente.</p>
+          <h2 style="margin-bottom:8px;">¡Hola, ${htmlEscape(clientName)}! 👋</h2>
+          <p>El paquete con número de seguimiento <strong>${htmlEscape(trackingNumber)}</strong> ha sido entregado correctamente.</p>
           <p>¡Gracias por elegir nuestros servicios!</p>
         </div>
       `;
@@ -254,11 +264,11 @@ export async function sendPackageStatusNotification({
 
     let body = '';
     if (status === 'READY_FOR_PICKUP') {
-      body = `¡Hola ${clientName}! 👋 Tu paquete con tracking *${trackingNumber}* está listo para ser retirado en nuestra oficina.`;
+      body = `¡Hola ${htmlEscape(clientName)}! 👋 Tu paquete con tracking *${htmlEscape(trackingNumber)}* está listo para ser retirado en nuestra oficina.`;
     } else if (status === 'ARRIVED') {
-      body = `¡Hola ${clientName}! 👋 Hemos recibido tu paquete con tracking *${trackingNumber}*. Te avisaremos cuando esté listo.`;
+      body = `¡Hola ${htmlEscape(clientName)}! 👋 Hemos recibido tu paquete con tracking *${htmlEscape(trackingNumber)}*. Te avisaremos cuando esté listo.`;
     } else {
-      body = `¡Hola ${clientName}! 👋 Tu paquete con tracking *${trackingNumber}* ha sido entregado correctamente. ¡Gracias!`;
+      body = `¡Hola ${htmlEscape(clientName)}! 👋 Tu paquete con tracking *${htmlEscape(trackingNumber)}* ha sido entregado correctamente. ¡Gracias!`;
     }
 
     const client = twilio(sid, token);

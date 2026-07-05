@@ -13,7 +13,12 @@ const DEFAULT_SETTINGS = {
   cost_per_kg: '5.00',
 };
 
-export async function GET() {
+export async function GET(request: Request) {
+  const user = getUser(request);
+  if (!isInternalUser(user)) {
+    return NextResponse.json({ error: 'Unauthorized access' }, { status: 403 });
+  }
+
   try {
     const db = getDb();
     const result = await db.query(

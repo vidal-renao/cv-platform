@@ -92,8 +92,8 @@ export const metadata = {
 
 export const viewport = {
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#2563eb' },
-    { media: '(prefers-color-scheme: dark)', color: '#1e3a5f' },
+    { media: '(prefers-color-scheme: light)', color: '#0B1120' },
+    { media: '(prefers-color-scheme: dark)', color: '#050A14' },
   ],
 };
 
@@ -131,7 +131,7 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-gray-50 text-gray-900 font-sans antialiased min-h-screen flex flex-col">
+      <body className="min-h-screen flex flex-col">
         <I18nProvider>
           <Navbar />
           {children}

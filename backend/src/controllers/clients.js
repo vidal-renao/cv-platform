@@ -3,6 +3,7 @@ const db = require('../db');
 const bcrypt = require('bcryptjs');
 const twilio = require('twilio');
 const { getResendClient } = require('../services/emailClient');
+const { htmlEscape } = require('../lib/htmlEscape');
 
 function getTwilioClient() {
   if (!process.env.TWILIO_ACCOUNT_SID || !process.env.TWILIO_AUTH_TOKEN) {
@@ -100,10 +101,13 @@ const updateClient = async (req, res, next) => {
 
     const result = await db.query(
       `UPDATE clients
-       SET name = $1, phone = $2, email = $3, address = $4
+       SET name = COALESCE($1, name),
+           phone = COALESCE($2, phone),
+           email = COALESCE($3, email),
+           address = COALESCE($4, address)
        WHERE id = $5 AND user_id = $6
        RETURNING *`,
-      [name, phone, email, address, id, userId]
+      [name || null, phone || null, email || null, address || null, id, userId]
     );
 
     if (result.rows.length === 0) {
@@ -245,9 +249,9 @@ const generateAccess = async (req, res, next) => {
           from: process.env.TWILIO_WHATSAPP_FROM || 'whatsapp:+14155238886',
           to: `whatsapp:${toPhone}`,
           body:
-            `¡Hola ${client.name}! 👋\n\n` +
+            `¡Hola ${htmlEscape(client.name)}! 👋\n\n` +
             `Tu acceso a *CV Platform* ha sido creado.\n\n` +
-            `📧 *Usuario:* ${client.email}\n` +
+            `📧 *Usuario:* ${htmlEscape(client.email)}\n` +
             `Enlace seguro: ${accessUrl}\n\n` +
             `El enlace expira automaticamente.`,
         });
@@ -266,19 +270,19 @@ const generateAccess = async (req, res, next) => {
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL || 'noreply@example.com',
           to: client.email,
-          subject: `¡Bienvenido a CV Platform, ${client.name}!`,
+          subject: `¡Bienvenido a CV Platform, ${htmlEscape(client.name)}!`,
           html: `
             <div style="font-family:sans-serif;max-width:520px;margin:auto;color:#1e293b">
               <div style="background:#1e40af;padding:32px 40px;border-radius:12px 12px 0 0">
                 <h1 style="color:white;margin:0;font-size:24px">CV Platform</h1>
               </div>
               <div style="background:#ffffff;padding:32px 40px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px">
-                <h2 style="margin:0 0 8px">¡Hola, ${client.name}!</h2>
+                <h2 style="margin:0 0 8px">¡Hola, ${htmlEscape(client.name)}!</h2>
                 <p style="color:#475569;margin:0 0 24px">Tu cuenta de cliente ha sido creada. Aquí están tus credenciales de acceso:</p>
 
                 <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:20px 24px;margin-bottom:24px">
                   <p style="margin:0 0 8px;font-size:14px;color:#64748b">Usuario (email)</p>
-                  <p style="margin:0 0 16px;font-size:18px;font-weight:700">${client.email}</p>
+                  <p style="margin:0 0 16px;font-size:18px;font-weight:700">${htmlEscape(client.email)}</p>
                   <p style="margin:0 0 8px;font-size:14px;color:#64748b">Enlace seguro</p>
                   <p style="margin:0;font-size:14px;font-weight:700;word-break:break-all">${accessUrl}</p>
                 </div>
@@ -377,9 +381,9 @@ const resendAccess = async (req, res, next) => {
           from: process.env.TWILIO_WHATSAPP_FROM || 'whatsapp:+14155238886',
           to: `whatsapp:${toPhone}`,
           body:
-            `¡Hola ${client.name}! 👋\n\n` +
+            `¡Hola ${htmlEscape(client.name)}! 👋\n\n` +
             `Te enviamos tu acceso a *CV Platform*.\n\n` +
-            `📧 *Usuario:* ${resolvedEmail}\n` +
+            `📧 *Usuario:* ${htmlEscape(resolvedEmail)}\n` +
             `🔗 *Restablecer contraseña:* ${resetUrl}\n\n` +
             `El enlace expira en 1 hora. Úsalo para establecer tu contraseña y entrar.`,
         });
@@ -398,19 +402,19 @@ const resendAccess = async (req, res, next) => {
         await resend.emails.send({
           from: process.env.RESEND_FROM_EMAIL || 'noreply@example.com',
           to: resolvedEmail,
-          subject: `Tu acceso a CV Platform, ${client.name}`,
+          subject: `Tu acceso a CV Platform, ${htmlEscape(client.name)}`,
           html: `
             <div style="font-family:sans-serif;max-width:520px;margin:auto;color:#1e293b">
               <div style="background:#1e40af;padding:32px 40px;border-radius:12px 12px 0 0">
                 <h1 style="color:white;margin:0;font-size:24px">CV Platform</h1>
               </div>
               <div style="background:#ffffff;padding:32px 40px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 12px 12px">
-                <h2 style="margin:0 0 8px">¡Hola, ${client.name}!</h2>
+                <h2 style="margin:0 0 8px">¡Hola, ${htmlEscape(client.name)}!</h2>
                 <p style="color:#475569;margin:0 0 24px">Aquí tienes tu enlace para acceder a tu cuenta. Expira en <strong>1 hora</strong>.</p>
 
                 <div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:8px;padding:20px 24px;margin-bottom:24px">
                   <p style="margin:0 0 8px;font-size:14px;color:#64748b">Usuario (email)</p>
-                  <p style="margin:0;font-size:18px;font-weight:700">${resolvedEmail}</p>
+                  <p style="margin:0;font-size:18px;font-weight:700">${htmlEscape(resolvedEmail)}</p>
                 </div>
 
                 <a href="${resetUrl}"

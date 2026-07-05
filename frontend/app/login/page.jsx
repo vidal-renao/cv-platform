@@ -5,11 +5,11 @@ import { login } from '../../lib/api';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 
-const DEMO_ACCOUNTS = [
-  { label: 'Admin',  email: 'admin@demo.com',  password: '123456', role: 'ADMIN'  },
-  { label: 'Staff',  email: 'staff@demo.com',  password: '123456', role: 'STAFF'  },
-  { label: 'Client', email: 'client@demo.com', password: '123456', role: 'CLIENT' },
-];
+const DEMO_ACCOUNTS = process.env.NODE_ENV === 'development' ? [
+  { label: 'Admin',  email: 'admin@demo.com',  password: 'demo1234', role: 'ADMIN'  },
+  { label: 'Staff',  email: 'staff@demo.com',  password: 'demo1234', role: 'STAFF'  },
+  { label: 'Client', email: 'client@demo.com', password: 'demo1234', role: 'CLIENT' },
+] : [];
 
 export default function LoginPage() {
   const { t } = useTranslation();

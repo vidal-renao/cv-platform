@@ -20,7 +20,7 @@ const authenticateToken = (req, res, next) => {
     req.user = {
       id:    decoded.id,
       email: decoded.email,
-      role:  decoded.role || 'ADMIN',
+      role: decoded.role || 'CLIENT',
     };
 
     // Fire-and-forget: update last_seen without blocking the request

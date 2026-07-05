@@ -1,5 +1,7 @@
 const db = require('../db');
 
+const MAX_BASE64_SIZE = 500 * 1024; // 500KB per field
+
 // POST /api/packages/:id/proof  (ADMIN only)
 const saveProof = async (req, res, next) => {
   try {
@@ -9,6 +11,13 @@ const saveProof = async (req, res, next) => {
 
     if (!signature_data && !photo_data) {
       return res.status(400).json({ error: 'At least a signature or photo is required' });
+    }
+
+    if (signature_data && signature_data.length > MAX_BASE64_SIZE) {
+      return res.status(400).json({ error: 'Signature data exceeds 500KB limit' });
+    }
+    if (photo_data && photo_data.length > MAX_BASE64_SIZE) {
+      return res.status(400).json({ error: 'Photo data exceeds 500KB limit' });
     }
 
     // Upsert — one proof per package

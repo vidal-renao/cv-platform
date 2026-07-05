@@ -19,8 +19,11 @@ export async function POST(request: Request) {
   if (!token || !newPassword) {
     return NextResponse.json({ error: 'Token and new password are required' }, { status: 400 });
   }
-  if (newPassword.length < 6) {
-    return NextResponse.json({ error: 'Password must be at least 6 characters' }, { status: 400 });
+  if (newPassword.length < 8) {
+    return NextResponse.json({ error: 'Password must be at least 8 characters' }, { status: 400 });
+  }
+  if (!/[A-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+    return NextResponse.json({ error: 'Password must contain at least one uppercase letter and one number' }, { status: 400 });
   }
 
   try {

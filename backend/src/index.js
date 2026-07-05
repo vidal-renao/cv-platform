@@ -57,7 +57,7 @@ app.use(cors({
 }));
 
 // 📥 Parse JSON
-app.use(express.json());
+app.use(express.json({ limit: '500kb' }));
 
 app.use((req, res, next) => {
   const requestId = req.headers['x-request-id'] || crypto.randomUUID();

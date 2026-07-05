@@ -22,6 +22,9 @@ function categoryForPath(path) {
   if (/^\/api\/packages\/[^/]+\/proof/.test(path)) {
     return 'upload';
   }
+  if (/^\/api\/track\//.test(path)) {
+    return 'tracking';
+  }
   return 'api';
 }
 
@@ -29,6 +32,7 @@ function maxForCategory(category) {
   if (category === 'auth') return numberFromEnv('RATE_LIMIT_MAX_AUTH', 10);
   if (category === 'chat') return numberFromEnv('RATE_LIMIT_MAX_CHAT', 60);
   if (category === 'upload') return numberFromEnv('RATE_LIMIT_MAX_UPLOAD', 20);
+  if (category === 'tracking') return numberFromEnv('RATE_LIMIT_MAX_TRACKING', 30);
   return numberFromEnv('RATE_LIMIT_MAX_API', 100);
 }
 

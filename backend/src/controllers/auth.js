@@ -3,6 +3,7 @@ const db = require('../db');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { getResendClient } = require('../services/emailClient');
+const { htmlEscape } = require('../lib/htmlEscape');
 
 function hashPublicToken(token) {
   return crypto.createHash('sha256').update(token, 'utf8').digest('hex');
@@ -107,8 +108,11 @@ const changePassword = async (req, res, next) => {
     if (!currentPassword || !newPassword) {
       return res.status(400).json({ error: 'currentPassword and newPassword are required' });
     }
-    if (newPassword.length < 6) {
-      return res.status(400).json({ error: 'New password must be at least 6 characters' });
+    if (newPassword.length < 8) {
+      return res.status(400).json({ error: 'New password must be at least 8 characters' });
+    }
+    if (!/[A-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+      return res.status(400).json({ error: 'Password must contain at least one uppercase letter and one number' });
     }
 
     const result = await db.query('SELECT password_hash FROM users WHERE id = $1', [userId]);
@@ -148,8 +152,8 @@ const forgotPassword = async (req, res, next) => {
     const tokenHash = hashPublicToken(token);
     const expiresAt = new Date(Date.now() + 60 * 60 * 1000); // 1 hour
 
-    // Invalidate any previous tokens for this user
-    await db.query('DELETE FROM password_resets WHERE user_id = $1', [user.id]);
+    // Invalidate any previous password_reset tokens for this user (preserve client_access tokens)
+    await db.query('DELETE FROM password_resets WHERE user_id = $1 AND purpose = $2', [user.id, 'password_reset']);
 
     await db.query(
       `INSERT INTO password_resets (user_id, token, expires_at, purpose)
@@ -195,7 +199,7 @@ const forgotPassword = async (req, res, next) => {
   }
 };
 
-// RESET PASSWORD — validates token and sets new password
+// RESET PASSWORD — validates token and sets new password (atomic)
 const resetPassword = async (req, res, next) => {
   try {
     const { token, newPassword } = req.body;
@@ -203,37 +207,33 @@ const resetPassword = async (req, res, next) => {
     if (!token || !newPassword) {
       return res.status(400).json({ error: 'Token y nueva contraseña son obligatorios.' });
     }
-    if (newPassword.length < 6) {
-      return res.status(400).json({ error: 'La contraseña debe tener al menos 6 caracteres.' });
+    if (newPassword.length < 8) {
+      return res.status(400).json({ error: 'La contraseña debe tener al menos 8 caracteres.' });
+    }
+    if (!/[A-Z]/.test(newPassword) || !/[0-9]/.test(newPassword)) {
+      return res.status(400).json({ error: 'La contraseña debe contener al menos una mayúscula y un número.' });
     }
 
     const tokenHash = hashPublicToken(token);
+
+    // Atomic: mark as used and return the reset record in one operation
     const result = await db.query(
-      `SELECT pr.user_id, pr.expires_at, pr.used_at
-       FROM password_resets pr
-       WHERE pr.token = $1`,
+      `UPDATE password_resets
+       SET used_at = NOW()
+       WHERE token = $1
+         AND purpose = 'password_reset'
+         AND used_at IS NULL
+         AND expires_at > NOW()
+       RETURNING user_id`,
       [tokenHash]
     );
 
     if (result.rows.length === 0) {
-      return res.status(400).json({ error: 'Enlace inválido o expirado.' });
-    }
-
-    const reset = result.rows[0];
-
-    if (reset.used_at) {
-      return res.status(400).json({ error: 'Este enlace ya fue utilizado.' });
-    }
-
-    if (new Date() > new Date(reset.expires_at)) {
-      return res.status(400).json({ error: 'El enlace ha expirado. Solicita uno nuevo.' });
+      return res.status(400).json({ error: 'Enlace inválido, expirado o ya utilizado.' });
     }
 
     const newHash = await bcrypt.hash(newPassword, 10);
-    await db.query('UPDATE users SET password_hash = $1 WHERE id = $2', [newHash, reset.user_id]);
-
-    // Mark token as used (single-use enforcement)
-    await db.query('UPDATE password_resets SET used_at = NOW() WHERE token = $1', [tokenHash]);
+    await db.query('UPDATE users SET password_hash = $1 WHERE id = $2', [newHash, result.rows[0].user_id]);
 
     res.json({ message: 'Contraseña actualizada correctamente.' });
   } catch (err) {

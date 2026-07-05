@@ -7,13 +7,13 @@ import { getCurrentUser, logout } from '../lib/api';
 import { useTranslation, LANGUAGES } from '../lib/i18n';
 
 const ROLE_STYLES = {
-  SUPERADMIN: 'bg-amber-100 text-amber-700',
-  ADMIN:      'bg-purple-100 text-purple-700',
-  STAFF:      'bg-teal-100 text-teal-700',
-  CLIENT:     'bg-blue-100 text-blue-700',
+  SUPERADMIN: 'bg-amber-400/15 text-amber-400 border-amber-400/20',
+  ADMIN:      'bg-purple-400/15 text-purple-400 border-purple-400/20',
+  STAFF:      'bg-teal-400/15 text-teal-400 border-teal-400/20',
+  CLIENT:     'bg-white/10 text-white/60 border-white/10',
 };
 
-function LangDropdown({ scrolled, isLanding }) {
+function LangDropdown() {
   const { locale, setLocale } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
@@ -28,32 +28,30 @@ function LangDropdown({ scrolled, isLanding }) {
     return () => document.removeEventListener('mousedown', handler);
   }, []);
 
-  const textColor = scrolled || !isLanding
-    ? 'text-gray-600 hover:text-gray-900'
-    : 'text-slate-300 hover:text-white';
-
   return (
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className={`flex items-center gap-1.5 text-sm font-medium transition ${textColor}`}
+        className="flex items-center gap-1.5 text-sm font-medium text-white/50 hover:text-white transition"
         aria-label="Select language"
       >
         <span className="text-base leading-none">{current.flag}</span>
-        <span className="hidden sm:inline">{current.code.toUpperCase()}</span>
-        <svg className="w-3 h-3 opacity-60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <span className="hidden sm:inline font-mono text-xs tracking-wider">{current.code.toUpperCase()}</span>
+        <svg className={`w-3 h-3 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {open && (
-        <ul className="absolute right-0 mt-2 w-40 bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden z-50">
+        <ul className="absolute right-0 mt-2 w-44 rounded-xl border border-white/10 overflow-hidden z-50 glass-card !p-1">
           {LANGUAGES.map((lang) => (
             <li key={lang.code}>
               <button
                 onClick={() => { setLocale(lang.code); setOpen(false); }}
-                className={`w-full text-left px-4 py-2.5 text-sm flex items-center gap-3 hover:bg-gray-50 transition ${
-                  locale === lang.code ? 'font-semibold text-blue-600 bg-blue-50' : 'text-gray-700'
+                className={`w-full text-left px-4 py-2.5 text-sm flex items-center gap-3 rounded-lg transition font-body ${
+                  locale === lang.code
+                    ? 'font-semibold text-teal-400 bg-teal-400/10'
+                    : 'text-white/60 hover:text-white hover:bg-white/5'
                 }`}
               >
                 <span className="text-base">{lang.flag}</span>
@@ -76,7 +74,6 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  // Only hide on the tracking page — it has its own embedded header
   const hidden = pathname?.startsWith('/track');
 
   const NAV_LINKS = [
@@ -104,7 +101,6 @@ export default function Navbar() {
     return () => document.removeEventListener('keydown', onKey);
   }, [menuOpen]);
 
-  // Close menu on route change
   useEffect(() => { setMenuOpen(false); }, [pathname]);
 
   if (!mounted || hidden) return null;
@@ -120,23 +116,21 @@ export default function Navbar() {
   const isInPanel  = pathname?.startsWith('/dashboard') || pathname?.startsWith('/client');
 
   return (
-    <nav className={`sticky top-0 z-50 transition-all duration-200 ${
+    <nav className={`sticky top-0 z-50 transition-all duration-300 ${
       scrolled
-        ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100'
+        ? 'bg-navy-900/80 backdrop-blur-xl border-b border-white/5 shadow-[0_4px_24px_rgba(0,0,0,0.4)]'
         : isLanding
-          ? 'bg-slate-900/80 backdrop-blur-md'
-          : 'bg-white border-b border-gray-100'
+          ? 'bg-transparent'
+          : 'bg-navy-900 border-b border-white/5'
     }`}>
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
-        {/* Logo — always goes to / */}
+        {/* Logo */}
         <Link
           href="/"
-          className={`text-lg font-bold tracking-tight transition ${
-            scrolled || !isLanding ? 'text-slate-900' : 'text-white'
-          }`}
+          className="text-lg font-display font-bold tracking-tight text-white"
         >
-          CV Platform
+          CV <span className="text-teal-400">Platform</span>
         </Link>
 
         {/* Desktop nav links (landing only) */}
@@ -146,11 +140,7 @@ export default function Navbar() {
               <Link
                 key={href}
                 href={href}
-                className={`px-4 py-2 text-sm font-medium rounded-lg transition ${
-                  scrolled
-                    ? 'text-slate-600 hover:text-slate-900 hover:bg-gray-100'
-                    : 'text-slate-300 hover:text-white hover:bg-white/10'
-                }`}
+                className="px-4 py-2 text-sm font-medium text-white/40 hover:text-white rounded-lg transition font-body hover:bg-white/5"
               >
                 {label}
               </Link>
@@ -161,28 +151,25 @@ export default function Navbar() {
         {/* Right side */}
         <div className="flex items-center gap-3">
 
-          {/* Language selector */}
-          <LangDropdown scrolled={scrolled} isLanding={isLanding} />
+          <LangDropdown />
 
           {user ? (
             <>
-              {/* User badge — only show outside panel to avoid duplication */}
               {!isInPanel && (
                 <div className="hidden sm:flex items-center gap-2">
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${ROLE_STYLES[user.role] || 'bg-gray-100 text-gray-700'}`}>
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold border ${ROLE_STYLES[user.role] || 'bg-white/10 text-white/60 border-white/10'}`}>
                     {user.email?.charAt(0).toUpperCase()}
                   </div>
-                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ROLE_STYLES[user.role] || 'bg-gray-100 text-gray-600'}`}>
+                  <span className={`text-xs font-semibold px-2 py-0.5 rounded-full border ${ROLE_STYLES[user.role] || 'bg-white/10 text-white/60 border-white/10'}`}>
                     {user.role}
                   </span>
                 </div>
               )}
 
-              {/* "Ir a mi Panel" — only show when not already inside the panel */}
               {!isInPanel && (
                 <Link
                   href={panelHref}
-                  className="text-sm bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold transition shadow-sm flex items-center gap-1.5"
+                  className="text-sm bg-teal-500 hover:bg-teal-400 text-navy-900 px-4 py-2 rounded-xl font-display font-bold transition flex items-center gap-1.5"
                 >
                   <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7" />
@@ -191,14 +178,9 @@ export default function Navbar() {
                 </Link>
               )}
 
-              {/* Logout — always visible */}
               <button
                 onClick={handleLogout}
-                className={`text-sm font-medium transition ${
-                  scrolled || !isLanding
-                    ? 'text-gray-500 hover:text-red-600'
-                    : 'text-slate-300 hover:text-white'
-                }`}
+                className="text-sm font-medium text-white/30 hover:text-white transition font-body"
               >
                 {t('nav.logout')}
               </button>
@@ -207,17 +189,13 @@ export default function Navbar() {
             <>
               <Link
                 href="/login"
-                className={`text-sm font-medium transition hidden sm:block ${
-                  scrolled || !isLanding
-                    ? 'text-gray-600 hover:text-gray-900'
-                    : 'text-slate-300 hover:text-white'
-                }`}
+                className="text-sm font-medium text-white/40 hover:text-white transition hidden sm:block font-body"
               >
                 {t('nav.login')}
               </Link>
               <Link
                 href="/login"
-                className="text-sm bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold transition shadow-sm"
+                className="text-sm bg-teal-500 hover:bg-teal-400 text-navy-900 px-4 py-2 rounded-xl font-display font-bold transition"
               >
                 {t('nav.access')}
               </Link>
@@ -231,9 +209,7 @@ export default function Navbar() {
               aria-expanded={menuOpen}
               aria-controls="mobile-menu"
               aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'}
-              className={`md:hidden p-2 rounded-lg transition ${
-                scrolled || !isLanding ? 'text-gray-600 hover:bg-gray-100' : 'text-slate-300 hover:bg-white/10'
-              }`}
+              className="md:hidden p-2 rounded-lg text-white/40 hover:text-white hover:bg-white/5 transition"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 {menuOpen
@@ -250,9 +226,9 @@ export default function Navbar() {
       {isLanding && (
         <div
           id="mobile-menu"
-          className={`md:hidden overflow-hidden transition-all duration-200 ease-in-out ${
+          className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
             menuOpen ? 'max-h-64 opacity-100' : 'max-h-0 opacity-0'
-          } bg-slate-900 border-t border-slate-700`}
+          } bg-navy-900/95 backdrop-blur-xl border-t border-white/5`}
           aria-hidden={!menuOpen}
         >
           <div className="px-6 py-4 space-y-1">
@@ -261,7 +237,7 @@ export default function Navbar() {
                 key={href}
                 href={href}
                 onClick={() => setMenuOpen(false)}
-                className="block px-3 py-2.5 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition"
+                className="block px-3 py-2.5 text-sm font-medium text-white/40 hover:text-white hover:bg-white/5 rounded-lg transition font-body"
               >
                 {label}
               </Link>

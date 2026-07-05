@@ -35,6 +35,8 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(event.request.url);
   // Only cache same-origin requests
   if (url.origin !== location.origin) return;
+  // Never cache API routes (authenticated responses)
+  if (url.pathname.startsWith('/api/')) return;
 
   event.respondWith(
     caches.match(event.request).then(

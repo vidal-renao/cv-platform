@@ -4,7 +4,7 @@
 
 ### Intelligent Logistics Management — Built for Scale
 
-[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://postgresql.org/)
 [![Twilio](https://img.shields.io/badge/Twilio-WhatsApp-F22F46?style=for-the-badge&logo=twilio&logoColor=white)](https://twilio.com/)
@@ -51,8 +51,8 @@ The result is a production-grade platform — not a prototype — with clean arc
 ### Frontend
 | Technology | Version | Purpose |
 |---|---|---|
-| **Next.js** | 14 (App Router) | React framework, SSR, file-based routing |
-| **Tailwind CSS** | 3 | Utility-first styling system |
+| **Next.js** | 15 (App Router) | React framework, SSR, file-based routing |
+| **Tailwind CSS** | 3.4 | Utility-first styling system |
 | **React Context API** | — | i18n state, zero external i18n dependencies |
 | **Canvas API** | — | In-browser digital signature capture for delivery proof |
 | **Recharts / Chart.js** | — | Analytics dashboards and KPI visualizations |
@@ -69,7 +69,7 @@ The result is a production-grade platform — not a prototype — with clean arc
 | **Twilio** | — | WhatsApp Business API notifications |
 | **Resend** | — | Branded transactional email |
 | **Helmet** | — | HTTP security headers |
-| **Multer** | — | Delivery photo upload handling |
+| **Multer** | — | ~~Delivery photo upload handling~~ (removed — base64 used) |
 
 ### Infrastructure
 | Tool | Purpose |
@@ -217,7 +217,7 @@ NEXT_PUBLIC_API_URL=http://localhost:5000/api
 ### 3. Database
 
 ```bash
-psql -U postgres -d cv_platform -f database/schema.sql
+psql -U postgres -d cv_platform -f backend/schema.sql
 ```
 
 ### 4. Install and run
@@ -254,7 +254,9 @@ cv-platform/
 │   │   ├── middlewares/      # JWT auth, role guards, validation, error handling
 │   │   ├── schemas/          # Zod validation schemas
 │   │   ├── services/         # Notification service (Twilio + Resend)
+│   │   ├── lib/              # Shared utilities (htmlEscape, etc.)
 │   │   └── db/               # PostgreSQL connection pool
+│   ├── migrations/           # SQL migration scripts
 │   └── .env.example
 │
 ├── frontend/
@@ -272,7 +274,7 @@ cv-platform/
 │   └── vercel.json           # Vercel deployment configuration
 │
 ├── database/
-│   └── schema.sql            # Full database schema
+│   └── schema.sql            # Full database schema (canonical)
 │
 └── docker/                   # Docker Compose for local dev
 ```

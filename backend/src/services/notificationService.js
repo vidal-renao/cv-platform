@@ -1,5 +1,6 @@
 const db = require('../db');
 const { getResendClient } = require('./emailClient');
+const { htmlEscape } = require('../lib/htmlEscape');
 
 // ─── WhatsApp via Twilio (or simulation if credentials missing) ────────────────
 const sendWhatsApp = async (phone, name, tracking_number) => {
@@ -13,7 +14,7 @@ const sendWhatsApp = async (phone, name, tracking_number) => {
       await twilio.messages.create({
         from,
         to: `whatsapp:${phone}`,
-        body: `¡Hola ${name}! Tu paquete con tracking ${tracking_number} ya está en nuestra oficina y listo para retirar.`,
+        body: `¡Hola ${htmlEscape(name)}! Tu paquete con tracking ${htmlEscape(tracking_number)} ya está en nuestra oficina y listo para retirar.`,
       });
       console.log(`[WhatsApp] Sent → ${phone} (pkg: ${tracking_number})`);
     } catch (err) {
@@ -80,8 +81,8 @@ const sendPackageArrival = async (packageData) => {
             to: email,
             subject: `Tu paquete ${tracking_number} ha llegado`,
             html: `
-              <p>¡Hola <strong>${name}</strong>!</p>
-              <p>Tu paquete con tracking <strong>${tracking_number}</strong> ya está en nuestra oficina y listo para retirar.</p>
+              <p>¡Hola <strong>${htmlEscape(name)}</strong>!</p>
+              <p>Tu paquete con tracking <strong>${htmlEscape(tracking_number)}</strong> ya está en nuestra oficina y listo para retirar.</p>
               <p>Si tienes alguna pregunta, responde a este correo.</p>
             `,
           });

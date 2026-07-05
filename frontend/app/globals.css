@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -5,28 +7,49 @@
 @layer base {
   html {
     scroll-behavior: smooth;
-    /* Prevent layout shift from scrollbar appearing/disappearing */
     scrollbar-gutter: stable;
-    /* Improve text rendering across browsers */
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
   }
   body {
-    @apply bg-gray-50 text-gray-900 antialiased font-sans;
-    /* Prevent horizontal scroll on mobile */
+    @apply bg-navy-950 text-white antialiased font-body;
     overflow-x: hidden;
   }
-  /* Improve focus visibility for accessibility */
   :focus-visible {
-    @apply outline-none ring-2 ring-blue-500 ring-offset-2;
+    @apply outline-none ring-2 ring-teal-400 ring-offset-2 ring-offset-navy-900;
   }
-  /* Better tap target on touch devices */
   button, a {
     -webkit-tap-highlight-color: transparent;
   }
-  /* Smooth image rendering */
   img {
     @apply max-w-full;
     image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+@layer components {
+  .tracking-number-display {
+    @apply font-mono text-2xl sm:text-3xl tracking-widest text-teal-400;
+    letter-spacing: 0.15em;
+  }
+
+  .status-dot {
+    @apply w-2.5 h-2.5 rounded-full;
+  }
+
+  .status-dot-active {
+    @apply bg-teal-400 shadow-[0_0_12px_rgba(0,212,170,0.5)];
+  }
+
+  .status-dot-inactive {
+    @apply bg-navy-600;
+  }
+
+  .glass-card {
+    @apply bg-white/[0.03] backdrop-blur-sm border border-white/[0.06] rounded-2xl;
+  }
+
+  .gradient-text {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-teal-400 to-teal-500;
   }
 }

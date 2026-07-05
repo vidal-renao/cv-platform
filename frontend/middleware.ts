@@ -100,7 +100,7 @@ function isSameOriginRequest(request: NextRequest): boolean {
     }
   }
 
-  return true;
+  return false;
 }
 
 function numberFromEnv(name: string, fallback: number): number {
