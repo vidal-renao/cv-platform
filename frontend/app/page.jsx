@@ -561,7 +561,7 @@ export default function Home() {
           </div>
 
           <div className="border-t border-white/5 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-white/20">
-            <p className="font-body">© {new Date().getFullYear()} CV Platform. {t('footer.copyright')}</p>
+            <p className="font-body">© {new Date().getFullYear()} Vidal Ecosystem. {t('footer.copyright')}</p>
             <div className="flex gap-5 font-body">
               <a href="#" className="hover:text-white/50 transition">{t('footer.terms')}</a>
               <a href="#" className="hover:text-white/50 transition">{t('footer.privacy')}</a>
