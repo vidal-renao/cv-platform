@@ -12,7 +12,7 @@ const STATUS_STYLES = {
   READY_FOR_PICKUP: 'bg-blue-50 text-blue-700 border-blue-200',
   ARRIVED:          'bg-yellow-50 text-yellow-700 border-yellow-200',
 };
-const STATUS_FALLBACK = 'bg-gray-50 text-gray-600 border-gray-200';
+const STATUS_FALLBACK = 'bg-stone-50 text-stone-600 border-stone-200';
 
 function StatCard({ label, value }) {
   return (

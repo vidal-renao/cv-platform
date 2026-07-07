@@ -32,35 +32,35 @@ function LangDropdown() {
     <div ref={ref} className="relative">
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white/50 hover:text-white hover:bg-white/5 rounded-lg transition"
+        className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition border border-white/10 hover:border-white/20"
         aria-label="Select language"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
         </svg>
-        <span className="hidden sm:inline font-mono text-xs tracking-wider">{current.code.toUpperCase()}</span>
-        <svg className={`w-3 h-3 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <span className="hidden sm:inline font-mono text-xs tracking-wider text-white/80">{current.code.toUpperCase()}</span>
+        <svg className={`w-3 h-3 text-white/50 transition-transform ${open ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {open && (
-        <ul className="absolute right-0 mt-2 w-48 rounded-xl border border-white/10 overflow-hidden z-50 glass-card !p-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.4)]">
+        <ul className="absolute right-0 mt-2 w-48 rounded-xl border border-navy-700 overflow-hidden z-50 bg-navy-900 !p-1.5 shadow-[0_8px_32px_rgba(0,0,0,0.6)]">
           {LANGUAGES.map((lang) => (
             <li key={lang.code}>
               <button
                 onClick={() => { setLocale(lang.code); setOpen(false); }}
                 className={`w-full text-left px-3 py-2.5 text-sm flex items-center gap-3 rounded-lg transition font-body ${
                   locale === lang.code
-                    ? 'font-semibold text-teal-400 bg-teal-400/10'
-                    : 'text-white/60 hover:text-white hover:bg-white/5'
+                    ? 'font-semibold text-teal-400 bg-teal-400/15'
+                    : 'text-white/70 hover:text-white hover:bg-white/10'
                 }`}
               >
                 <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                 </svg>
                 <span>{lang.label}</span>
-                <span className="ml-auto font-mono text-[10px] text-white/30">{lang.flag}</span>
+                <span className="ml-auto font-mono text-[10px] text-white/40">{lang.flag}</span>
               </button>
             </li>
           ))}

@@ -56,8 +56,11 @@ export default function AnalyticsPage() {
 
   return (
     <div className="space-y-6 animate-fade-in-up">
-      <h1 className="text-2xl font-bold text-gray-900 tracking-tight">{t('common.analytics')}</h1>
-      <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-100">
+      <div>
+        <h1 className="text-2xl md:text-3xl font-display font-bold text-navy-900">{t('common.analytics')}</h1>
+        <p className="text-sm text-stone-400 mt-1 font-body">{t('analytics.subtitle')}</p>
+      </div>
+      <div className="bg-white p-8 rounded-xl border border-stone-200">
         <div className="h-96">
           <Bar options={options} data={data} />
         </div>

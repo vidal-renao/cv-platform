@@ -7,10 +7,10 @@ import {
 const CustomTooltip = ({ active, payload, label }) => {
   if (!active || !payload?.length) return null;
   return (
-    <div className="bg-white border border-gray-200 rounded-lg shadow-lg px-4 py-3 text-sm">
-      <p className="font-semibold text-gray-700 mb-1">{label}</p>
-      <p className="text-primary-600">{payload[0].value} packages</p>
-      {payload[1] && <p className="text-green-600">${Number(payload[1].value).toFixed(2)} revenue</p>}
+    <div className="bg-white border border-stone-200 rounded-lg shadow-lg px-4 py-3 text-sm">
+      <p className="font-semibold text-navy-700 mb-1">{label}</p>
+      <p className="text-teal-600 font-medium">{payload[0].value} packages</p>
+      {payload[1] && <p className="text-emerald-600 font-medium">${Number(payload[1].value).toFixed(2)} revenue</p>}
     </div>
   );
 };
@@ -18,7 +18,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 export default function MonthlyChart({ data }) {
   if (!data || data.length === 0) {
     return (
-      <div className="flex items-center justify-center h-48 text-gray-400 text-sm">
+      <div className="flex items-center justify-center h-48 text-stone-400 text-sm">
         No data yet for the last 12 months.
       </div>
     );
