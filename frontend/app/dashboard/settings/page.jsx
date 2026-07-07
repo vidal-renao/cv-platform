@@ -3,18 +3,19 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from '../../../lib/i18n';
 import { fetchWithAuth } from '../../../lib/api';
 import { clearCurrencyCache } from '../../../lib/currency';
+import Button from '../../../components/ui/Button';
 
 const CURRENCIES = [
-  { code: 'USD', symbol: '$',  label: 'USD — Dólar estadounidense' },
-  { code: 'EUR', symbol: '€',  label: 'EUR — Euro' },
-  { code: 'CHF', symbol: 'CHF', label: 'CHF — Franco suizo' },
-  { code: 'GBP', symbol: '£',  label: 'GBP — Libra esterlina' },
-  { code: 'MXN', symbol: '$',  label: 'MXN — Peso mexicano' },
-  { code: 'COP', symbol: '$',  label: 'COP — Peso colombiano' },
-  { code: 'PEN', symbol: 'S/', label: 'PEN — Sol peruano' },
-  { code: 'CRC', symbol: '₡',  label: 'CRC — Colón costarricense' },
-  { code: 'GTQ', symbol: 'Q',  label: 'GTQ — Quetzal guatemalteco' },
-  { code: 'HNL', symbol: 'L',  label: 'HNL — Lempira hondureño' },
+  { code: 'USD', symbol: '$',  label: 'USD \u2014 D\u00f3lar estadounidense' },
+  { code: 'EUR', symbol: '\u20ac',  label: 'EUR \u2014 Euro' },
+  { code: 'CHF', symbol: 'CHF', label: 'CHF \u2014 Franco suizo' },
+  { code: 'GBP', symbol: '\u00a3',  label: 'GBP \u2014 Libra esterlina' },
+  { code: 'MXN', symbol: '$',  label: 'MXN \u2014 Peso mexicano' },
+  { code: 'COP', symbol: '$',  label: 'COP \u2014 Peso colombiano' },
+  { code: 'PEN', symbol: 'S/', label: 'PEN \u2014 Sol peruano' },
+  { code: 'CRC', symbol: '\u20a1',  label: 'CRC \u2014 Col\u00f3n costarricense' },
+  { code: 'GTQ', symbol: 'Q',  label: 'GTQ \u2014 Quetzal guatemalteco' },
+  { code: 'HNL', symbol: 'L',  label: 'HNL \u2014 Lempira hondure\u00f1o' },
 ];
 
 export default function SettingsPage() {
@@ -61,36 +62,37 @@ export default function SettingsPage() {
 
   return (
     <div className="space-y-6 animate-fade-in-up max-w-2xl">
-      <h1 className="text-2xl font-bold text-gray-900 tracking-tight">{t('common.settings')}</h1>
+      <div>
+        <h1 className="text-2xl md:text-3xl font-display font-bold text-navy-900">{t('common.settings')}</h1>
+      </div>
 
-      {/* Currency & pricing */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 space-y-8">
+      <div className="bg-white rounded-2xl border border-stone-200 p-8 space-y-8">
         <div>
-          <h3 className="text-lg font-bold text-gray-900">{t('settings.currencyTitle')}</h3>
-          <p className="mt-1 text-sm text-gray-500">{t('settings.currencySubtitle')}</p>
+          <h3 className="text-lg font-display font-bold text-navy-900">{t('settings.currencyTitle')}</h3>
+          <p className="mt-1 text-sm text-stone-500 font-body">{t('settings.currencySubtitle')}</p>
         </div>
 
         <div className="space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('settings.currencyLabel')}</label>
+            <label className="block text-sm font-semibold text-navy-700 mb-1 font-body">{t('settings.currencyLabel')}</label>
             <select
               value={currencyCode}
               onChange={e => setCurrencyCode(e.target.value)}
-              className="block w-full border border-gray-300 rounded-lg shadow-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm"
+              className="block w-full border border-stone-200 rounded-lg py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:border-teal-400 text-sm bg-white"
             >
               {CURRENCIES.map(c => (
                 <option key={c.code} value={c.code}>{c.label}</option>
               ))}
             </select>
-            <p className="mt-1 text-xs text-gray-400">
-              Símbolo: <span className="font-bold">{CURRENCIES.find(c => c.code === currencyCode)?.symbol}</span>
+            <p className="mt-1 text-xs text-stone-400 font-body">
+              S\u00edmbolo: <span className="font-bold text-navy-700">{CURRENCIES.find(c => c.code === currencyCode)?.symbol}</span>
             </p>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('settings.costPerKgLabel')}</label>
+            <label className="block text-sm font-semibold text-navy-700 mb-1 font-body">{t('settings.costPerKgLabel')}</label>
             <div className="relative">
-              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-medium">
+              <span className="absolute left-3 top-1/2 -translate-y-1/2 text-stone-500 font-medium">
                 {CURRENCIES.find(c => c.code === currencyCode)?.symbol}
               </span>
               <input
@@ -99,42 +101,51 @@ export default function SettingsPage() {
                 step="0.01"
                 value={costPerKg}
                 onChange={e => setCostPerKg(e.target.value)}
-                className="block w-full border border-gray-300 rounded-lg shadow-sm py-2.5 pl-8 pr-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm"
+                className="block w-full border border-stone-200 rounded-lg py-2.5 pl-8 pr-3 focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:border-teal-400 text-sm"
               />
             </div>
-            <p className="mt-1 text-xs text-gray-400">{t('settings.costPerKgHint')}</p>
+            <p className="mt-1 text-xs text-stone-400 font-body">{t('settings.costPerKgHint')}</p>
           </div>
         </div>
 
-        {error && <p className="text-sm text-red-600">{error}</p>}
-        {saved  && <p className="text-sm text-green-600">{t('settings.savedOk')}</p>}
+        {error && (
+          <div className="flex items-center gap-2 text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-2.5">
+            <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            {error}
+          </div>
+        )}
+        {saved && (
+          <div className="flex items-center gap-2 text-sm text-emerald-700 bg-emerald-50 border border-emerald-200 rounded-lg px-4 py-2.5">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+            </svg>
+            {t('settings.savedOk')}
+          </div>
+        )}
 
-        <div className="pt-6 border-t border-gray-100 flex justify-end space-x-3">
-          <button
-            onClick={handleSave}
-            disabled={saving}
-            className="bg-primary-600 border border-transparent text-white px-5 py-2.5 rounded-lg hover:bg-primary-700 transition shadow-sm font-medium text-sm disabled:opacity-60"
-          >
-            {saving ? 'Guardando…' : t('common.save')}
-          </button>
+        <div className="pt-6 border-t border-stone-200 flex justify-end">
+          <Button onClick={handleSave} disabled={saving}>
+            {saving ? 'Guardando\u2026' : t('common.save')}
+          </Button>
         </div>
       </div>
 
-      {/* Profile section (placeholder) */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 space-y-8">
+      <div className="bg-white rounded-2xl border border-stone-200 p-8 space-y-8">
         <div>
-          <h3 className="text-lg font-bold text-gray-900">{t('settings.profileTitle')}</h3>
-          <p className="mt-1 text-sm text-gray-500">{t('settings.profileSubtitle')}</p>
+          <h3 className="text-lg font-display font-bold text-navy-900">{t('settings.profileTitle')}</h3>
+          <p className="mt-1 text-sm text-stone-500 font-body">{t('settings.profileSubtitle')}</p>
         </div>
 
         <div className="space-y-5">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('settings.companyNameLabel')}</label>
-            <input type="text" className="block w-full border border-gray-300 rounded-lg shadow-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm transition-shadow" defaultValue="CV Logistics Main" />
+            <label className="block text-sm font-semibold text-navy-700 mb-1 font-body">{t('settings.companyNameLabel')}</label>
+            <input type="text" className="block w-full border border-stone-200 rounded-lg py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:border-teal-400 text-sm transition" defaultValue="CV Logistics Main" />
           </div>
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">{t('settings.adminEmailLabel')}</label>
-            <input type="email" className="block w-full border border-gray-300 rounded-lg shadow-sm py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm transition-shadow" defaultValue="admin@cvplatform.com" />
+            <label className="block text-sm font-semibold text-navy-700 mb-1 font-body">{t('settings.adminEmailLabel')}</label>
+            <input type="email" className="block w-full border border-stone-200 rounded-lg py-2.5 px-3 focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:border-teal-400 text-sm transition" defaultValue="admin@cvplatform.com" />
           </div>
         </div>
       </div>

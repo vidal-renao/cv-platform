@@ -108,9 +108,9 @@ export default function AdminPackageDetail() {
   if (loading) {
     return (
       <div className="space-y-6 animate-pulse">
-        <div className="h-8 bg-gray-200 rounded w-48" />
-        <div className="h-40 bg-gray-200 rounded-2xl" />
-        <div className="h-64 bg-gray-200 rounded-2xl" />
+        <div className="h-8 bg-stone-200 rounded w-48" />
+        <div className="h-40 bg-stone-200 rounded-2xl" />
+        <div className="h-64 bg-stone-200 rounded-2xl" />
       </div>
     );
   }
@@ -131,28 +131,28 @@ export default function AdminPackageDetail() {
         />
       )}
 
-      <Link href="/dashboard/packages" className="text-sm text-gray-400 hover:text-gray-600 flex items-center gap-1 w-fit">
+      <Link href="/dashboard/packages" className="text-sm text-stone-400 hover:text-stone-600 flex items-center gap-1 w-fit transition-colors">
         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" /></svg>
         {t('packagesDetail.back')}
       </Link>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
+      <div className="bg-white rounded-2xl border border-stone-200 p-6">
         <div className="flex items-start justify-between flex-wrap gap-4">
           <div>
-            <h1 className="text-xl font-bold text-gray-900">{pkg.tracking_number}</h1>
-            <p className="text-sm text-gray-400 mt-1">
-              {t('packagesDetail.clientLabel')}: <span className="text-gray-600 font-medium">{pkg.client_name || '—'}</span>
-              {pkg.weight ? ` · ${pkg.weight} kg` : ''}
-              {pkg.cost ? ` · ${currencySymbol}${Number(pkg.cost).toFixed(2)}` : ''}
+            <h1 className="text-xl font-bold font-display text-navy-900">{pkg.tracking_number}</h1>
+            <p className="text-sm text-stone-400 mt-1 font-body">
+              {t('packagesDetail.clientLabel')}: <span className="text-stone-600 font-medium">{pkg.client_name || '\u2014'}</span>
+              {pkg.weight ? ` \u00B7 ${pkg.weight} kg` : ''}
+              {pkg.cost ? ` \u00B7 ${currencySymbol}${Number(pkg.cost).toFixed(2)}` : ''}
             </p>
-            {pkg.description && <p className="text-sm text-gray-500 mt-2">{pkg.description}</p>}
+            {pkg.description && <p className="text-sm text-stone-500 mt-2 font-body">{pkg.description}</p>}
           </div>
           <div className="flex items-center gap-3">
             <select
               value={pkg.status}
               disabled={changingStatus}
               onChange={e => handleStatusChange(e.target.value)}
-              className={`text-sm border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-400 transition ${STATUS_STYLES[pkg.status] || STATUS_FALLBACK} disabled:opacity-50`}
+              className={`text-sm border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400/50 transition ${STATUS_STYLES[pkg.status] || STATUS_FALLBACK} disabled:opacity-50`}
             >
               {VALID_STATUSES.map(s => (
                 <option key={s} value={s}>
@@ -162,7 +162,7 @@ export default function AdminPackageDetail() {
             </select>
             <button
               onClick={() => setShowProofModal(true)}
-              className="px-4 py-2 bg-green-600 text-white text-sm font-medium rounded-lg hover:bg-green-700 transition"
+              className="px-4 py-2 bg-teal-500 text-navy-900 text-sm font-bold rounded-lg hover:bg-teal-400 transition"
             >
               {proof ? t('packagesDetail.updateProof') : t('packagesDetail.proofOfDelivery')}
             </button>
@@ -170,27 +170,27 @@ export default function AdminPackageDetail() {
         </div>
 
         {proof && (
-          <div className="mt-4 pt-4 border-t border-gray-100 flex items-center gap-3 flex-wrap">
-            <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            <span className="text-sm text-green-700 font-medium">{t('packagesDetail.proofRecorded')}</span>
-            {proof.signature_data && <Image src={proof.signature_data} alt="Signature" width={96} height={48} unoptimized className="h-12 border border-gray-200 rounded object-contain" />}
-            {proof.photo_data && <Image src={proof.photo_data} alt="Photo" width={96} height={48} unoptimized className="h-12 border border-gray-200 rounded object-cover" />}
-            {proof.notes && <span className="text-xs text-gray-400">{proof.notes}</span>}
+          <div className="mt-4 pt-4 border-t border-stone-200 flex items-center gap-3 flex-wrap">
+            <svg className="w-4 h-4 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span className="text-sm text-emerald-700 font-medium">{t('packagesDetail.proofRecorded')}</span>
+            {proof.signature_data && <Image src={proof.signature_data} alt="Signature" width={96} height={48} unoptimized className="h-12 border border-stone-200 rounded object-contain" />}
+            {proof.photo_data && <Image src={proof.photo_data} alt="Photo" width={96} height={48} unoptimized className="h-12 border border-stone-200 rounded object-cover" />}
+            {proof.notes && <span className="text-xs text-stone-400">{proof.notes}</span>}
           </div>
         )}
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
-          <h2 className="font-semibold text-gray-900">{t('packagesDetail.comments')}</h2>
-          <span className="text-xs text-gray-400">
+      <div className="bg-white rounded-2xl border border-stone-200 overflow-hidden">
+        <div className="px-6 py-4 border-b border-stone-200 flex items-center justify-between">
+          <h2 className="font-display font-bold text-navy-900">{t('packagesDetail.comments')}</h2>
+          <span className="text-xs text-stone-400 font-body">
             {msgCount} {msgCount === 1 ? t('packagesDetail.message') : t('packagesDetail.messages')}
           </span>
         </div>
 
         <div className="px-6 py-4 space-y-3 max-h-96 overflow-y-auto">
           {comments.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-8">{t('packagesDetail.noComments')}</p>
+            <p className="text-sm text-stone-400 text-center py-8 font-body">{t('packagesDetail.noComments')}</p>
           ) : comments.map(c => {
             const isAdmin = c.author_role === 'ADMIN';
             return (
@@ -199,22 +199,22 @@ export default function AdminPackageDetail() {
                   c.is_internal
                     ? 'bg-amber-50 border border-amber-200 text-amber-900 rounded-br-none'
                     : isAdmin
-                    ? 'bg-primary-600 text-white rounded-br-none'
-                    : 'bg-gray-100 text-gray-800 rounded-bl-none'
+                    ? 'bg-teal-500 text-navy-900 rounded-br-none'
+                    : 'bg-stone-100 text-stone-800 rounded-bl-none'
                 }`}>
                   {c.is_internal && (
-                    <span className="text-xs font-semibold text-amber-600 block mb-1">{t('packagesDetail.internalNote')}</span>
+                    <span className="text-xs font-bold text-amber-600 block mb-1">{t('packagesDetail.internalNote')}</span>
                   )}
                   <p>{c.comment}</p>
                   <div className="flex items-center justify-between gap-3 mt-1">
-                    <p className={`text-xs ${c.is_internal ? 'text-amber-500' : isAdmin ? 'text-primary-200' : 'text-gray-400'}`}>
-                      {c.author_email?.split('@')[0]} · {new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                    <p className={`text-xs ${c.is_internal ? 'text-amber-500' : isAdmin ? 'text-navy-600' : 'text-stone-400'}`}>
+                      {c.author_email?.split('@')[0]} {'·'} {new Date(c.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>
                     <button
                       onClick={() => handleDeleteComment(c.id)}
                       className="opacity-0 group-hover:opacity-100 transition text-red-400 hover:text-red-600 text-xs"
                     >
-                      ×
+                      {'\u00D7'}
                     </button>
                   </div>
                 </div>
@@ -224,7 +224,7 @@ export default function AdminPackageDetail() {
           <div ref={commentEndRef} />
         </div>
 
-        <form onSubmit={handleSend} className="px-6 py-4 border-t border-gray-100 space-y-3">
+        <form onSubmit={handleSend} className="px-6 py-4 border-t border-stone-200 space-y-3">
           <div className="flex items-center gap-3">
             <label className="flex items-center gap-2 cursor-pointer select-none">
               <input
@@ -233,7 +233,7 @@ export default function AdminPackageDetail() {
                 onChange={e => setIsInternal(e.target.checked)}
                 className="rounded text-amber-500 focus:ring-amber-400"
               />
-              <span className="text-sm text-gray-600">{t('packagesDetail.internalNoteOnly')}</span>
+              <span className="text-sm text-stone-600 font-body">{t('packagesDetail.internalNoteOnly')}</span>
             </label>
           </div>
           <div className="flex gap-3">
@@ -241,14 +241,14 @@ export default function AdminPackageDetail() {
               value={newComment}
               onChange={e => setNewComment(e.target.value)}
               placeholder={isInternal ? t('packagesDetail.internalPlaceholder') : t('packagesDetail.messagePlaceholder')}
-              className={`flex-1 px-4 py-2.5 text-sm border rounded-lg focus:outline-none focus:ring-2 transition ${
-                isInternal ? 'border-amber-200 focus:ring-amber-300 bg-amber-50' : 'border-gray-200 focus:ring-primary-400'
+              className={`flex-1 px-4 py-2.5 text-sm border rounded-lg focus:outline-none focus:ring-2 transition font-body ${
+                isInternal ? 'border-amber-200 focus:ring-amber-300 bg-amber-50' : 'border-stone-200 focus:ring-teal-400/50 focus:border-teal-400'
               }`}
             />
             <button
               type="submit"
               disabled={sending || !newComment.trim()}
-              className="px-4 py-2.5 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 transition disabled:opacity-50"
+              className="px-4 py-2.5 bg-teal-500 text-navy-900 text-sm font-bold rounded-lg hover:bg-teal-400 transition disabled:opacity-50"
             >
               {t('packagesDetail.send')}
             </button>

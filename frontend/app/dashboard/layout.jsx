@@ -6,7 +6,6 @@ import Link from "next/link";
 import { fetchWithAuth, getCurrentUser, logout } from '../../lib/api';
 import { useTranslation } from '../../lib/i18n';
 
-/* ─── Global Search ─────────────────────────────────────────── */
 function GlobalSearch() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -52,7 +51,7 @@ function GlobalSearch() {
   return (
     <div ref={wrapperRef} className="relative w-72">
       <div className="relative">
-        <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
         <input
@@ -60,10 +59,10 @@ function GlobalSearch() {
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           placeholder={t('nav.searchClients')}
-          className="w-full pl-9 pr-4 py-2 text-sm border border-gray-200 rounded-lg bg-gray-50 focus:outline-none focus:ring-2 focus:ring-primary-400 focus:bg-white transition"
+          className="w-full pl-9 pr-4 py-2 text-sm border border-stone-200 rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-teal-400/50 focus:border-teal-400 transition placeholder:text-stone-400"
         />
         {loading && (
-          <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-300 animate-spin" fill="none" viewBox="0 0 24 24">
+          <svg className="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-300 animate-spin" fill="none" viewBox="0 0 24 24">
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
           </svg>
@@ -71,19 +70,19 @@ function GlobalSearch() {
       </div>
 
       {open && results.length > 0 && (
-        <ul className="absolute z-50 top-full mt-1.5 w-full bg-white border border-gray-200 rounded-xl shadow-xl overflow-hidden">
+        <ul className="absolute z-50 top-full mt-1.5 w-full bg-white border border-stone-200 rounded-xl shadow-xl overflow-hidden">
           {results.map((client) => (
             <li key={client.id}>
               <button
                 onClick={() => goToClient(client.id)}
-                className="w-full text-left px-4 py-3 hover:bg-gray-50 transition flex items-center gap-3"
+                className="w-full text-left px-4 py-3 hover:bg-stone-50 transition flex items-center gap-3"
               >
-                <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-sm font-bold flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-bold flex-shrink-0">
                   {client.name?.charAt(0).toUpperCase()}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">{client.name}</p>
-                  <p className="text-xs text-gray-400">
+                  <p className="text-sm font-medium text-navy-900 truncate">{client.name}</p>
+                  <p className="text-xs text-stone-400">
                     {client.active_packages} {t('dashboard.topbar.activePackages')}
                   </p>
                 </div>
@@ -94,7 +93,7 @@ function GlobalSearch() {
       )}
 
       {open && query && results.length === 0 && !loading && (
-        <div className="absolute z-50 top-full mt-1.5 w-full bg-white border border-gray-200 rounded-xl shadow-xl px-4 py-3 text-sm text-gray-400">
+        <div className="absolute z-50 top-full mt-1.5 w-full bg-white border border-stone-200 rounded-xl shadow-xl px-4 py-3 text-sm text-stone-400">
           {t('nav.noClientsFound')} &quot;{query}&quot;
         </div>
       )}
@@ -102,7 +101,6 @@ function GlobalSearch() {
   );
 }
 
-/* ─── Chat Panel ─────────────────────────────────────────────── */
 function ChatPanel({ me, onClose }) {
   const { t } = useTranslation();
   const [contacts, setContacts] = useState([]);
@@ -113,9 +111,7 @@ function ChatPanel({ me, onClose }) {
   const bottomRef = useRef(null);
   const pollRef = useRef(null);
 
-  useEffect(() => {
-    loadContacts();
-  }, []);
+  useEffect(() => { loadContacts(); }, []);
 
   const loadContacts = async () => {
     try {
@@ -164,16 +160,15 @@ function ChatPanel({ me, onClose }) {
   const online = (c) => c.is_online || (c.last_seen && Date.now() - new Date(c.last_seen).getTime() < THRESHOLD);
 
   return (
-    <div className="fixed inset-y-0 right-0 w-full sm:w-80 bg-white border-l border-gray-200 shadow-2xl z-50 flex flex-col" style={{ top: '64px' }}>
-      {/* Header */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100 bg-slate-900">
+    <div className="fixed inset-y-0 right-0 w-full sm:w-80 bg-white border-l border-stone-200 shadow-2xl z-50 flex flex-col" style={{ top: '64px' }}>
+      <div className="flex items-center justify-between px-4 py-3 border-b border-stone-100 bg-navy-900">
         <div className="flex items-center gap-2">
-          <svg className="w-4 h-4 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-4 h-4 text-teal-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
           </svg>
-          <span className="text-sm font-bold text-white">{t('chat.title')}</span>
+          <span className="text-sm font-bold text-white font-display">{t('chat.title')}</span>
         </div>
-        <button onClick={onClose} className="text-slate-400 hover:text-white transition">
+        <button onClick={onClose} className="text-stone-400 hover:text-white transition">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -181,30 +176,29 @@ function ChatPanel({ me, onClose }) {
       </div>
 
       {!selected ? (
-        /* Contact list */
         <div className="flex-1 overflow-y-auto">
           {contacts.length === 0 ? (
-            <p className="text-center text-gray-400 text-sm p-8">{t('chat.noContacts')}</p>
+            <p className="text-center text-stone-400 text-sm p-8">{t('chat.noContacts')}</p>
           ) : contacts.map(c => (
             <button
               key={c.id}
               onClick={() => { setSelected(c); loadContacts(); }}
-              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-50 transition border-b border-gray-50"
+              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-stone-50 transition border-b border-stone-50"
             >
               <div className="relative flex-shrink-0">
-                <div className="w-9 h-9 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-sm font-bold">
+                <div className="w-9 h-9 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-sm font-bold">
                   {displayName(c.email).charAt(0).toUpperCase()}
                 </div>
                 {online(c) && (
-                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-white rounded-full" />
+                  <span className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 border-2 border-white rounded-full" />
                 )}
               </div>
               <div className="flex-1 min-w-0 text-left">
-                <p className="text-sm font-medium text-gray-900 truncate">{displayName(c.email)}</p>
-                <p className="text-xs text-gray-400">{c.role}</p>
+                <p className="text-sm font-medium text-navy-900 truncate">{displayName(c.email)}</p>
+                <p className="text-xs text-stone-400">{c.role}</p>
               </div>
               {c.unread > 0 && (
-                <span className="flex-shrink-0 w-5 h-5 bg-blue-600 text-white text-xs font-bold rounded-full flex items-center justify-center">
+                <span className="flex-shrink-0 w-5 h-5 bg-teal-500 text-navy-900 text-xs font-bold rounded-full flex items-center justify-center">
                   {c.unread}
                 </span>
               )}
@@ -212,31 +206,30 @@ function ChatPanel({ me, onClose }) {
           ))}
         </div>
       ) : (
-        /* Message thread */
         <>
-          <div className="flex items-center gap-2 px-4 py-2.5 border-b border-gray-100 bg-gray-50">
-            <button onClick={() => setSelected(null)} className="text-gray-400 hover:text-gray-700 transition">
+          <div className="flex items-center gap-2 px-4 py-2.5 border-b border-stone-100 bg-stone-50">
+            <button onClick={() => setSelected(null)} className="text-stone-400 hover:text-navy-700 transition">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             <div className="relative">
-              <div className="w-7 h-7 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center text-xs font-bold">
+              <div className="w-7 h-7 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center text-xs font-bold">
                 {displayName(selected.email).charAt(0).toUpperCase()}
               </div>
               {online(selected) && (
-                <span className="absolute bottom-0 right-0 w-2 h-2 bg-green-500 border border-white rounded-full" />
+                <span className="absolute bottom-0 right-0 w-2 h-2 bg-emerald-500 border border-white rounded-full" />
               )}
             </div>
             <div>
-              <p className="text-sm font-semibold text-gray-900">{displayName(selected.email)}</p>
-              <p className="text-xs text-gray-400">{online(selected) ? t('chat.online') : t('chat.offline')}</p>
+              <p className="text-sm font-semibold text-navy-900">{displayName(selected.email)}</p>
+              <p className="text-xs text-stone-400">{online(selected) ? t('chat.online') : t('chat.offline')}</p>
             </div>
           </div>
 
           <div className="flex-1 overflow-y-auto p-3 space-y-2">
             {messages.length === 0 && (
-              <p className="text-center text-gray-400 text-xs mt-8">{t('chat.noMessages')}</p>
+              <p className="text-center text-stone-400 text-xs mt-8">{t('chat.noMessages')}</p>
             )}
             {messages.map(msg => {
               const isMine = msg.sender_id === me?.id;
@@ -244,11 +237,11 @@ function ChatPanel({ me, onClose }) {
                 <div key={msg.id} className={`flex ${isMine ? 'justify-end' : 'justify-start'}`}>
                   <div className={`max-w-[85%] px-3 py-2 rounded-2xl text-sm ${
                     isMine
-                      ? 'bg-blue-600 text-white rounded-tr-sm'
-                      : 'bg-gray-100 text-gray-900 rounded-tl-sm'
+                      ? 'bg-teal-500 text-navy-900 rounded-tr-sm'
+                      : 'bg-stone-100 text-navy-900 rounded-tl-sm'
                   }`}>
                     <p className="break-words">{msg.content}</p>
-                    <p className={`text-xs mt-1 ${isMine ? 'text-blue-200' : 'text-gray-400'}`}>
+                    <p className={`text-xs mt-1 ${isMine ? 'text-navy-900/50' : 'text-stone-400'}`}>
                       {new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>
                   </div>
@@ -258,18 +251,18 @@ function ChatPanel({ me, onClose }) {
             <div ref={bottomRef} />
           </div>
 
-          <form onSubmit={handleSend} className="p-3 border-t border-gray-100 flex gap-2">
+          <form onSubmit={handleSend} className="p-3 border-t border-stone-100 flex gap-2">
             <input
               type="text"
               value={draft}
               onChange={e => setDraft(e.target.value)}
               placeholder={t('chat.placeholder')}
-              className="flex-1 text-sm border border-gray-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              className="flex-1 text-sm border border-stone-200 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-teal-400/50 placeholder:text-stone-400"
             />
             <button
               type="submit"
               disabled={!draft.trim() || sending}
-              className="bg-blue-600 hover:bg-blue-700 disabled:opacity-40 text-white p-2 rounded-xl transition"
+              className="bg-teal-500 hover:bg-teal-400 disabled:opacity-40 text-navy-900 p-2 rounded-xl transition"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
@@ -282,7 +275,6 @@ function ChatPanel({ me, onClose }) {
   );
 }
 
-/* ─── Constants ─────────────────────────────────────────────── */
 const NAV_LINK_DEFS = [
   { href: '/dashboard',          key: 'dashboard', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6', adminOnly: false },
   { href: '/dashboard/clients',  key: 'clients',   icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z', adminOnly: false },
@@ -292,12 +284,11 @@ const NAV_LINK_DEFS = [
 ];
 
 const ROLE_BADGE = {
-  SUPERADMIN: 'bg-amber-100 text-amber-700',
-  ADMIN:      'bg-purple-100 text-purple-700',
-  STAFF:      'bg-teal-100 text-teal-700',
+  SUPERADMIN: 'bg-amber-100 text-amber-700 border-amber-200',
+  ADMIN:      'bg-purple-100 text-purple-700 border-purple-200',
+  STAFF:      'bg-teal-100 text-teal-700 border-teal-200',
 };
 
-/* ─── Layout ─────────────────────────────────────────────────── */
 export default function DashboardLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -308,7 +299,6 @@ export default function DashboardLayout({ children }) {
   const [unread, setUnread] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  // Close mobile sidebar on route change
   useEffect(() => { setSidebarOpen(false); }, [pathname]);
 
   useEffect(() => {
@@ -321,9 +311,7 @@ export default function DashboardLayout({ children }) {
         }
         setUser(sessionUser);
       })
-      .catch(() => {
-        router.replace('/login');
-      });
+      .catch(() => { router.replace('/login'); });
   }, [router]);
 
   useEffect(() => {
@@ -333,7 +321,6 @@ export default function DashboardLayout({ children }) {
     }
   }, [router, user]);
 
-  // Poll unread count every 30s
   useEffect(() => {
     if (!user) return;
     const loadUnread = () =>
@@ -352,19 +339,18 @@ export default function DashboardLayout({ children }) {
 
   if (redirecting) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="min-h-screen flex items-center justify-center bg-stone-50">
         <div className="text-center space-y-2">
-          <div className="w-8 h-8 border-2 border-primary-500 border-t-transparent rounded-full animate-spin mx-auto" />
-          <p className="text-sm text-gray-500">{t('dashboard.topbar.redirecting')}</p>
+          <div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin mx-auto" />
+          <p className="text-sm text-stone-500">{t('dashboard.topbar.redirecting')}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-1 bg-gray-50 min-h-[calc(100vh-64px)]">
+    <div className="flex flex-1 bg-stone-50 min-h-[calc(100vh-64px)]">
 
-      {/* Mobile overlay */}
       {sidebarOpen && (
         <div
           className="fixed inset-0 z-30 bg-black/50 md:hidden"
@@ -372,14 +358,17 @@ export default function DashboardLayout({ children }) {
         />
       )}
 
-      {/* SIDEBAR */}
       <aside className={`
-        fixed top-16 bottom-0 left-0 z-40 w-64 bg-slate-900 p-6 flex flex-col overflow-y-auto
+        fixed top-16 bottom-0 left-0 z-40 w-64 bg-navy-900 p-6 flex flex-col overflow-y-auto
         transform transition-transform duration-300 ease-in-out
         ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         md:relative md:top-auto md:bottom-auto md:z-auto md:translate-x-0 md:flex-shrink-0
       `}>
-        <h2 className="text-xl font-bold mb-6 text-white tracking-tight">CV Platform</h2>
+        <div className="mb-8">
+          <p className="text-xl font-display font-bold tracking-tight text-white">Vidal<span className="text-teal-400">Ecosystem</span></p>
+          <p className="text-xs text-navy-600 mt-0.5 font-body">Management Console</p>
+        </div>
+
         <nav className="space-y-0.5 flex-1">
           {NAV_LINK_DEFS
             .filter(({ adminOnly }) => {
@@ -396,8 +385,8 @@ export default function DashboardLayout({ children }) {
                   href={href}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition ${
                     isActive
-                      ? 'bg-blue-600 text-white'
-                      : 'text-slate-300 hover:bg-slate-700 hover:text-white'
+                      ? 'bg-teal-500/10 text-teal-400 border border-teal-500/20'
+                      : 'text-navy-300 hover:bg-navy-800 hover:text-white border border-transparent'
                   }`}
                 >
                   <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -408,10 +397,11 @@ export default function DashboardLayout({ children }) {
               );
             })}
         </nav>
-        <div className="mt-4 pt-4 border-t border-slate-700">
+
+        <div className="mt-4 pt-4 border-t border-navy-800">
           <Link
             href="/"
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-400 hover:bg-slate-700 hover:text-white transition"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-navy-400 hover:bg-navy-800 hover:text-white transition border border-transparent"
           >
             <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
@@ -422,15 +412,11 @@ export default function DashboardLayout({ children }) {
         </div>
       </aside>
 
-      {/* MAIN AREA */}
       <div className="flex-1 flex flex-col min-w-0">
-
-        {/* TOP BAR */}
-        <header className="bg-white border-b border-gray-100 px-4 sm:px-8 py-3 flex items-center justify-between sticky top-16 z-40">
+        <header className="bg-white/80 backdrop-blur-md border-b border-stone-200 px-4 sm:px-8 py-3 flex items-center justify-between sticky top-16 z-40">
           <div className="flex items-center gap-3">
-            {/* Hamburger — mobile only */}
             <button
-              className="md:hidden p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition"
+              className="md:hidden p-2 rounded-lg text-navy-500 hover:bg-stone-100 transition"
               onClick={() => setSidebarOpen(o => !o)}
               aria-label="Toggle menu"
             >
@@ -442,17 +428,17 @@ export default function DashboardLayout({ children }) {
               <GlobalSearch />
             </div>
             {user && (
-              <p className="hidden lg:block text-sm text-gray-500">
-                {t('dashboard.topbar.welcome')}, <span className="font-semibold text-gray-800 capitalize">{displayName}</span>
+              <p className="hidden lg:block text-sm text-stone-500 font-body">
+                {t('dashboard.topbar.welcome')}, <span className="font-semibold text-navy-900 capitalize">{displayName}</span>
               </p>
             )}
           </div>
+
           <div className="flex items-center gap-3">
-            {/* Chat button */}
             {user && user.role !== 'CLIENT' && (
               <button
                 onClick={() => setChatOpen(o => !o)}
-                className="relative p-2 rounded-lg text-slate-500 hover:bg-slate-100 transition"
+                className="relative p-2 rounded-lg text-navy-500 hover:bg-stone-100 transition"
                 title={t('chat.title')}
               >
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -472,14 +458,14 @@ export default function DashboardLayout({ children }) {
                   <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold ${ROLE_BADGE[user.role] || 'bg-purple-100 text-purple-700'}`}>
                     {user.email?.charAt(0).toUpperCase()}
                   </div>
-                  <span className="text-sm text-gray-600 hidden md:block">{user.email}</span>
+                  <span className="text-sm text-navy-600 hidden md:block font-body">{user.email}</span>
                   <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${ROLE_BADGE[user.role] || 'bg-purple-100 text-purple-700'}`}>
                     {user.role}
                   </span>
                 </div>
                 <button
                   onClick={handleLogout}
-                  className="text-sm text-gray-400 hover:text-red-600 font-medium transition"
+                  className="text-sm text-stone-400 hover:text-red-600 font-medium transition"
                 >
                   {t('dashboard.topbar.logout')}
                 </button>
@@ -493,7 +479,6 @@ export default function DashboardLayout({ children }) {
         </main>
       </div>
 
-      {/* CHAT PANEL */}
       {chatOpen && user && (
         <ChatPanel me={user} onClose={() => { setChatOpen(false); }} />
       )}

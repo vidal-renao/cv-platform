@@ -16,9 +16,11 @@ const STATUS_FALLBACK = 'bg-gray-50 text-gray-600 border-gray-200';
 
 function StatCard({ label, value }) {
   return (
-    <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6">
-      <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider">{label}</p>
-      <p className="text-3xl font-black text-gray-900 mt-1">{value}</p>
+    <div className="relative bg-white rounded-2xl border border-stone-200 p-6 overflow-hidden group hover:shadow-md transition-shadow">
+      <div className="absolute top-0 right-0 w-24 h-24 bg-teal-400/5 rounded-bl-[100px] group-hover:bg-teal-400/10 transition-colors" />
+      <p className="text-xs font-semibold text-stone-500 uppercase tracking-wider font-body">{label}</p>
+      <p className="text-3xl font-black text-navy-900 mt-1 font-display">{value}</p>
+      <div className="mt-3 h-1 w-12 bg-teal-400 rounded-full" />
     </div>
   );
 }
@@ -42,11 +44,11 @@ export default function ClientProfilePage() {
   if (loading) {
     return (
       <div className="space-y-6 animate-pulse">
-        <div className="h-8 bg-gray-200 rounded w-48" />
+        <div className="h-8 bg-stone-200 rounded w-48" />
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {[0,1,2].map(i => <div key={i} className="h-28 bg-gray-200 rounded-2xl" />)}
+          {[0,1,2].map(i => <div key={i} className="h-28 bg-stone-200 rounded-2xl" />)}
         </div>
-        <div className="h-64 bg-gray-200 rounded-xl" />
+        <div className="h-64 bg-stone-200 rounded-xl" />
       </div>
     );
   }
@@ -55,7 +57,7 @@ export default function ClientProfilePage() {
     return (
       <div className="text-center py-16 text-red-500">
         <p className="font-medium">{error}</p>
-        <button onClick={() => router.back()} className="mt-4 text-sm text-gray-500 hover:underline">
+        <button onClick={() => router.back()} className="mt-4 text-sm text-stone-500 hover:underline">
           {t('clientsDetail.goBack')}
         </button>
       </div>
@@ -68,19 +70,19 @@ export default function ClientProfilePage() {
     <div className="space-y-8 animate-fade-in-up">
 
       <div>
-        <Link href="/dashboard/clients" className="text-sm text-gray-400 hover:text-gray-600 flex items-center gap-1 mb-4">
+        <Link href="/dashboard/clients" className="text-sm text-stone-400 hover:text-stone-600 flex items-center gap-1 mb-4 transition-colors w-fit">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
           </svg>
           {t('clientsDetail.allClients')}
         </Link>
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-2xl font-bold">
+          <div className="w-14 h-14 rounded-full bg-navy-100 text-navy-700 flex items-center justify-center text-2xl font-bold font-display">
             {name?.charAt(0).toUpperCase()}
           </div>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{name}</h1>
-            <p className="text-gray-500 text-sm">{email} {phone ? `· ${phone}` : ''} {address ? `· ${address}` : ''}</p>
+            <h1 className="text-2xl font-bold font-display text-navy-900">{name}</h1>
+            <p className="text-stone-500 text-sm font-body">{email} {phone ? `· ${phone}` : ''} {address ? `· ${address}` : ''}</p>
           </div>
         </div>
       </div>
@@ -94,42 +96,42 @@ export default function ClientProfilePage() {
         />
       </div>
 
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-100">
-          <h2 className="font-semibold text-gray-900">{t('clientsDetail.packageHistory')}</h2>
+      <div className="bg-white rounded-xl border border-stone-200 overflow-hidden">
+        <div className="px-6 py-4 border-b border-stone-200">
+          <h2 className="font-display font-bold text-navy-900">{t('clientsDetail.packageHistory')}</h2>
         </div>
         {!packages || packages.length === 0 ? (
-          <p className="px-6 py-10 text-center text-gray-400">{t('clientsDetail.noPackages')}</p>
+          <p className="px-6 py-10 text-center text-stone-400 text-sm">{t('clientsDetail.noPackages')}</p>
         ) : (
           <div className="overflow-x-auto">
-          <table className="min-w-full min-w-[500px] divide-y divide-gray-100">
-            <thead className="bg-gray-50/50">
+          <table className="min-w-full divide-y divide-stone-200">
+            <thead className="bg-stone-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{t('clientsDetail.tracking')}</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{t('clientsDetail.status')}</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{t('clientsDetail.weight')}</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{t('clientsDetail.cost')}</th>
-                <th className="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase">{t('clientsDetail.date')}</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-stone-500 uppercase tracking-wider font-body">{t('clientsDetail.tracking')}</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-stone-500 uppercase tracking-wider font-body">{t('clientsDetail.status')}</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-stone-500 uppercase tracking-wider font-body">{t('clientsDetail.weight')}</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-stone-500 uppercase tracking-wider font-body">{t('clientsDetail.cost')}</th>
+                <th className="px-6 py-4 text-left text-xs font-semibold text-stone-500 uppercase tracking-wider font-body">{t('clientsDetail.date')}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="bg-white divide-y divide-stone-100">
               {packages.map((pkg) => (
-                <tr key={pkg.id} className="hover:bg-gray-50/50 transition-colors">
-                  <td className="px-6 py-4 text-sm">
-                    <Link href={`/dashboard/packages/${pkg.id}`} className="font-medium text-primary-600 hover:text-primary-800 hover:underline transition">
+                <tr key={pkg.id} className="hover:bg-stone-50/50 transition-colors">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <Link href={`/dashboard/packages/${pkg.id}`} className="font-medium text-teal-600 hover:text-teal-700 hover:underline transition font-mono">
                       {pkg.tracking_number}
                     </Link>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-4 whitespace-nowrap">
                     <span className={`px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full border ${STATUS_STYLES[pkg.status] || STATUS_FALLBACK}`}>
                       {t(`packages.status.${pkg.status}`) !== `packages.status.${pkg.status}` ? t(`packages.status.${pkg.status}`) : pkg.status?.replace(/_/g, ' ')}
                     </span>
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-500">{pkg.weight ? `${pkg.weight} kg` : '—'}</td>
-                  <td className="px-6 py-4 text-sm text-gray-700 font-medium">
-                    {pkg.cost ? `${currencySymbol}${Number(pkg.cost).toFixed(2)}` : '—'}
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-500 font-body">{pkg.weight ? `${pkg.weight} kg` : '\u2014'}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-navy-700 font-medium font-body">
+                    {pkg.cost ? `${currencySymbol}${Number(pkg.cost).toFixed(2)}` : '\u2014'}
                   </td>
-                  <td className="px-6 py-4 text-sm text-gray-400">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-stone-400 font-body">
                     {new Date(pkg.created_at).toLocaleDateString()}
                   </td>
                 </tr>
