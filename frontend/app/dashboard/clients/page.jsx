@@ -135,7 +135,7 @@ export default function ClientsPage() {
       });
       loadClients(); // refresh has_account flag
     } catch (err) {
-      alert(err.message);
+      setFormError(err.message);
     } finally {
       setGeneratingId(null);
     }
@@ -147,15 +147,15 @@ export default function ClientsPage() {
       const data = await fetchWithAuth(`/clients/${clientId}/resend-access`, { method: 'POST' });
       setResendModal({ email: data.email, accessUrl: data.accessUrl, phone: data.phone, notifications: data.notifications });
     } catch (err) {
-      alert(err.message);
+      setFormError(err.message);
     } finally {
       setResendingId(null);
     }
   };
 
-  const deleteClient = async (id) => {
+  const [deleteConfirmId, setDeleteConfirmId] = useState(null);
 
-    if (!confirm(t('clients.table.deleteConfirm'))) return;
+  const deleteClient = async (id) => {
 
     try {
 
@@ -164,9 +164,11 @@ export default function ClientsPage() {
       });
 
       loadClients();
+      setDeleteConfirmId(null);
 
     } catch (error) {
       console.error("Error deleting client:", error);
+      setDeleteConfirmId(null);
     }
 
   };
@@ -188,8 +190,8 @@ export default function ClientsPage() {
     };
 
     return (
-      <span className={`px-2 py-1 text-xs rounded-full font-medium ${map[status]}`}>
-        {t(`clients.status.${status}`) !== `clients.status.${status}` ? t(`clients.status.${status}`) : status}
+          <span className={`px-2 py-1 text-xs rounded-full font-medium ${map[status]}`}>
+        {status}
       </span>
     );
 
@@ -198,6 +200,34 @@ export default function ClientsPage() {
   return (
 
     <div className="space-y-10">
+
+      {/* DELETE CONFIRM MODAL */}
+      {deleteConfirmId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+          <div className="bg-white rounded-2xl shadow-xl p-8 max-w-sm w-full mx-4 space-y-4">
+            <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto">
+              <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z" />
+              </svg>
+            </div>
+            <h3 className="text-lg font-bold text-gray-900 text-center">{t('clients.table.deleteConfirm')}</h3>
+            <div className="grid grid-cols-2 gap-2">
+              <button
+                onClick={() => setDeleteConfirmId(null)}
+                className="py-2.5 border border-gray-300 text-gray-700 text-sm font-medium rounded-lg hover:bg-gray-50 transition"
+              >
+                {t('common.cancel') || 'Cancel'}
+              </button>
+              <button
+                onClick={() => deleteClient(deleteConfirmId)}
+                className="py-2.5 bg-red-600 text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition"
+              >
+                {t('clients.table.deleteBtn') || 'Delete'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ACCESS MODAL */}
       {accessModal && (
@@ -595,21 +625,30 @@ export default function ClientsPage() {
                         className="text-gray-500 hover:text-primary-600"
                         title="View profile"
                       >
-                        👁️
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-label="View profile">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                        </svg>
                       </button>
 
                       <button
                         onClick={()=>editClient(client)}
                         className="text-gray-500 hover:text-blue-600"
+                        aria-label="Edit client"
                       >
-                        ✏️
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
                       </button>
 
                       <button
-                        onClick={()=>deleteClient(client.id)}
+                        onClick={()=>setDeleteConfirmId(client.id)}
                         className="text-gray-500 hover:text-red-600"
+                        aria-label="Delete client"
                       >
-                        🗑️
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
                       </button>
 
                     </div>

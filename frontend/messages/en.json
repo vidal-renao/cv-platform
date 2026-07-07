@@ -15,12 +15,17 @@
     "badge": "Logistics Management System",
     "title1": "Your package,",
     "title2": "always in control",
-    "subtitle": "Track your shipment instantly. No account needed.",
+    "subtitle": "Track your shipment instantly from anywhere in the world. No sign-up, no hassle.",
     "placeholder": "Enter your tracking number — e.g.: CVP-2024-0001",
     "trackBtn": "Track",
+    "trustSecure": "Secure connection",
+    "trustRealTime": "Real-time updates",
+    "trustNoAccount": "No account needed",
     "loginCtaPre": "Have an account?",
     "loginLink": "Sign in",
-    "loginCtaPost": "to see the full history of your shipments."
+    "loginCtaPost": "to see the full history of your shipments.",
+    "registerCta": "Create a free account",
+    "demoBanner": "Demo available:"
   },
   "stats": {
     "packages": "Packages delivered",
@@ -129,6 +134,7 @@
     "analytics": "Analytics",
     "notifications": "Notifications",
     "save": "Save",
+    "close": "Close",
     "login": "Sign In"
   },
   "dashboard": {

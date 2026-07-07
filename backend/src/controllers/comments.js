@@ -6,9 +6,9 @@ const getComments = async (req, res, next) => {
   try {
     const { id: packageId } = req.params;
     const userId = req.user.id;
-    const isAdmin = req.user.role === 'ADMIN';
+    const isAdmin = req.user.role === 'ADMIN' || req.user.role === 'SUPERADMIN';
 
-    // ADMIN: verify package belongs to their account
+    // ADMIN / SUPERADMIN: verify package belongs to their account
     // CLIENT: handled separately in client routes
     if (isAdmin) {
       const pkgCheck = await db.query(
@@ -42,7 +42,7 @@ const addComment = async (req, res, next) => {
     const { id: packageId } = req.params;
     const { comment, is_internal } = req.body;
     const userId = req.user.id;
-    const isAdmin = req.user.role === 'ADMIN';
+    const isAdmin = req.user.role === 'ADMIN' || req.user.role === 'SUPERADMIN';
 
     if (!comment?.trim()) {
       return res.status(400).json({ error: 'Comment cannot be empty' });

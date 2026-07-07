@@ -15,12 +15,17 @@
     "badge": "Sistema de Gestión Logística",
     "title1": "Tu paquete,",
     "title2": "siempre bajo control",
-    "subtitle": "Rastrea tu envío al instante. Sin necesidad de crear una cuenta.",
+    "subtitle": "Rastrea tu envío al instante desde cualquier parte del mundo. Sin registro, sin complicaciones.",
     "placeholder": "Ingresa tu número de tracking — Ej: CVP-2024-0001",
     "trackBtn": "Rastrear",
+    "trustSecure": "Conexión segura",
+    "trustRealTime": "Actualización en tiempo real",
+    "trustNoAccount": "Sin necesidad de cuenta",
     "loginCtaPre": "¿Tienes cuenta?",
     "loginLink": "Inicia sesión",
-    "loginCtaPost": "para ver el historial completo de tus envíos."
+    "loginCtaPost": "para ver el historial completo de tus envíos.",
+    "registerCta": "Crear una cuenta gratuita",
+    "demoBanner": "Demo disponible:"
   },
   "stats": {
     "packages": "Paquetes entregados",
@@ -129,6 +134,7 @@
     "analytics": "Analíticas",
     "notifications": "Notificaciones",
     "save": "Guardar",
+    "close": "Cerrar",
     "login": "Iniciar Sesión"
   },
   "dashboard": {

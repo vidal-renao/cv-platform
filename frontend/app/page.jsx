@@ -1,11 +1,19 @@
 'use client'
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslation } from '../lib/i18n';
 
 const API_URL = '/api';
+
+const DEMO_BANNER_KEY = 'cv_demo_banner_dismissed';
+
+const DEMO_CREDENTIALS = [
+  { role: 'Admin',  email: 'admin@demo.ch'  },
+  { role: 'Staff',  email: 'staff@demo.ch'  },
+  { role: 'Client', email: 'client@demo.ch' },
+];
 
 const SERVICES = [
   {
@@ -49,20 +57,25 @@ const STATS = [
   { value: '24/7', key: 'support' },
 ];
 
-const TRACKING_STEPS = [
-  { label: 'Recibido', icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4' },
-  { label: 'En tránsito', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
-  { label: 'En aduana', icon: 'M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z' },
-  { label: 'Listo para retiro', icon: 'M5 13l4 4L19 7' },
-];
+
 
 export default function Home() {
   const router = useRouter();
   const { t }  = useTranslation();
+  const [showDemoBanner, setShowDemoBanner] = useState(false);
   const [trackingInput, setTrackingInput] = useState('');
   const [contactForm, setContactForm]     = useState({ name: '', email: '', message: '' });
   const [contactStatus, setContactStatus] = useState('idle');
   const [contactError, setContactError]   = useState('');
+
+  useEffect(() => {
+    setShowDemoBanner(!localStorage.getItem(DEMO_BANNER_KEY));
+  }, []);
+
+  const dismissDemoBanner = () => {
+    localStorage.setItem(DEMO_BANNER_KEY, 'true');
+    setShowDemoBanner(false);
+  };
 
   const handleTrack = (e) => {
     e.preventDefault();
@@ -93,6 +106,40 @@ export default function Home() {
   return (
     <main className="flex-1 flex flex-col">
 
+      {/* ── DEMO BANNER ─────────────────────────────────────── */}
+      {showDemoBanner && (
+        <div className="relative z-20 bg-teal-500/10 border-b border-teal-500/20 px-4 py-3">
+          <div className="max-w-6xl mx-auto flex items-center justify-between gap-4">
+            <div className="flex items-center gap-2 text-sm text-teal-300 font-body">
+              <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              <span>{t('hero.demoBanner')}</span>
+              <span className="hidden sm:inline text-white/40 mx-1">—</span>
+              <span className="hidden sm:inline text-white/40">
+                {DEMO_CREDENTIALS.map((c, i) => (
+                  <span key={c.role}>
+                    {i > 0 && <span className="mx-1.5 text-white/20">|</span>}
+                    <span className="font-mono text-xs text-teal-300/80">{c.email}</span>
+                    <span className="text-white/30 mx-1">/</span>
+                    <span className="font-mono text-xs text-teal-300/80">demo1234</span>
+                  </span>
+                ))}
+              </span>
+            </div>
+            <button
+              onClick={dismissDemoBanner}
+              className="text-white/30 hover:text-white/70 transition flex-shrink-0"
+              aria-label={t('common.close')}
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      )}
+
       {/* ── HERO ────────────────────────────────────────────── */}
       <section className="relative flex flex-col items-center justify-center text-center px-6 py-28 sm:py-40 min-h-[88vh] overflow-hidden">
         {/* Ambient glow */}
@@ -103,78 +150,82 @@ export default function Home() {
           {t('hero.badge')}
         </div>
 
-        <h1 className="relative z-10 text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-white tracking-tight max-w-3xl leading-[1.1] mb-5">
+        <h1 className="relative z-10 text-5xl sm:text-6xl lg:text-7xl font-display font-bold text-white tracking-tight max-w-4xl leading-[1.1] mb-5">
           {t('hero.title1')}{' '}
           <span className="gradient-text">{t('hero.title2')}</span>
         </h1>
 
-        <p className="relative z-10 text-white/50 text-lg max-w-lg mb-14 leading-relaxed font-body">
+        <p className="relative z-10 text-white/50 text-lg max-w-2xl mb-14 leading-relaxed font-body">
           {t('hero.subtitle')}
         </p>
 
-        {/* Tracking bar — the signature element */}
-        <form onSubmit={handleTrack} className="relative z-10 w-full max-w-2xl">
-          <div className="flex rounded-2xl overflow-hidden border border-white/10 focus-within:border-teal-400/50 transition-colors bg-white/[0.03] backdrop-blur-sm">
-            <div className="relative flex-1">
-              <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"
-                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
-                </svg>
-              </div>
-              <input
-                type="text"
-                value={trackingInput}
-                onChange={(e) => setTrackingInput(e.target.value)}
-                placeholder={t('hero.placeholder')}
-                className="w-full bg-transparent text-white placeholder-white/30 pl-14 pr-4 py-5 text-base focus:outline-none font-mono tracking-wider"
-              />
-            </div>
-            <button
-              type="submit"
-              disabled={!trackingInput.trim()}
-              className="bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-navy-900 font-display font-bold px-8 py-5 text-base transition flex items-center gap-2 whitespace-nowrap"
-            >
-              {t('hero.trackBtn')}
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
-              </svg>
-            </button>
-          </div>
-        </form>
-
-        {/* Tracking timeline preview */}
-        <div className="relative z-10 mt-12 flex items-center gap-0 w-full max-w-md">
-          {TRACKING_STEPS.map((step, i) => (
-            <div key={step.label} className="flex items-center flex-1">
-              <div className="flex flex-col items-center gap-1.5">
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                  i < 2 ? 'bg-teal-400/20 text-teal-400' : 'bg-white/5 text-white/20'
-                }`}>
-                  <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d={step.icon} />
+        <div className="relative z-10 w-full max-w-2xl space-y-3">
+          {/* Tracking bar — the signature element */}
+          <form onSubmit={handleTrack}>
+            <div className="flex rounded-2xl overflow-hidden border border-white/10 focus-within:border-teal-400/50 transition-colors bg-white/[0.03] backdrop-blur-sm">
+              <div className="relative flex-1">
+                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5"
+                      d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
                   </svg>
                 </div>
-                <span className={`text-[10px] font-body whitespace-nowrap ${
-                  i < 2 ? 'text-teal-400/70' : 'text-white/20'
-                }`}>{step.label}</span>
+                <input
+                  type="text"
+                  value={trackingInput}
+                  onChange={(e) => setTrackingInput(e.target.value)}
+                  placeholder={t('hero.placeholder')}
+                  className="w-full bg-transparent text-white placeholder-white/30 pl-14 pr-4 py-5 text-base focus:outline-none font-mono tracking-wider"
+                />
               </div>
-              {i < TRACKING_STEPS.length - 1 && (
-                <div className={`flex-1 h-px mx-1 mt-[-18px] ${
-                  i < 1 ? 'bg-teal-400/40' : 'bg-white/10'
-                }`} />
-              )}
+              <button
+                type="submit"
+                disabled={!trackingInput.trim()}
+                className="bg-teal-500 hover:bg-teal-400 disabled:opacity-30 disabled:cursor-not-allowed text-navy-900 font-display font-bold px-8 py-5 text-base transition flex items-center gap-2 whitespace-nowrap"
+              >
+                {t('hero.trackBtn')}
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
             </div>
-          ))}
+          </form>
+
+          {/* Trust badges */}
+          <div className="flex items-center justify-center gap-6 text-xs text-white/25 font-body">
+            <span className="flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 text-teal-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+              </svg>
+              {t('hero.trustSecure')}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 text-teal-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              {t('hero.trustRealTime')}
+            </span>
+            <span className="flex items-center gap-1.5">
+              <svg className="w-3.5 h-3.5 text-teal-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              {t('hero.trustNoAccount')}
+            </span>
+          </div>
         </div>
 
-        <p className="relative z-10 mt-8 text-xs text-white/30 font-body">
-          {t('hero.loginCtaPre')}{' '}
-          <Link href="/login" className="text-teal-400 hover:text-teal-300 font-medium transition">
-            {t('hero.loginLink')}
+        <div className="relative z-10 mt-16 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-white/40 font-body">
+          <Link href="/login" className="text-teal-400 hover:text-teal-300 font-medium transition flex items-center gap-1.5">
+            {t('hero.loginCtaPre')}
+            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
           </Link>
-          {' '}{t('hero.loginCtaPost')}
-        </p>
+          <span className="hidden sm:inline text-white/10">|</span>
+          <Link href="/register" className="hover:text-white/60 transition">
+            {t('hero.registerCta')}
+          </Link>
+        </div>
       </section>
 
       {/* ── STATS ───────────────────────────────────────────── */}
