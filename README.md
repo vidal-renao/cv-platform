@@ -2,7 +2,7 @@
 
 # CV Platform
 
-### Intelligent Logistics Management — Built for Scale
+### Logistics Management Portfolio Project
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-20-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
@@ -10,12 +10,11 @@
 [![Twilio](https://img.shields.io/badge/Twilio-WhatsApp-F22F46?style=for-the-badge&logo=twilio&logoColor=white)](https://twilio.com/)
 [![Resend](https://img.shields.io/badge/Resend-Email-000000?style=for-the-badge&logo=mail.ru&logoColor=white)](https://resend.com/)
 [![i18n](https://img.shields.io/badge/i18n-6_languages-6366F1?style=for-the-badge&logo=googletranslate&logoColor=white)](#-internationalization)
-[![AI Audited](https://img.shields.io/badge/Security-AI_Audited-22C55E?style=for-the-badge&logo=shieldsdotio&logoColor=white)](#-security-protocol)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 **End-to-end logistics platform with real-time tracking, automated multi-channel notifications, role-based access control, and native six-language support — designed for international courier operations.**
 
-[Live Demo](#) · [Report Bug](../../issues) · [Request Feature](../../issues)
+[Report Bug](../../issues) · [Request Feature](../../issues)
 
 </div>
 
@@ -34,15 +33,11 @@ When your logistics operation crosses borders, your software has to cross them t
 
 ---
 
-## The AI-Driven Solution
+## Development approach
 
-CV Platform was engineered with AI as a core development multiplier — not a gimmick. The development process included:
+CV Platform is a full-stack logistics project covering package workflows, notifications and multilingual interfaces. AI tools assisted development.
 
-- **AI-assisted architecture design** — key decisions on data modeling, RBAC structure, and i18n architecture were validated against AI-generated constraint analysis before a single line of code was written.
-- **AI-audited security** — a full secret scanning and credentials audit was performed by AI agents prior to the first public commit, catching rotatable tokens and configuration leaks before they reached version history.
-- **AI-accelerated i18n** — six complete translation dictionaries with context-aware keys across 40+ UI surfaces were built and cross-validated in a fraction of the time manual translation would require.
-
-The result is a production-grade platform — not a prototype — with clean architecture, zero exposed secrets, and an i18n system that treats language as infrastructure, not an afterthought.
+**Status:** portfolio project. Production readiness, security and performance require deployment-specific validation; no independent security certification or current public demo is claimed here.
 
 ---
 
@@ -146,7 +141,7 @@ Zero-login tracking at `/track/[tracking_number]` — shareable, SEO-friendly, f
 
 ## Security Protocol
 
-> Repository was fully audited by AI security agents prior to first public commit. No credentials exist in any commit in the git history.
+> The table below describes the project's documented security controls. It is not an independent audit or a guarantee that repository history contains no secrets.
 
 | Control | Implementation |
 |---|---|
@@ -159,7 +154,7 @@ Zero-login tracking at `/track/[tracking_number]` — shareable, SEO-friendly, f
 | **Input validation** | Zod schemas validate all API inputs before any DB query executes |
 | **Token lifecycle** | Password reset tokens: single-use, stored hashed, 1h expiry |
 | **HTTP headers** | Helmet (backend) + Vercel security headers (frontend): `nosniff`, `DENY` framing, XSS protection |
-| **Clean history** | Repository initialized fresh — zero credential exposure in historical commits |
+| **Secret hygiene** | Keep credentials outside source control and verify history with dedicated scanning |
 
 ---
 
@@ -300,6 +295,6 @@ Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
 
 <div align="center">
 
-Built with precision · Secured by AI audit · Ready for production
+Full-stack logistics project · Next.js, Express and PostgreSQL
 
 </div>
