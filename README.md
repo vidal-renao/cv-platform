@@ -10,7 +10,6 @@
 [![Twilio](https://img.shields.io/badge/Twilio-WhatsApp-F22F46?style=for-the-badge&logo=twilio&logoColor=white)](https://twilio.com/)
 [![Resend](https://img.shields.io/badge/Resend-Email-000000?style=for-the-badge&logo=mail.ru&logoColor=white)](https://resend.com/)
 [![i18n](https://img.shields.io/badge/i18n-6_languages-6366F1?style=for-the-badge&logo=googletranslate&logoColor=white)](#-internationalization)
-[![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](LICENSE)
 
 **End-to-end logistics platform with real-time tracking, automated multi-channel notifications, role-based access control, and native six-language support — designed for international courier operations.**
 
@@ -289,7 +288,7 @@ cv-platform/
 
 ## License
 
-Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
+No standalone LICENSE file is currently included. Contact the author for licensing information.
 
 ---
 
